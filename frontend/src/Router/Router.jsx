@@ -19,6 +19,11 @@ import BlogDetails from "../Pages/InnerPage/BlogDetails";
 import Contact from "../Pages/InnerPage/Contact";
 import ErrorPage from "../Shared/ErrorPage/ErrorPage";
 
+
+// Custom pages
+
+
+
 // Starting React Router.
 const router = createBrowserRouter([
   {

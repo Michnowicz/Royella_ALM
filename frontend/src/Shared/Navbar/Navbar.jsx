@@ -6,6 +6,8 @@ import { BiChevronDown, BiSun } from "react-icons/bi";
 import { IoMoonSharp } from "react-icons/io5";
 import { useEffect, useState } from "react";
 
+import Log from "../../ALMcomponents/Log/Log";
+
 const Navbar = () => {
   // modal openar
   const [isOpen, setIsOpen] = useState(false);
@@ -37,6 +39,7 @@ const Navbar = () => {
     }
   }, [isDarkMode]);
 
+
   return (
     <nav
       className={` w-full lg:fixed font-Lora z-10  lg:px-5 lg:py-2  transition-all duration-300 ${navbarBgColor} `}
@@ -55,7 +58,7 @@ const Navbar = () => {
           </div>
           {/* small screen size */}
           <div className="px-3 w-full lg:hidden flex justify-between text-lightBlack lg:text-white dark:text-white bg-khaki h-[70px]  items-center  p-3">
-            <div className=" w-28  ">
+            <div className=" w-28">
               <Link to="/">
                 <img
                   src="/images/home-1/brand-1.png"
@@ -304,11 +307,16 @@ const Navbar = () => {
             >
               Contact
             </NavLink>
+            
           </ul>
 
           {/* large device visible button and search icon */}
           <div className="hidden lg:flex items-center">
-            <span onClick={handleClick} className="mr-3 cursor-pointer group ">
+          
+            {/* {Connection menu} */}
+            <Log/>
+
+              <span onClick={handleClick} className="mr-3 cursor-pointer group ">
               {isDarkMode ? (
                 <BiSun
                   className="text-white group-hover:rotate-90 rotate transition-all duration-300"
@@ -323,6 +331,8 @@ const Navbar = () => {
                 />
               )}
             </span>
+
+
             <Link to="/find_room">
               <button className="btn-secondary ">Booking Online</button>
             </Link>
@@ -330,6 +340,7 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
+
   );
 };
 

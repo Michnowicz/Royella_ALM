@@ -14,6 +14,7 @@ import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import { Link } from "react-router-dom";
 import FsLightbox from "fslightbox-react";
+
 const About = () => {
   const [setCurrentSlide] = useState(0);
   // const [setLoaded] = useState(false);
