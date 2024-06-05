@@ -9,18 +9,19 @@ from django.core.validators import RegexValidator
 
 ########## user models ##########
 class Role(models.Model):
-    name = models.CharField()
+    name = models.CharField(max_length=32)
 
 class UserImg(models.Model):
     image = models.ImageField(upload_to="user/")
 
 class User(AbstractUser):
-    role = models.ForeignKey(Role, on_delete=models.SET_NULL,required=True)
+    pass
+    role = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True)
     image = models.ForeignKey(UserImg, on_delete=models.CASCADE)
 
 class Testimony(models.Model):
-    description= models.TextField(required=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, required=True)
+    description= models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 
@@ -31,15 +32,15 @@ class RoomImg(models.Model):
     image = models.ImageField(upload_to="room/")
 
 class Room(models.Model):
-    name = models.CharField(max_length=32, required=True)
-    bed_number = models.IntegerField(required=True)
-    space = models.IntegerField(required=True)
+    name = models.CharField(max_length=32)
+    bed_number = models.IntegerField()
+    space = models.IntegerField()
     rating = models.IntegerField(default=0, validators=[
         MinValueValidator(0),
         MaxValueValidator(5)
     ])
-    price = models.FloatField(required=True)
-    percentage_reduction = models.FloatField(required=True, validators=[
+    price = models.FloatField()
+    percentage_reduction = models.FloatField(validators=[
         MinValueValidator(0),
         MaxValueValidator(1)
     ])
@@ -55,32 +56,32 @@ class BannerImg(models.Model):
     image = models.ImageField(upload_to="banner")
 
 class Banner(models.Model):
-    title = models.CharField(max_length=32, required=True)
-    subtitle = models.CharField(max_length=48, required=True)
+    title = models.CharField(max_length=32)
+    subtitle = models.CharField(max_length=48)
     rating = models.IntegerField(default=0, validators=[
         MinValueValidator(0),
         MaxValueValidator(5)
     ])
-    phone_number = models.CharField(max_length=24, validators=RegexValidator('\d', message="The phone number must be a number."))
-    image = models.ForeignKey()
+    phone_number = models.CharField(max_length=24, validators=[RegexValidator('\d', message="The phone number must be a number.")])
+    image = models.ForeignKey(BannerImg, on_delete=models.SET_NULL, null=True)
 
 
 
 # homepage section "LUXURY HOTEL AND RESORT"
 class HotelResort(models.Model):
-    title = models.CharField(max_length=32, required=True)
-    subtitle = models.CharField(max_length=64, required=True)
-    text = models.TextField(required=True)
+    title = models.CharField(max_length=32)
+    subtitle = models.CharField(max_length=64)
+    text = models.TextField()
 
 
 
 # managers
 class Manager(models.Model):
-    title = models.CharField(max_length=32, required=True)
-    subtitle = models.CharField(max_length=48, required=True)
-    description = models.CharField(max_length=255, required=True)
+    title = models.CharField(max_length=32)
+    subtitle = models.CharField(max_length=48)
+    description = models.CharField(max_length=255)
     image = models.ImageField(upload_to="manager")
-    testimonial = models.ForeignKey(Testimony, on_delete=models.SET_NULL)
+    testimonial = models.ForeignKey(Testimony, on_delete=models.SET_NULL, null=True)
 
 
 
@@ -89,13 +90,13 @@ class Manager(models.Model):
 ########## About page ##########
 # facilities
 class Facility(models.Model):
-    title = models.CharField(max_length=32, required=True)
-    subtitle = models.CharField(max_length=48, required=True)
-    description = models.CharField(max_length=255, required=True)
+    title = models.CharField(max_length=32)
+    subtitle = models.CharField(max_length=48)
+    description = models.CharField(max_length=255)
     image = models.ImageField(upload_to="manager")
     street = models.CharField(max_length=64)
     city = models.CharField(max_length=32)
-    postal_code = models.CharField(max_length=5, validators=RegexValidator('\d', message="The postal code must be a number."))
+    postal_code = models.CharField(max_length=5, validators=[RegexValidator('\d', message="The postal code must be a number.")])
 
 
 # employees
@@ -108,8 +109,8 @@ class employees(models.Model):
 
 # contact
 class Contact(models.Model):
-    phone = models.CharField(max_length=24, validators=RegexValidator('\d', message="The phone number must be a number."))
+    phone = models.CharField(max_length=24, validators=[RegexValidator('\d', message="The phone number must be a number.")])
     email = models.EmailField()
     street = models.CharField(max_length=64)
     city = models.CharField(max_length=32)
-    postal_code = models.CharField(max_length=5, validators=RegexValidator('\d', message="The postal code must be a number."))
+    postal_code = models.CharField(max_length=5, validators=[RegexValidator('\d', message="The postal code must be a number.")])
