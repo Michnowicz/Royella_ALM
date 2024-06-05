@@ -15,9 +15,8 @@ class UserImg(models.Model):
     image = models.ImageField(upload_to="user/")
 
 class User(AbstractUser):
-    pass
-    role = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True)
-    image = models.ForeignKey(UserImg, on_delete=models.CASCADE)
+    role = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, default=2)
+    image = models.ForeignKey(UserImg, on_delete=models.CASCADE, null=True)
 
 class Testimony(models.Model):
     description= models.TextField()
