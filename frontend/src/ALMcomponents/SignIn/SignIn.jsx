@@ -43,10 +43,9 @@ export default function SignIn({signIn, setSignIn}) {
         e.preventDefault()
         
         // user image 
-
         const formImage = new FormData();
         formImage.append("image",user.image);
-
+        
         const response = await axios.post("http://127.0.0.1:8000/api/user_img/create",formImage)
         .then(response => {
             setImageID(response.data.id)
@@ -54,7 +53,17 @@ export default function SignIn({signIn, setSignIn}) {
         })
 
         if (status === "succes") {
-            const response = await axios.post("http://127.0.0.1:8000/api/user/create",user)
+            //user
+            const formUser = new FormData()
+            formUser.append("username",user.email)
+            formUser.append("first_name", user.first_name)
+            formUser.append("last_name",user.last_name)
+            formUser.append("email", user.email)
+            formUser.append("password", user.password)
+            formUser.append("role", 2)
+            formUser.append("image", imageID)
+
+            const response = await axios.post("http://127.0.0.1:8000/api/user/create",formUser)
             .then(response => {
                 console.log(response.data)
             })

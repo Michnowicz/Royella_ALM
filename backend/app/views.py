@@ -44,22 +44,20 @@ def create_userImg(request):
 
 @api_view(['POST'])
 def create_user(request):
-    data = json.loads(request.body)
-
-
-    if User.objects.filter(username=data.get('email')).exists():
-        return JsonResponse({'status': 'error', 'message': 'username already taken'})
-    else:
-        new_image = UserImg(image=request._files)
-        new_image.save()
-        return JsonResponse({'data':"ok"})
+    # data = json.loads(request.data)
 
     # new_user = User(
-    #     username=data.get('email'),
+    #     username=data.get('username'),
     #     email=data.get('email'),
     #     password=make_password(data.get('password')),
     #     first_name = data.get("first_name"),
     #     last_name = data.get("last_name"),
-    #     )
-    
-    return JsonResponse({"data": data})
+    #     role = data.get("role")
+    # )
+
+    serializer = UserSerializers(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return JsonResponse({"status":"success", "message": "user created successfully"})
+    else:
+        return JsonResponse({"status":"error", "message": serializer.errors})
