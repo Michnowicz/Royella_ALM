@@ -44,16 +44,6 @@ def create_userImg(request):
 
 @api_view(['POST'])
 def create_user(request):
-    # data = json.loads(request.data)
-
-    # new_user = User(
-    #     username=data.get('username'),
-    #     email=data.get('email'),
-    #     password=make_password(data.get('password')),
-    #     first_name = data.get("first_name"),
-    #     last_name = data.get("last_name"),
-    #     role = data.get("role")
-    # )
 
     serializer = UserSerializers(data=request.data)
     if serializer.is_valid():

@@ -20,9 +20,9 @@ export default function LogIn({logIn, setLogIn}) {
         const {name, value} = e.target
         setUser({...user, [name]:value})
     }
-    useEffect(()=>{
-        console.log(user);
-    },[user])
+    // useEffect(()=>{
+    //     console.log(user);
+    // },[user])
 
 
 
@@ -40,7 +40,7 @@ export default function LogIn({logIn, setLogIn}) {
                 setLogIn(false)
             } else {
                 setErrorMessage(response.data.message)
-                console.log(response.data.message);
+                // console.log(response.data.message);
             }
         })
     }

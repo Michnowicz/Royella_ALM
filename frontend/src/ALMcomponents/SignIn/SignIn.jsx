@@ -31,29 +31,32 @@ export default function SignIn({signIn, setSignIn}) {
         setImage(e.target.files[0])
     }
 
-    useEffect(()=>{
-        console.log(user);
-    },[user])
-    useEffect(()=>{
-        console.log(image);
-    },[image])
+    // useEffect(()=>{
+    //     console.log(user);
+    // },[user])
+    // useEffect(()=>{
+    //     console.log(image);
+    // },[image])
 
     // handle log in submit
     const submitLogIn = async (e) => {
         e.preventDefault()
         
-        // user image 
+        // verify and saves the user image in the UserImg model
         const formImage = new FormData();
         formImage.append("image",user.image);
         
         const response = await axios.post("http://127.0.0.1:8000/api/user_img/create",formImage)
         .then(response => {
-            setImageID(response.data.id)
+            setImageID(response.data.data.id)
             setStatus(response.data.status)
+            // console.log(response.data.data.id);
         })
+    }
 
+    const createUser = async () => {
+        // create the user when the submitLogIn() is successful
         if (status === "succes") {
-            //user
             const formUser = new FormData()
             formUser.append("username",user.email)
             formUser.append("first_name", user.first_name)
@@ -61,14 +64,24 @@ export default function SignIn({signIn, setSignIn}) {
             formUser.append("email", user.email)
             formUser.append("password", user.password)
             formUser.append("role", 2)
-            formUser.append("image", imageID)
+            formUser.append("image", parseInt(imageID))
+            // console.log(imageID);
 
             const response = await axios.post("http://127.0.0.1:8000/api/user/create",formUser)
             .then(response => {
-                console.log(response.data)
+                // console.log(response.data)
             })
+            // close the modal
+            setErrorMessage("")
+                document.body.style.overflow = "auto"
+                setSignIn(false)
+                setStatus("")
         }
-    }
+    } 
+
+    useEffect(()=>{
+        createUser()
+    },[status])
 
 
 
