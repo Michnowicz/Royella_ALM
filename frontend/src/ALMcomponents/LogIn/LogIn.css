@@ -21,3 +21,10 @@
 .logform {
     width: 500px;
 }
+
+
+.errMsg {
+    color: red;
+    font-weight: 500;
+    height: 24px;
+}

@@ -32,16 +32,17 @@ export default function LogIn({logIn, setLogIn}) {
 
         const response = await axios.post("http://127.0.0.1:8000/api/login",user)
         .then(response => {
-            console.log(response.data)
+            // console.log(response.data)
             if (response.data.status == "success" ) {
                 localStorage.setItem("access_token", response.data.access_token)
+                setErrorMessage("")
+                document.body.style.overflow = "auto"
+                setLogIn(false)
             } else {
                 setErrorMessage(response.data.message)
+                console.log(response.data.message);
             }
         })
-
-        document.body.style.overflow = "auto"
-        setLogIn(false)
     }
 
 
@@ -64,6 +65,7 @@ export default function LogIn({logIn, setLogIn}) {
                             {/* <label htmlFor="password" className="text-gray dark:text-lightGray">Password</label> */}
                             <input type="password" placeholder="password" name="password" className="w-full h-12 md:h-13 lg:h-[59px] px-4 border border-gray dark:border-lightGray text-gray dark:text-lightGray outline-none  bg-transparent mt-4 focus:ring-0 placeholder:text-gray focus:border-gray dark:focus:border-lightGray focus:outline-none" onChange={handleInput}/>
                         </div>
+                        <div className="errMsg">{errorMessage}</div>
                         <div>
                             <button className="w-full bg-khaki text-white text-center h-10 2xl:h-[55px] mt-5" type="submit">
                                 LOG IN
