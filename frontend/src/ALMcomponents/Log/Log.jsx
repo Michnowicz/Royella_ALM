@@ -3,27 +3,21 @@ import { BiChevronDown, BiSun } from "react-icons/bi";
 import { useEffect, useState } from "react";
 
 import LogIn from "../LogIn/LogIn.jsx"
+import SignIn from "../SignIn/SignIn.jsx"
 
 const Log = () => {
 
   const [logIn, setLogIn] = useState(false)
-  const [SignIn, setSignIn] = useState(false)
+  const [signIn, setSignIn] = useState(false)
 
   const handleclick = (e) => {
     document.body.style.overflow = "hidden"
     if (e.target.id == "login") {
       setLogIn(!logIn)
     } else {
-      setSignIn(!SignIn)
+      setSignIn(!signIn)
     }
   }
-
-  useEffect(()=>{
-    console.log("login :" , logIn);
-  },[logIn])
-  useEffect(()=>{
-    console.log("signin :" , SignIn);
-  },[SignIn])
 
 
   return(
@@ -51,6 +45,7 @@ const Log = () => {
       </NavLink>
 
       <LogIn logIn={logIn} setLogIn={setLogIn}/>
+      <SignIn signIn={signIn} setSignIn={setSignIn} />
     </>
   )
 };
