@@ -1,6 +1,7 @@
 import { Link, useLocation, NavLink } from "react-router-dom";
 import { BiChevronDown, BiSun } from "react-icons/bi";
 import { useEffect, useState } from "react";
+import axios from "axios"
 
 import LogIn from "../LogIn/LogIn.jsx"
 import SignIn from "../SignIn/SignIn.jsx"
@@ -10,13 +11,29 @@ const Log = () => {
   const [logIn, setLogIn] = useState(false)
   const [signIn, setSignIn] = useState(false)
 
+  const [token, setToken] = useState("")
+  const [message, setMessage] = useState("")
+
   const handleclick = (e) => {
     document.body.style.overflow = "hidden"
     if (e.target.id == "login") {
       setLogIn(!logIn)
-    } else {
+    } else if (e.target.id === "singin") {
       setSignIn(!signIn)
+    } else if (e.target.id === "disconnect") {
+      logout()
     }
+  }
+
+  const logout = async () => {
+    localStorage.removeItem('access_token')
+    const response = axios.post('http://127.0.0.1:8000/api/user/disconnect')
+      .then(response => {
+        setMessage(response.data.message)
+        console.log(response.data);
+        setToken("")
+      }
+    )
   }
 
 
@@ -40,12 +57,23 @@ const Log = () => {
                 SIGN IN
               </li>
             </div>
+            {
+              token != "" ?
+              <div className=" px-5 group hover:bg-khaki hover:text-white">
+                <li className="hover:ml-3 duration-300 py-2" onClick={handleclick} id="disconnect">
+                  DISCONNECT
+                </li>
+              </div>
+              :
+              ""
+            }
           </ul>
         </div>
       </NavLink>
 
-      <LogIn logIn={logIn} setLogIn={setLogIn}/>
-      <SignIn signIn={signIn} setSignIn={setSignIn} />
+      <LogIn logIn={logIn} setLogIn={setLogIn} setToken={setToken}/>
+      <SignIn signIn={signIn} setSignIn={setSignIn}/>
+
     </>
   )
 };

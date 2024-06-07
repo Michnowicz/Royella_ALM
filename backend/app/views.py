@@ -30,24 +30,29 @@ def Log_in(request):
         return JsonResponse({"status":"success", "message": "user connected", "access_token":access_token, "data": data})
 
 
-
 @api_view(['POST'])
 def create_userImg(request):
     user_image = UserImgSerializers(data=request.data)
-
     if user_image.is_valid():
         user_image.save()
+        # return saved image id to create the user
         image = UserImgSerializers(UserImg.objects.latest('id'))
         return Response({"status": "succes", "data":image.data})
     else:
         return JsonResponse({"status": "error", "massage": user_image.errors})
 
+
 @api_view(['POST'])
 def create_user(request):
-
     serializer = UserSerializers(data=request.data)
     if serializer.is_valid():
         serializer.save()
         return JsonResponse({"status":"success", "message": "user created successfully"})
     else:
         return JsonResponse({"status":"error", "message": serializer.errors})
+    
+
+@api_view(['POST'])
+def disconnect(request):
+    logout(request)
+    return JsonResponse({'status': 'success', 'message': 'user disconnected'})
