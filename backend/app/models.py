@@ -52,11 +52,12 @@ class Room(models.Model):
 
 ########## banner models ##########
 class BannerImg(models.Model):
-    image = models.ImageField(upload_to="banner")
+    image = models.ImageField(upload_to="banner/")
 
 class Banner(models.Model):
     title = models.CharField(max_length=32)
-    subtitle = models.CharField(max_length=48)
+    subtitle = models.CharField(max_length=24)
+    subtitle_bottom = models.CharField(max_length=24, default="")
     rating = models.IntegerField(default=0, validators=[
         MinValueValidator(0),
         MaxValueValidator(5)

@@ -13,6 +13,17 @@ import json
 
 
 
+########## all views ##########
+def data_get(request):
+    banners = BannerSerializers(Banner.objects.all(), many=True)
+    for b in banners.data:
+        bannerImg = BannerImgSerializers(BannerImg.objects.get(id=b["image"]))
+        b["image"] = bannerImg.data
+    data = {
+        "banner" : banners.data,
+    }
+    return JsonResponse({"data":data})
+
 
 
 
@@ -29,7 +40,6 @@ def Log_in(request):
         access_token = str(refresh.access_token)
         return JsonResponse({"status":"success", "message": "user connected", "access_token":access_token, "data": data})
 
-
 @api_view(['POST'])
 def create_userImg(request):
     user_image = UserImgSerializers(data=request.data)
@@ -41,7 +51,6 @@ def create_userImg(request):
     else:
         return JsonResponse({"status": "error", "massage": user_image.errors})
 
-
 @api_view(['POST'])
 def create_user(request):
     serializer = UserSerializers(data=request.data)
@@ -51,8 +60,32 @@ def create_user(request):
     else:
         return JsonResponse({"status":"error", "message": serializer.errors})
     
-
 @api_view(['POST'])
 def disconnect(request):
     logout(request)
     return JsonResponse({'status': 'success', 'message': 'user disconnected'})
+
+def get_user(request):
+    try:
+        auth = JWTAuthentication()
+        user, _ = auth.authenticate(request)
+    except:
+        return JsonResponse({'status': 'error'})
+    mon_user = {
+        'user': user.username,
+        'role' : user.role.id
+    }
+    return JsonResponse({'user': mon_user})
+
+
+
+
+
+
+########## banner views ##########
+def get_banners(request):
+    banners = BannerSerializers(Banner.objects.all(), many=True)
+    for b in banners.data:
+        bannerImg = BannerImgSerializers(BannerImg.objects.get(id=b["image"]))
+        b["image"] = bannerImg.data
+    return JsonResponse({"data":banners.data})

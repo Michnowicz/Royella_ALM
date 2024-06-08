@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import { useState } from "react";
 
 // Home And Main Home1
 import Main from "../Main/Main";
@@ -21,11 +22,12 @@ import ErrorPage from "../Shared/ErrorPage/ErrorPage";
 
 
 // Custom pages
-
-
+import Backoffice from "../Backoffice/Backoffice";
+import Banner from "../Pages/Backoffice/Banner/Banner";
 
 // Starting React Router.
 const router = createBrowserRouter([
+
   {
     path: "/",
     element: <Main />,
@@ -78,6 +80,18 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+    ],
+  },
+
+  {
+    path: "/backoffice",
+    element: <Backoffice />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/backoffice/banner",
+        element: <Banner/>,
       },
     ],
   },

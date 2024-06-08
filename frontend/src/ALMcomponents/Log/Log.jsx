@@ -10,17 +10,19 @@ const Log = () => {
 
   const [logIn, setLogIn] = useState(false)
   const [signIn, setSignIn] = useState(false)
-
   const [token, setToken] = useState("")
   const [message, setMessage] = useState("")
+  const [user, setUser] = useState({})
 
   const handleclick = (e) => {
     document.body.style.overflow = "hidden"
-    if (e.target.id == "login") {
+    if (e.target.id === "login") {
       setLogIn(!logIn)
-    } else if (e.target.id === "singin") {
+    }
+    if (e.target.id === "signin") {
       setSignIn(!signIn)
-    } else if (e.target.id === "disconnect") {
+    }
+    if (e.target.id === "disconnect") {
       logout()
     }
   }
@@ -30,15 +32,41 @@ const Log = () => {
     const response = axios.post('http://127.0.0.1:8000/api/user/disconnect')
       .then(response => {
         setMessage(response.data.message)
-        console.log(response.data);
+        // console.log(response.data);
         setToken("")
       }
     )
   }
 
+  // verify if the user is connected
+  useEffect(()=>{
+    if (token != "") {
+      fetchToken()
+    }
+  },[token])
+  const fetchToken = async () => {
+      const response = await axios.get("http://127.0.0.1:8000/api/user/get",
+      {headers: {
+          'Authorization' : `Bearer ${token}`
+      }})
+      .then(response => {
+          setUser(response.data.user)
+          console.log(response.data);
+      })
+  }
+
+
+  useEffect(()=>{
+    console.log(signIn);
+    console.log(logIn);
+  },[signIn, logIn])
+
 
   return(
     <>
+      <LogIn logIn={logIn} setLogIn={setLogIn} setToken={setToken}/>
+      <SignIn signIn={signIn} setSignIn={setSignIn}/>
+
       {/* {Connection menu} */}
       <NavLink className={ `text-lightBlack lg:text-white dark:text-white  lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 group relative `} to="#">
         <span className="flex items-center pl-5 pr-5">
@@ -47,32 +75,44 @@ const Log = () => {
         </span>
         <div className="absolute pt-4 lg:pt-8 z-20">
           <ul className="shadow-2xl hidden group-hover:block rounded-sm bg-white text-black w-60 text-left dark:bg-normalBlack dark:text-white transition-all duration-500 text-sm  py-4">
-            <div className="px-5 group hover:bg-khaki hover:text-white">
-              <li className="hover:ml-3 duration-300 py-2" onClick={handleclick} id="login">
-                LOG IN
-              </li>
-            </div>
-            <div className=" px-5 group hover:bg-khaki hover:text-white">
-              <li className="hover:ml-3 duration-300 py-2" onClick={handleclick} id="signin">
-                SIGN IN
-              </li>
-            </div>
             {
               token != "" ?
-              <div className=" px-5 group hover:bg-khaki hover:text-white">
-                <li className="hover:ml-3 duration-300 py-2" onClick={handleclick} id="disconnect">
-                  DISCONNECT
-                </li>
-              </div>
+              <>
+                <div className=" px-5 group hover:bg-khaki hover:text-white">
+                  {
+                    user.role != 2 ?
+                    <NavLink to="/backoffice" className="py-2 block">
+                      BACKOFFICE
+                    </NavLink>
+                    :
+                    ""
+                  }
+                </div>
+                <div className=" px-5 group hover:bg-khaki hover:text-white">
+                  <li className="hover:ml-3 duration-300 py-2" onClick={handleclick} id="disconnect">
+                    DISCONNECT
+                  </li>
+                </div>
+              </>
               :
-              ""
+              <>
+                <div className="px-5 group hover:bg-khaki hover:text-white">
+                  <li className="hover:ml-3 duration-300 py-2" onClick={handleclick} id="login">
+                    LOG IN
+                  </li>
+                </div>
+                <div className=" px-5 group hover:bg-khaki hover:text-white">
+                  <li className="hover:ml-3 duration-300 py-2" onClick={handleclick} id="signin">
+                    SIGN IN
+                  </li>
+                </div>
+              </>
             }
           </ul>
         </div>
+        
       </NavLink>
 
-      <LogIn logIn={logIn} setLogIn={setLogIn} setToken={setToken}/>
-      <SignIn signIn={signIn} setSignIn={setSignIn}/>
 
     </>
   )

@@ -50,3 +50,39 @@ def run_users():
         })
         pks = seeder.execute()
         print(pks)
+
+
+
+
+def run_bannerImg():
+    images = ["banner1.jpg", "banner2.jpg", "banner3.jpg", "banner4.jpg"]
+    seeder=Seed.seeder()
+    for i in range(4):
+        seeder.add_entity(BannerImg, 1, {
+            "image": lambda x : images[i]
+        })
+        pks = seeder.execute()
+        print(pks)
+
+
+
+
+def run_banner():
+    titles = ["LUXURY HOTEL AND RESORT", "LUXURY HOTEL", "LUXURY RESORT", "ROYELLA CITY HOTEL"]
+    subtitles = ["THE BEST LUXURY HOTEL", "THE BEST LUXURY HOTEL", "THE BEST LUXURY HOTEL", "THE BEST LUXURY HOTEL"]
+    subtitles_bottom = ["IN CALIFORNIA", "IN KASHMIR", "IN COLOSSEUM", "IN SRILANKA"]
+    ratings = [3, 4, 5, 4]
+    phone_numbers = ["0423652294035", "2550747707271", "6469348627791", "3114818024128"]
+
+    seeder=Seed.seeder()
+    for i in range(4):
+        seeder.add_entity(Banner, 1, {
+            "title" : lambda x : titles[i],
+            "subtitle" : lambda x : subtitles[i],
+            "subtitle_bottom" : lambda x : subtitles_bottom[i],
+            "rating" : lambda x : ratings[i],
+            "phone_number" : lambda x : phone_numbers[i],
+            "image" : lambda x : BannerImg.objects.get(id=i+1),
+        })
+        pks = seeder.execute()
+        print(pks)
