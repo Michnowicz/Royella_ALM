@@ -22,7 +22,7 @@ import ErrorPage from "../Shared/ErrorPage/ErrorPage";
 
 
 // Custom pages
-import Backoffice from "../Backoffice/Backoffice";
+import Backoffice from "../Pages/Backoffice/Backoffice";
 import Banner from "../Pages/Backoffice/Banner/Banner";
 
 // Starting React Router.

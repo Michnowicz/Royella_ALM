@@ -17,10 +17,10 @@ const Home1 = () => {
 
   useEffect(()=>{
     if (banners == null) {
-      fetchBanners()
+      fetchAll()
     }
   },[])
-  const fetchBanners = async () => {
+  const fetchAll = async () => {
       const response = await axios.get("http://127.0.0.1:8000/api/all/get")
       // console.log(response.data.data.banner);
       setBanners(response.data.data.banner)
