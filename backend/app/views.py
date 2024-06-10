@@ -89,3 +89,25 @@ def get_banners(request):
         bannerImg = BannerImgSerializers(BannerImg.objects.get(id=b["image"]))
         b["image"] = bannerImg.data
     return JsonResponse({"data":banners.data})
+
+
+@api_view(['POST'])
+def create_bannerImg(request):
+    banner_image = BannerImgSerializers(data=request.data)
+    if banner_image.is_valid():
+        banner_image.save()
+        return JsonResponse({"status":"success", "message":"banner image create"})
+    else:
+        return JsonResponse({"status": "error", "message":"there is an error" , "data":banner_image.errors})
+    
+
+@api_view(['POST'])
+def create_banner(request):
+    serializer = BannerSerializers(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        image = BannerImgSerializers(BannerImg.objects.latest('id'))
+        return JsonResponse({"status":"success", "message": "banner created successfully", "data":image.data})
+    else:
+        return JsonResponse({"status":"error", "message": serializer.errors})
+    

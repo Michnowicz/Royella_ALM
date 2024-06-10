@@ -16,6 +16,7 @@ urlpatterns = [
     path("api/user_img/create", create_userImg),
     #banner
     path("api/banner/get", get_banners),
+    path("api/bannerimg/create", create_bannerImg),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -19,6 +19,8 @@ const Banner = () => {
         console.log(banners);
     },[banners])
 
+    
+
     return (
         <div className="Banner min-h-screen dark:bg-lightBlack dark:bg-lightBlack">
             <div className=" py-20 2xl:py-[120px] w-full bg-no-repeat bg-top bg-opacity-[0.07]">

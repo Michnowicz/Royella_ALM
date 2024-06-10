@@ -2,7 +2,6 @@
 import "swiper/css";
 import "swiper/css/navigation";
 import "./style.css";
-import axios from "axios"
 
 // import required modules
 import { Autoplay, Navigation, Pagination } from "swiper/modules";

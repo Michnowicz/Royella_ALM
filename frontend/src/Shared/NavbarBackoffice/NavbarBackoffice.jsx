@@ -118,7 +118,7 @@ const NavbarBackoffice = () => {
                   : isActive
                   ? "active"
                   : ""} text-lightBlack  dark:text-white hover:text-khaki dark:hover:text-khaki  lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 group relative`}
-              to="/home4"
+              to="/backoffice"
             >
               <span className="flex items-center">
                 Home
@@ -133,7 +133,6 @@ const NavbarBackoffice = () => {
                       </NavLink>
                     </li>
                   </div>
-                  
                 </ul>
               </div>
             </NavLink>
