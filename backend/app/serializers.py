@@ -16,12 +16,21 @@ class UserSerializers(serializers.ModelSerializer):
 
 
 
-########## banner ##########
-class BannerImgSerializers(serializers.ModelSerializer):
+########## Rooms ##########
+class RoomImgSerializers(serializers.ModelSerializer):
     class Meta:
-        model = BannerImg
+        model = RoomImg
         fields = '__all__'
 
+class RoomSerializes(serializers.ModelSerializer):
+    class Meta:
+        model = Room
+        fields = '__all__'
+
+
+
+
+########## banner ##########
 class BannerSerializers(serializers.ModelSerializer):
     class Meta:
         model = Banner

@@ -15,12 +15,18 @@ import json
 
 ########## all views ##########
 def data_get(request):
+    #banners
     banners = BannerSerializers(Banner.objects.all(), many=True)
     for b in banners.data:
-        bannerImg = BannerImgSerializers(BannerImg.objects.get(id=b["image"]))
+        room = RoomSerializes(Room.objects.get(id=b["room"]))
+        bannerImg = RoomImgSerializers(RoomImg.objects.get(id=b["room"]))
         b["image"] = bannerImg.data
+        b["room"] = room.data
+    #rooms
+    rooms = RoomSerializes(Room.objects.all(), many=True)
     data = {
         "banner" : banners.data,
+        "rooms" : rooms.data,
     }
     return JsonResponse({"data":data})
 
@@ -82,32 +88,22 @@ def get_user(request):
 
 
 
-########## banner views ##########
-def get_banners(request):
-    banners = BannerSerializers(Banner.objects.all(), many=True)
-    for b in banners.data:
-        bannerImg = BannerImgSerializers(BannerImg.objects.get(id=b["image"]))
-        b["image"] = bannerImg.data
-    return JsonResponse({"data":banners.data})
-
+########## rooms views ##########
+@api_view(['POST'])
+def create_roomImg(request):
+    roomimg = RoomImgSerializers(data=request.data)
+    if roomimg.is_valid():
+        roomimg.save()
+        return JsonResponse({"status": "success", "message": "room created successfully", "data":roomimg.data})
+    else:
+        return JsonResponse({"status": "error", "message": roomimg.errors})
 
 @api_view(['POST'])
-def create_bannerImg(request):
-    banner_image = BannerImgSerializers(data=request.data)
-    if banner_image.is_valid():
-        banner_image.save()
-        return JsonResponse({"status":"success", "message":"banner image create"})
+def create_room(request):
+    room = RoomSerializes(data=request.data)
+    if room.is_valid():
+        # image = UserImgSerializers(UserImg.objects.latest('id'))
+        room.save()
+        return JsonResponse({"status": "success", "message": "Room created successfully", "data":room.data})
     else:
-        return JsonResponse({"status": "error", "message":"there is an error" , "data":banner_image.errors})
-    
-
-@api_view(['POST'])
-def create_banner(request):
-    serializer = BannerSerializers(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        image = BannerImgSerializers(BannerImg.objects.latest('id'))
-        return JsonResponse({"status":"success", "message": "banner created successfully", "data":image.data})
-    else:
-        return JsonResponse({"status":"error", "message": serializer.errors})
-    
+        return JsonResponse({"status": "error", "message": room.errors})

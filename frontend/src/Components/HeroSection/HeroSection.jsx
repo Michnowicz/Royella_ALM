@@ -11,7 +11,7 @@ import { BiPhoneCall } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-const HeroSection = ({banners, setBanners}) => {
+const HeroSection = ({banners}) => {
 
   useEffect(()=>{
     console.log(banners);
@@ -48,10 +48,10 @@ const HeroSection = ({banners, setBanners}) => {
               >
                 <div className="font-Garamond 2xl:w-[720px] text-center">
                   <div className="flex space-x-2 items-center justify-center mb-5 lg:mb-6">
-                    {[...Array(b.rating)].map((x, i) =>
+                    {[...Array(b.room.rating)].map((x, i) =>
                       <FaStar className="w-[14px] h-[14px] lg:w-[16px] lg:h-[16px] text-khaki" key={i}/>
                     )}
-                    {[...Array(5-b.rating)].map((x, i) =>
+                    {[...Array(5-b.room.rating)].map((x, i) =>
                       <FaStar className="w-[14px] h-[14px] lg:w-[16px] lg:h-[16px] text-black" key={i}/>
                     )}
                   </div>
@@ -77,7 +77,7 @@ const HeroSection = ({banners, setBanners}) => {
                 </div>
                 {/* contact info */}
                 <div className="w-[221px] h-[50px] border-white border hidden md:flex items-center justify-center absolute left-0 top-1/2 -rotate-90">
-                  <BiPhoneCall className="w-5 h-5 mr-2 text-khaki" /> +{b.phone_number.slice(0,3)} {b.phone_number.slice(3,6)} {b.phone_number.slice(6,10)} {b.phone_number.slice(10,13)}
+                  <BiPhoneCall className="w-5 h-5 mr-2 text-khaki" /> +{b.room.phone_number.slice(0,3)} {b.room.phone_number.slice(3,6)} {b.room.phone_number.slice(6,10)} {b.room.phone_number.slice(10,13)}
                 </div>
               </div>
             </SwiperSlide>

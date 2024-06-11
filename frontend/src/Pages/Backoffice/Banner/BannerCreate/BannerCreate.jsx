@@ -25,7 +25,7 @@ const BannerCreate = () => {
         e.preventDefault()
         const response= axios.post("http://127.0.0.1:8000/api/bannerimg/create", formImage)
         .then(response=>{
-            console.log(response);
+            // console.log(response);
         })
     }
 
@@ -39,12 +39,12 @@ const BannerCreate = () => {
         }
     }
 
-    useEffect(()=>{
-        console.log(banner);
-    },[banner])
-    useEffect(()=>{
-        console.log(bannerImage);
-    },[bannerImage])
+    // useEffect(()=>{
+    //     console.log(banner);
+    // },[banner])
+    // useEffect(()=>{
+    //     console.log(bannerImage);
+    // },[bannerImage])
 
     return (
         <div className="Container bg-whiteSmoke dark:bg-normalBlack px-7 md:px-10 lg:px-14 2xl:px-20 py-10 md:py-14 lg:py-18 xl:py-20 2xl:py-[100px]">

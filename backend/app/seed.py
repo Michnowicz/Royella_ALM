@@ -53,13 +53,42 @@ def run_users():
 
 
 
+def run_Room():
+    names = ["Double Suite Rooms", "Delux Family Rooms", "Superior Bed Rooms", "Junior Suite Room", "Family Suite Room", "Beautiful family Room"]
+    subtitles = ["Luxury Room", "Luxury Room", "Luxury Room", "Luxury Room", "Luxury Room", "Luxury Room"]
+    beds = [2, 3, 1, 2, 3, 2]
+    spaces = [1500, 1300, 1400, 1700, 1100, 1400]
+    ratings = [5, 3, 5, 4, 2]
+    prices = [450, 650, 300, 400, 500, 450]
+    reduction = [0, 0, 0, 0, 0, 0]
+    disponibilities = [1, 1, 1, 1, 0, 1]
+    phones = ["0423652294035", "2550747707271", "6469348627791", "3114818024128","2523882645528", "2783875866499"]
+    
+    seeder=Seed.seeder()
+    for i in range(6):
+        seeder.add_entity(Room, 1, {
+            "name": lambda x: names[i-1],
+            "subtitle": lambda x: subtitles[i-1],
+            "bed_number": lambda x: beds[i-1],
+            "space": lambda x: spaces[i-1],
+            "rating": lambda x: ratings[i-1],
+            "price": lambda x: prices[i-1],
+            "percentage_reduction": lambda x: reduction[i-1],
+            "disponibility": lambda x: disponibilities[i-1],
+            "phone_number": lambda x: phones[i-1]
+        })
+        pks = seeder.execute()
+        print(pks)
 
-def run_bannerImg():
+
+
+def run_RoomImg():
     images = ["banner1.jpg", "banner2.jpg", "banner3.jpg", "banner4.jpg"]
     seeder=Seed.seeder()
     for i in range(4):
-        seeder.add_entity(BannerImg, 1, {
-            "image": lambda x : images[i]
+        seeder.add_entity(RoomImg, 1, {
+            "image": lambda x : images[i],
+            "room": lambda x: Room.objects.get(id=i+1),
         })
         pks = seeder.execute()
         print(pks)
@@ -71,8 +100,6 @@ def run_banner():
     titles = ["LUXURY HOTEL AND RESORT", "LUXURY HOTEL", "LUXURY RESORT", "ROYELLA CITY HOTEL"]
     subtitles = ["THE BEST LUXURY HOTEL", "THE BEST LUXURY HOTEL", "THE BEST LUXURY HOTEL", "THE BEST LUXURY HOTEL"]
     subtitles_bottom = ["IN CALIFORNIA", "IN KASHMIR", "IN COLOSSEUM", "IN SRILANKA"]
-    ratings = [3, 4, 5, 4]
-    phone_numbers = ["0423652294035", "2550747707271", "6469348627791", "3114818024128"]
 
     seeder=Seed.seeder()
     for i in range(4):
@@ -80,9 +107,7 @@ def run_banner():
             "title" : lambda x : titles[i],
             "subtitle" : lambda x : subtitles[i],
             "subtitle_bottom" : lambda x : subtitles_bottom[i],
-            "rating" : lambda x : ratings[i],
-            "phone_number" : lambda x : phone_numbers[i],
-            "image" : lambda x : BannerImg.objects.get(id=i+1),
+            "room": lambda x: Room.objects.get(id=i+1)
         })
         pks = seeder.execute()
         print(pks)

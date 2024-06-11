@@ -27,11 +27,9 @@ class Testimony(models.Model):
 
 
 ########## rooms models ##########
-class RoomImg(models.Model):
-    image = models.ImageField(upload_to="room/")
-
 class Room(models.Model):
     name = models.CharField(max_length=32)
+    subtitle = models.CharField(max_length=32)
     bed_number = models.IntegerField()
     space = models.IntegerField()
     rating = models.IntegerField(default=0, validators=[
@@ -44,26 +42,22 @@ class Room(models.Model):
         MaxValueValidator(1)
     ])
     disponibility = models.BooleanField(default=True)
-    image = models.ForeignKey(RoomImg, null=True, on_delete=models.SET_NULL)
+    phone_number = models.CharField(max_length=24, validators=[RegexValidator('\d', message="The phone number must be a number.")])
+
+class RoomImg(models.Model):
+    image = models.ImageField(upload_to="room/")
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
 
 
 
 
 
 ########## banner models ##########
-class BannerImg(models.Model):
-    image = models.ImageField(upload_to="banner/")
-
 class Banner(models.Model):
     title = models.CharField(max_length=32)
     subtitle = models.CharField(max_length=24)
     subtitle_bottom = models.CharField(max_length=24, default="")
-    rating = models.IntegerField(default=0, validators=[
-        MinValueValidator(0),
-        MaxValueValidator(5)
-    ])
-    phone_number = models.CharField(max_length=24, validators=[RegexValidator('\d', message="The phone number must be a number.")])
-    image = models.ForeignKey(BannerImg, on_delete=models.SET_NULL, null=True)
+    room = models.ForeignKey(Room, on_delete=models.SET_NULL, null=True)
 
 
 

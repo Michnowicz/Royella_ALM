@@ -24,6 +24,7 @@ import ErrorPage from "../Shared/ErrorPage/ErrorPage";
 // Custom pages
 import Backoffice from "../Pages/Backoffice/Backoffice";
 import Banner from "../Pages/Backoffice/Banner/Banner";
+import Rooms from "../Pages/Backoffice/Rooms/Rooms.jsx";
 
 // Starting React Router.
 const router = createBrowserRouter([
@@ -91,7 +92,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/backoffice/banner",
-        element: <Banner/>,
+        element: <Banner />,
+      },
+      {
+        path: "/backoffice/rooms",
+        element: <Rooms />,
       },
     ],
   },

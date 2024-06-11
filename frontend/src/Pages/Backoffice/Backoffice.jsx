@@ -34,17 +34,17 @@ const Backoffice = () => {
   //     })
   // }
 
-  const [banners, setBanners] = useState(null)
+  const [data, setData] = useState(null)
 
   useEffect(()=>{
-    if (banners == null) {
-      fetchBanners()
+    if (data == null) {
+      fetchData()
     }
-  },[banners])
-  const fetchBanners = async () => {
+  },[data])
+  const fetchData = async () => {
       const response = await axios.get("http://127.0.0.1:8000/api/all/get")
-      // console.log(response.data.data.banner);
-      setBanners(response.data.data.banner)
+      // console.log(response.data.data.rooms);
+      setData(response.data.data)
   }
 
   return (
@@ -55,8 +55,8 @@ const Backoffice = () => {
       <NavbarBackoffice/>
       <div>
         {
-          banners ?
-          <Outlet context={[banners, setBanners]}/>
+          data  ?
+          <Outlet context={[data]}/>
           :
           ""
         }

@@ -14,18 +14,18 @@ import { useOutletContext } from "react-router-dom";
 
 const Banner = () => {
 
-    const [banners] = useOutletContext();
-    useEffect(()=>{
-        console.log(banners);
-    },[banners])
-
+    const [data] = useOutletContext();
     
+    useEffect(()=>{
+        // console.log(data);
+    },[data])
+
+
 
     return (
         <div className="Banner min-h-screen dark:bg-lightBlack dark:bg-lightBlack">
             <div className=" py-20 2xl:py-[120px] w-full bg-no-repeat bg-top bg-opacity-[0.07]">
-                
-                {
+                {/* {
                     banners.length != 0 ?
                     <>
                         <BannerCreate/>
@@ -37,7 +37,7 @@ const Banner = () => {
                     </>
                     :
                     <p>loading</p>
-                }
+                } */}
             </div>
         </div>
     );

@@ -129,7 +129,7 @@ const NavbarBackoffice = () => {
                   <div className=" px-5 group hover:bg-khaki hover:text-white">
                     <li className="hover:ml-3 duration-300  ">
                       <NavLink to="/backoffice/banner" className="py-2 block">
-                        Banner
+                        Create Banner
                       </NavLink>
                     </li>
                   </div>
@@ -143,149 +143,11 @@ const NavbarBackoffice = () => {
                   : isActive
                   ? "active"
                   : ""} text-lightBlack  dark:text-white hover:text-khaki dark:hover:text-khaki  lg:border-b-0 px-3 py-2 w-full block transition-all duration-300`}
-              to="/home4/about"
+              to="/backoffice/rooms"
             >
-              About
+              ROOMS
             </NavLink>
-            <NavLink
-              className={`${({ isActive, isPending }) =>
-                isPending
-                  ? "pending"
-                  : isActive
-                  ? "active"
-                  : ""} text-lightBlack  dark:text-white hover:text-khaki dark:hover:text-khaki  lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 group relative `}
-              to="#"
-            >
-              <span className="flex items-center">
-                Rooms
-                <BiChevronDown className="ml-1" />
-              </span>
-              <div className="absolute pt-5 lg:pt-8 z-20">
-                <ul className="shadow-2xl hidden group-hover:block rounded-sm bg-white text-black w-[200px] text-left dark:bg-normalBlack dark:text-white transition-all duration-500 text-sm py-4 ">
-                  <div className=" px-5 group hover:bg-khaki hover:text-white">
-                    <li className="hover:ml-3 duration-300  ">
-                      <NavLink to="/home4/room" className="block py-2">
-                        Room
-                      </NavLink>
-                    </li>
-                  </div>
-                  <div className=" px-5 group hover:bg-khaki hover:text-white">
-                    <li className="hover:ml-3 duration-300  ">
-                      <NavLink to="/home4/find_room" className="block py-2">
-                        Find Room
-                      </NavLink>
-                    </li>
-                  </div>
-                  <div className=" px-5 group hover:bg-khaki hover:text-white">
-                    <li className="hover:ml-3 duration-300  ">
-                      <NavLink to="/home4/room_details" className="block py-2">
-                        Room Details
-                      </NavLink>
-                    </li>
-                  </div>
-                </ul>
-              </div>
-            </NavLink>
-            <NavLink
-              className={`${({ isActive, isPending }) =>
-                isPending
-                  ? "pending"
-                  : isActive
-                  ? "active"
-                  : ""} text-lightBlack  dark:text-white hover:text-khaki dark:hover:text-khaki  lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 group relative `}
-              to="#"
-            >
-              <span className="flex items-center">
-                Page
-                <BiChevronDown className="ml-1" />
-              </span>
-              <div className="absolute pt-5 lg:pt-8 z-20">
-                <ul className="shadow-2xl hidden group-hover:block rounded-sm bg-white text-black w-[200px] text-left dark:bg-normalBlack dark:text-white transition-all duration-500 text-sm py-4 ">
-                  <div className=" px-5 group hover:bg-khaki hover:text-white">
-                    <li className="hover:ml-3 duration-300  ">
-                      <NavLink to="/home4/about" className="py-2 block">
-                        ABOUT US
-                      </NavLink>
-                    </li>
-                  </div>
-                  <div className=" px-5 group hover:bg-khaki hover:text-white">
-                    <li className="hover:ml-3 duration-300  ">
-                      <NavLink to="/home4/services" className="py-2 block">
-                        SERVICE
-                      </NavLink>
-                    </li>
-                  </div>
-                  <div className=" px-5 group hover:bg-khaki hover:text-white">
-                    <li className="hover:ml-3 duration-300  ">
-                      <NavLink
-                        to="/home4/service_details"
-                        className="py-2 block"
-                      >
-                        SERVICE DETAILS
-                      </NavLink>
-                    </li>
-                  </div>
-                  <div className=" px-5 group hover:bg-khaki hover:text-white">
-                    <li className="hover:ml-3 duration-300  ">
-                      <NavLink to="/home4/our_team" className="py-2 block">
-                        OUR TEAM
-                      </NavLink>
-                    </li>
-                  </div>
-                  <div className=" px-5 group hover:bg-khaki hover:text-white">
-                    <li className="hover:ml-3 duration-300  ">
-                      <NavLink to="/home4/pricing" className="py-2 block">
-                        PRICING
-                      </NavLink>
-                    </li>
-                  </div>
-                </ul>
-              </div>
-            </NavLink>
-            {/* blog sub menu link */}
-            <NavLink
-              className={`${({ isActive, isPending }) =>
-                isPending
-                  ? "pending"
-                  : isActive
-                  ? "active"
-                  : ""} text-lightBlack  dark:text-white hover:text-khaki dark:hover:text-khaki  lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 group relative `}
-              to="#"
-            >
-              <span className="flex items-center">
-                BLOG
-                <BiChevronDown className="ml-1" />
-              </span>
-              <div className="absolute pt-4 lg:pt-8 z-20">
-                <ul className="shadow-2xl hidden group-hover:block rounded-sm bg-white text-black w-60 text-left dark:bg-normalBlack dark:text-white transition-all duration-500 text-sm  py-4">
-                  <div className=" px-5 group hover:bg-khaki hover:text-white">
-                    <li className="hover:ml-3 duration-300 ">
-                      <NavLink to="/home4/blog" className="py-2 block">
-                        BLOG
-                      </NavLink>
-                    </li>
-                  </div>
-                  <div className=" px-5 group hover:bg-khaki hover:text-white">
-                    <li className="hover:ml-3 duration-300 ">
-                      <NavLink to="/home4/blog_details" className="py-2 block">
-                        BLOG DETAILS
-                      </NavLink>
-                    </li>
-                  </div>
-                </ul>
-              </div>
-            </NavLink>
-            <NavLink
-              className={`${({ isActive, isPending }) =>
-                isPending
-                  ? "pending"
-                  : isActive
-                  ? "active"
-                  : ""} text-lightBlack  dark:text-white hover:text-khaki dark:hover:text-khaki lg:border-b-0 px-3 py-2 w-full block transition-all duration-300`}
-              to="/home4/contact"
-            >
-              Contact
-            </NavLink>
+            
             {/* large device visible button and search icon */}
 
             <div className="hidden lg:flex items-center ml-5">

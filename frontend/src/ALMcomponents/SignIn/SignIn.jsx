@@ -31,13 +31,6 @@ export default function SignIn({signIn, setSignIn}) {
         setImage(e.target.files[0])
     }
 
-    // useEffect(()=>{
-    //     console.log(user);
-    // },[user])
-    // useEffect(()=>{
-    //     console.log(image);
-    // },[image])
-
     // handle log in submit
     const submitLogIn = async (e) => {
         e.preventDefault()
