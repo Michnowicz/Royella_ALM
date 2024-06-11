@@ -42,7 +42,7 @@ const RoomCreate = () => {
 
             axios.post("http://127.0.0.1:8000/api/rooms/create", formRoom)
             .then(response=>{
-                console.log(response.data);
+                // console.log(response.data);
                 setStatus(response.data.status)
                 setRoomID(response.data.data.id)
             })
@@ -50,17 +50,17 @@ const RoomCreate = () => {
     }
 
     useEffect(()=> {
-        console.log(status);
-        console.log(roomID);
+        // console.log(status);
+        // console.log(roomID);
         if (status === "success") {
             const formRoomImg = new FormData()
             formRoomImg.append('image', roomImage)
             formRoomImg.append('room', parseInt(roomID))
-            console.log(formRoomImg);
+            // console.log(formRoomImg);
             
             axios.post("http://127.0.0.1:8000/api/roomsimg/create", formRoomImg)
             .then(response=>{
-                console.log(response.data);
+                // console.log(response.data);
             })
         }
     },[status])
@@ -77,16 +77,16 @@ const RoomCreate = () => {
         }
     }
 
-    useEffect(()=>{
-        if (room != null) {
-            console.log(room);
-        }
-    },[room])
-    useEffect(()=>{
-        if (roomImage != null) {
-            console.log(roomImage);
-        }
-    },[roomImage])
+    // useEffect(()=>{
+    //     if (room != null) {
+    //         console.log(room);
+    //     }
+    // },[room])
+    // useEffect(()=>{
+    //     if (roomImage != null) {
+    //         console.log(roomImage);
+    //     }
+    // },[roomImage])
 
     return (
         <div className="Container bg-whiteSmoke dark:bg-normalBlack px-7 md:px-10 lg:px-14 2xl:px-20 py-10 md:py-14 lg:py-18 xl:py-20 2xl:py-[100px]">

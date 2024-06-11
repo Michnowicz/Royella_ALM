@@ -43,7 +43,7 @@ const Backoffice = () => {
   },[data])
   const fetchData = async () => {
       const response = await axios.get("http://127.0.0.1:8000/api/all/get")
-      // console.log(response.data.data.rooms);
+      // console.log(response.data.data);
       setData(response.data.data)
   }
 

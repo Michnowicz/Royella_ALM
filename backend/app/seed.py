@@ -83,9 +83,9 @@ def run_Room():
 
 
 def run_RoomImg():
-    images = ["banner1.jpg", "banner2.jpg", "banner3.jpg", "banner4.jpg"]
+    images = ["banner1.jpg", "banner2.jpg", "banner3.jpg", "banner4.jpg", "banner5.jpg", "banner6.jpg"]
     seeder=Seed.seeder()
-    for i in range(4):
+    for i in range(6):
         seeder.add_entity(RoomImg, 1, {
             "image": lambda x : images[i],
             "room": lambda x: Room.objects.get(id=i+1),

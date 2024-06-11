@@ -19,11 +19,24 @@ def data_get(request):
     banners = BannerSerializers(Banner.objects.all(), many=True)
     for b in banners.data:
         room = RoomSerializes(Room.objects.get(id=b["room"]))
-        bannerImg = RoomImgSerializers(RoomImg.objects.get(id=b["room"]))
+        bannerImg = RoomImgSerializers(RoomImg.objects.get(room=b["room"]))
         b["image"] = bannerImg.data
         b["room"] = room.data
+
     #rooms
     rooms = RoomSerializes(Room.objects.all(), many=True)
+    for r in rooms.data:
+        id = r["id"]
+        try :
+            banner = BannerSerializers(Banner.objects.get(room=id))
+            r["banner"] = banner.data
+            roomImage = RoomImgSerializers(RoomImg.objects.get(room=id))
+            r["image"] = roomImage.data
+        except Banner.DoesNotExist:
+            r["banner"] = None
+            r["image"] = None
+        
+
     data = {
         "banner" : banners.data,
         "rooms" : rooms.data,

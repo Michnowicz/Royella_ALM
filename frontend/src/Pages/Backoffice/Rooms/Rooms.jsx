@@ -7,6 +7,7 @@ import "./style.css";
 // import required modules
 import { useEffect, useState } from "react";
 import RoomCreate from "./RoomCreate/RoomCreate.jsx"
+import RoomModify from "./RoomsModify/RoomsModify.jsx";
 import { useOutletContext } from "react-router-dom";
 
 
@@ -33,6 +34,14 @@ const Rooms = () => {
                 {
                     rooms != null && rooms.length > 0 ?
                     <RoomCreate/>
+                    :
+                    ""
+                }
+            </div>
+            <div className=" w-full bg-no-repeat bg-top bg-opacity-[0.07]">
+                {
+                    rooms != null && rooms.length > 0 ?
+                    <RoomModify rooms={rooms}/>
                     :
                     ""
                 }
