@@ -51,15 +51,15 @@ const Log = () => {
       }})
       .then(response => {
           setUser(response.data.user)
-          console.log(response.data);
+          // console.log(response.data);
       })
   }
 
 
-  useEffect(()=>{
-    console.log(signIn);
-    console.log(logIn);
-  },[signIn, logIn])
+  // useEffect(()=>{
+  //   console.log(signIn);
+  //   console.log(logIn);
+  // },[signIn, logIn])
 
 
   return(

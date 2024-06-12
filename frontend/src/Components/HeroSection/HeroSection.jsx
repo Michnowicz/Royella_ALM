@@ -13,9 +13,9 @@ import { useEffect, useState } from "react";
 
 const HeroSection = ({banners}) => {
 
-  useEffect(()=>{
-    console.log(banners);
-  },[banners])
+  // useEffect(()=>{
+  //   console.log(banners);
+  // },[banners])
 
   return (
     <div className="">

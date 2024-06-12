@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 import "../../Components4/Testimonial/testimonials.css";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
 
 // import required modules
 
-const Rooms = () => {
+const Rooms = ({rooms}) => {
   const [open, setOpen] = useState(false);
   const [guestOpen, setGuestOpen] = useState(false);
   const [room, setRoom] = useState(1);
@@ -39,6 +39,48 @@ const Rooms = () => {
       // setLoaded(true);
     },
   });
+
+
+
+  // random room selection
+  const [randomRoom, setRandomRoom] = useState([])
+
+  const randomNum = (min, max) => {
+    return Math.floor(Math.random()
+        * (max - min + 1)) + min;
+  };
+
+  useEffect(()=>{
+    if (rooms != null && rooms.length != 0) {
+      let flag = true
+      const random = []
+      while (random.length < 3) {
+        flag = true
+        const randomID = randomNum(0, rooms.length-1)
+        if (random.length == 0) {
+          random.push(rooms[randomID])
+        } else {
+          for (let i = 0; i < random.length; i++) {
+            if (random[i].id == randomID) {
+              flag = false
+            }
+          }
+          if (flag == true) {
+            random.push(rooms[randomID-1])
+          }
+        }
+      }
+      setRandomRoom(random)
+    }
+  },[rooms])
+
+
+
+  useEffect(()=>{
+    console.log(randomRoom);
+  },[randomRoom])
+
+
 
   return (
     <div className="bg-whiteSmoke dark:bg-lightBlack">
@@ -223,246 +265,99 @@ const Rooms = () => {
 
           <div className="relative">
             <div className="mt-14 2xl:mt-[60px] keen-slider " ref={sliderRef}>
-              {/* slide - 1 */}
-              <div className="keen-slider__slide number-slide1 ">
-                <div data-aos="fade-up-left" data-aos-duration="1000">
-                  <div className="overflow-x-hidden 3xl:w-[410px] group relative">
-                    <div className="relative">
-                      <div className="overflow-hidden">
-                        <img
-                          src="/images/home-1/room-1.jpg "
-                          className="w-full h-full object-cover group-hover:scale-110 transition-all duration-300"
-                          alt=""
-                        />
-                      </div>
-                      <div className="">
-                        <Link to={"/room_details"}>
-                          <button className="flex items-center justify-center text-[15px] leading-[38px] bg-lightBlack absolute bottom-0 -left-40 px-5 text-white  group-hover:left-0 transition-all duration-300 hover:bg-khaki">
-                            View Details{" "}
-                            <BsArrowRight className="w-4 h-4 ml-2  text-white" />{" "}
-                          </button>
-                        </Link>
-                      </div>
-                    </div>
-                    <div className="font-Garamond">
-                      <div className="px-5 3xl:px-6 py-2 inline-flex bg-khaki text-sm  items-center justify-center text-white  absolute top-[10px] right-[10px] font-Lora font-normal leading-[26px]">
-                        <span className="">$560</span>
-                        <span className="mx-2">|</span>
-                        <span>Night</span>
-                      </div>
 
-                      <div className=" border-[1px] border-[#e8e8e8] dark:border-[#424242] border-t-0">
-                        <div className="py-6 px-[30px]">
-                          <h4 className="text-sm leading-[26px] text-khaki uppercase font-semibold">
-                            Luxury Room
-                          </h4>
-                          <Link to="/room">
-                            <h2 className="text-2xl lg:text-[28px] leading-[26px] font-semibold text-lightBlack dark:text-white py-4">
-                              Double Suite Rooms
-                            </h2>
-                          </Link>
-                          <p className="text-sm font-normal text-gray  dark:text-lightGray font-Lora">
-                            1500 SQ.FT/Rooms
-                          </p>
-                        </div>
-                        <div className="  border-t-[1px] border-[#e8e8e8] dark:border-[#424242] py-5">
-                          <div className="px-[30px] flex items-center justify-between">
-                            <div className="">
-                              <span className="font-Lora text-base flex items-center ">
-                                <img
-                                  src="/images/home-1/room-bottom-icon.png"
+              
+              {/* slide */}
+              { randomRoom.length != 0 && randomRoom ?
+                randomRoom.map((r,i) => (
+                  <div className="keen-slider__slide number-slide1 w-96" key={i}>
+                    <div data-aos="fade-up-left" data-aos-duration="1000">
+                      <div className="overflow-x-hidden 3xl:w-[410px] group relative">
+                          <div className="relative">
+                          <div className="overflow-hidden">
+                              {
+                                  r.image != null ?
+                                  <img
+                                  src={"http://127.0.0.1:8000"+r.image.image}
+                                  className="w-[410px] h-[320px] object-cover group-hover:scale-110 transition-all duration-300"
                                   alt=""
-                                />
-                                <span className="ml-[10px] text-gray dark:text-lightGray">
-                                  2 King Bed
-                                </span>
-                              </span>
-                            </div>
-                            <span className="w-[1px] h-[25px] bg-[#ddd] dark:bg-gray"></span>
-                            <ul className="flex items-center text-khaki space-x-[5px]">
-                              <li>
-                                <FaStar />
-                              </li>
-                              <li>
-                                <FaStar />
-                              </li>
-                              <li>
-                                <FaStar />
-                              </li>
-                              <li>
-                                <FaStar />
-                              </li>
-                              <li>
-                                <FaStar />
-                              </li>
-                            </ul>
+                                  />
+                                  :
+                                  <img
+                                      src="/images/home-1/room-1.jpg"
+                                      alt="room_section_logo"
+                                      className="w-[410px] h-[320px]"
+                                  />
+                              }
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* slide - 2 */}
-              <div className="keen-slider__slide number-slide1 ">
-                <div data-aos="fade-up" data-aos-duration="1000">
-                  <div className=" 3xl:w-[410px] group relative">
-                    <div className="relative">
-                      <div className="overflow-hidden">
-                        <img
-                          src="/images/home-1/room-2.jpg "
-                          className="w-full h-full object-cover group-hover:scale-110 transition-all duration-300"
-                          alt=""
-                        />
-                      </div>
-                      <div className="">
-                        <Link to={"/room_details"}>
-                          <button className="flex items-center justify-center text-[15px] leading-[38px] bg-lightBlack absolute bottom-0 -left-40 px-5 text-white  group-hover:left-0 transition-all duration-300 hover:bg-khaki">
-                            View Details{" "}
-                            <BsArrowRight className="w-4 h-4 ml-2  text-white" />{" "}
-                          </button>
-                        </Link>
-                      </div>
-                    </div>
-                    <div className="font-Garamond">
-                      <div className="px-5 3xl:px-6 py-2 inline-flex bg-khaki text-sm  items-center justify-center font-Lora font-normal leading-[26px] text-white  absolute top-[10px] right-[10px] ">
-                        <span className="">$560</span>
-                        <span className="mx-2">|</span>
-                        <span>Night</span>
-                      </div>
+                          <div className="">
+                              <Link to={`/backoffice/rooms/${r.id}`}>
+                              <button className="flex items-center justify-center text-[15px] leading-[38px] bg-lightBlack absolute bottom-0 -left-40 px-5 text-white  group-hover:left-0 transition-all duration-300 hover:bg-khaki">
+                                  Modify{" "}
+                                  <BsArrowRight className="w-4 h-4 ml-2  text-white" />{" "}
+                              </button>
+                              </Link>
+                          </div>
+                          </div>
+                          <div className="font-Garamond">
+                          <div className="px-5 3xl:px-6 py-2 inline-flex bg-khaki text-sm  items-center justify-center text-white  absolute top-[10px] right-[10px] font-Lora font-normal leading-[26px]">
+                              <span className="">${r.price}</span>
+                              <span className="mx-2">|</span>
+                              <span>Night</span>
+                          </div>
 
-                      <div className=" border-[1px] border-[#e8e8e8] dark:border-[#424242] border-t-0">
-                        <div className="py-6 px-[30px]">
-                          <h4 className="text-sm leading-[26px] text-khaki uppercase font-semibold">
-                            Luxury Room
-                          </h4>
-                          <Link to="/room">
-                            <h2 className="text-2xl lg:text-[28px] leading-[26px] font-semibold text-lightBlack dark:text-white py-4">
-                              Delux Family Rooms
-                            </h2>
-                          </Link>
-                          <p className="text-sm font-normal text-gray  dark:text-lightGray font-Lora">
-                            1500 SQ.FT/Rooms
-                          </p>
-                        </div>
-                        <div className="  border-t-[1px] border-[#e8e8e8] dark:border-[#424242] py-5">
-                          <div className="px-[30px] flex items-center justify-between">
-                            <div className="">
-                              <span className="font-Lora text-base flex items-center ">
-                                <img
-                                  src="/images/home-1/room-bottom-icon.png"
-                                  alt=""
-                                />
-                                <span className="ml-[10px] text-gray dark:text-lightGray">
-                                  2 King Bed
-                                </span>
-                              </span>
-                            </div>
-                            <span className="w-[1px] h-[25px] bg-[#ddd] dark:bg-gray"></span>
-                            <ul className="flex items-center text-khaki space-x-[5px]">
-                              <li>
-                                <FaStar />
-                              </li>
-                              <li>
-                                <FaStar />
-                              </li>
-                              <li>
-                                <FaStar />
-                              </li>
-                              <li>
-                                <FaStar />
-                              </li>
-                              <li>
-                                <FaStar />
-                              </li>
-                            </ul>
+                          <div className=" border-[1px] border-[#e8e8e8] dark:border-[#424242] border-t-0">
+                              <div className="py-6 px-[30px]">
+                              <h4 className="text-sm leading-[26px] text-khaki uppercase font-semibold">
+                                  {r.subtitle}
+                              </h4>
+                              <Link to="/room">
+                                  <h2 className="text-2xl lg:text-[28px] leading-[26px] font-semibold text-lightBlack dark:text-white py-4">
+                                  {r.name}
+                                  </h2>
+                              </Link>
+                              <p className="text-sm font-normal text-gray  dark:text-lightGray font-Lora">
+                                  {r.space} SQ.FT/Rooms
+                              </p>
+                              </div>
+                              <div className="  border-t-[1px] border-[#e8e8e8] dark:border-[#424242] py-5">
+                              <div className="px-[30px] flex items-center justify-between">
+                                  <div className="">
+                                  <span className="font-Lora text-base flex items-center ">
+                                      <img
+                                      src="/images/home-1/room-bottom-icon.png"
+                                      alt=""
+                                      />
+                                      <span className="ml-[10px] text-gray dark:text-lightGray">
+                                      {r.bed_number} King Bed
+                                      </span>
+                                  </span>
+                                  </div>
+                                  <span className="w-[1px] h-[25px] bg-[#ddd] dark:bg-gray"></span>
+                                  <ul className="flex items-center text-black space-x-[5px]">
+                                  {[...Array(r.rating)].map((x, i) =>
+                                      <li>
+                                          <FaStar className="w-[14px] h-[14px] lg:w-[16px] lg:h-[16px] text-khaki" key={i}/>
+                                      </li>
+                                  )}
+                                  {[...Array(5-r.rating)].map((x, i) =>
+                                      <li>
+                                          <FaStar className="w-[14px] h-[14px] lg:w-[16px] lg:h-[16px] text-black" key={i}/>
+                                      </li>
+                                  )}
+                                  </ul>
+                              </div>
+                              </div>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* slide - 3 */}
-              <div className="keen-slider__slide number-slide1 ">
-                <div data-aos="fade-up-right" data-aos-duration="1000">
-                  <div className=" 3xl:w-[410px] group relative">
-                    <div className="relative">
-                      <div className="overflow-hidden">
-                        <img
-                          src="/images/home-1/room-3.jpg "
-                          className="w-full h-full object-cover group-hover:scale-110 transition-all duration-300"
-                          alt=""
-                        />
-                      </div>
-                      <div className="">
-                        <Link to={"/room_details"}>
-                          <button className="flex items-center justify-center text-[15px] leading-[38px] bg-lightBlack absolute bottom-0 -left-40 px-5 text-white  group-hover:left-0 transition-all duration-300 hover:bg-khaki">
-                            View Details{" "}
-                            <BsArrowRight className="w-4 h-4 ml-2  text-white" />{" "}
-                          </button>
-                        </Link>
-                      </div>
-                    </div>
-                    <div className="font-Garamond">
-                      <div className="px-5 3xl:px-6 py-2 inline-flex bg-khaki text-sm  items-center justify-center font-Lora font-normal leading-[26px] text-white  absolute top-[10px] right-[10px] ">
-                        <span className="">$560</span>
-                        <span className="mx-2">|</span>
-                        <span>Night</span>
-                      </div>
-
-                      <div className=" border-[1px] border-[#e8e8e8] dark:border-[#424242] border-t-0">
-                        <div className="py-6 px-[30px]">
-                          <h4 className="text-sm leading-[26px] text-khaki uppercase font-semibold">
-                            Luxury Room
-                          </h4>
-                          <Link to="/room">
-                            <h2 className="text-2xl lg:text-[28px] leading-[26px] font-semibold text-lightBlack dark:text-white py-4">
-                              Suprior Bed Rooms
-                            </h2>
-                          </Link>
-                          <p className="text-sm font-normal text-gray  dark:text-lightGray font-Lora">
-                            1500 SQ.FT/Rooms
-                          </p>
-                        </div>
-                        <div className="  border-t-[1px] border-[#e8e8e8] dark:border-[#424242] py-5">
-                          <div className="px-[30px] flex items-center justify-between">
-                            <div className="">
-                              <span className="font-Lora text-base flex items-center ">
-                                <img
-                                  src="/images/home-1/room-bottom-icon.png"
-                                  alt=""
-                                />
-                                <span className="ml-[10px] text-gray dark:text-lightGray">
-                                  2 King Bed
-                                </span>
-                              </span>
-                            </div>
-                            <span className="w-[1px] h-[25px] bg-[#ddd] dark:bg-gray"></span>
-                            <ul className="flex items-center text-khaki space-x-[5px]">
-                              <li>
-                                <FaStar />
-                              </li>
-                              <li>
-                                <FaStar />
-                              </li>
-                              <li>
-                                <FaStar />
-                              </li>
-                              <li>
-                                <FaStar />
-                              </li>
-                              <li>
-                                <FaStar />
-                              </li>
-                            </ul>
                           </div>
-                        </div>
                       </div>
                     </div>
-                  </div>
                 </div>
-              </div>
+                ))
+                :
+                ""
+              }
+              
             </div>
 
             {/* slider breckpoints */}

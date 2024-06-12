@@ -5,6 +5,10 @@
   left: 92%;
 }
 
+.test {
+  background-color: #acacac38;
+}
+
 .swiper-button-prev::after,
 .swiper-button-next:after {
   font-size: 20px;

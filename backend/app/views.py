@@ -17,6 +17,7 @@ import json
 def data_get(request):
     #banners
     banners = BannerSerializers(Banner.objects.all(), many=True)
+    
     for b in banners.data:
         room = RoomSerializes(Room.objects.get(id=b["room"]))
         bannerImg = RoomImgSerializers(RoomImg.objects.get(room=b["room"]))
