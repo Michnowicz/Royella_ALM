@@ -114,11 +114,20 @@ def create_roomImg(request):
     else:
         return JsonResponse({"status": "error", "message": roomimg.errors})
 
+@api_view(["PUT"])
+def modify_roomImg(request,id):
+    roomImg = RoomImg.objects.get(id=id)
+    serializer = RoomImgSerializers(roomImg, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return JsonResponse({"status": "success", "message": "Room modified successfully", "data":serializer.data})
+    else:
+        return JsonResponse({"status": "error", "message": serializer.errors})
+
 @api_view(['POST'])
 def create_room(request):
     room = RoomSerializes(data=request.data)
     if room.is_valid():
-        # image = UserImgSerializers(UserImg.objects.latest('id'))
         room.save()
         return JsonResponse({"status": "success", "message": "Room created successfully", "data":room.data})
     else:
@@ -133,3 +142,5 @@ def modify_room(request, id):
         return JsonResponse({"status": "success", "message": "Room modified successfully", "data":serializer.data})
     else:
         return JsonResponse({"status": "error", "message": serializer.errors})
+    
+

@@ -37,6 +37,18 @@ const RoomDetails = () => {
         .then(response=>{
             console.log(response.data);
         })
+
+        // save room image
+        if (roomImage != null) {
+            const formRoomImg = new FormData()
+            formRoomImg.append("image", roomImage)
+            formRoomImg.append("room", id)
+
+            axios.put(`http://127.0.0.1:8000/api/roomsimg/modify/${id}`, formRoomImg)
+            .then(response=>{
+                console.log(response)
+            })
+        }
     }
 
     const handleInput = (e) => {
