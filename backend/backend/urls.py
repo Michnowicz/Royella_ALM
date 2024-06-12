@@ -17,6 +17,7 @@ urlpatterns = [
     path("api/user_img/create", create_userImg),
 
     #rooms
+    path("api/rooms/<int:id>", get_room),
     path("api/rooms/create", create_room),
     path("api/roomsimg/create", create_roomImg),
 

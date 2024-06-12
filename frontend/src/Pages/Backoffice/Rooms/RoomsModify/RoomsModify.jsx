@@ -1,5 +1,5 @@
 
-import "../style.css";
+import "../style.css"
 
 
 // import required modules
@@ -12,7 +12,7 @@ import { BsArrowRight } from "react-icons/bs";
 import { FaStar } from "react-icons/fa";
 import "keen-slider/keen-slider.min.css";
 
-const RoomsModify = ({rooms}) => {
+const RoomModify = ({rooms}) => {
 
     const [chevron, setChevron] = useState(false)
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -44,7 +44,7 @@ const RoomsModify = ({rooms}) => {
                 
                 <div className="relative">
                     <div className="mt-14 2xl:mt-[60px] flex flex-wrap justify-center gap-20">
-                    {/* slide - 1 */}
+                    {/* slide */}
                     { rooms && rooms.length > 0 ?
                         rooms.map((r,i)=>(
                         <div className="keen-slider__slide number-slide1 w-96" key={i}>
@@ -68,9 +68,9 @@ const RoomsModify = ({rooms}) => {
                                     }
                                 </div>
                                 <div className="">
-                                    <Link to={"/room_details"}>
+                                    <Link to={`/backoffice/rooms/${r.id}`}>
                                     <button className="flex items-center justify-center text-[15px] leading-[38px] bg-lightBlack absolute bottom-0 -left-40 px-5 text-white  group-hover:left-0 transition-all duration-300 hover:bg-khaki">
-                                        View Details{" "}
+                                        Modify{" "}
                                         <BsArrowRight className="w-4 h-4 ml-2  text-white" />{" "}
                                     </button>
                                     </Link>
@@ -169,4 +169,4 @@ const RoomsModify = ({rooms}) => {
     );
 };
 
-export default RoomsModify;
+export default RoomModify;

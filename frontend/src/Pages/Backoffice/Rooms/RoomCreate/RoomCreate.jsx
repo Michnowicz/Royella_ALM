@@ -104,7 +104,7 @@ const RoomCreate = () => {
                 <form className="bg-lightBlack  p-[30px] lg:p-[45px] 2xl:p-[61px]" onSubmit={submitForm}>
                     <div className="flex flex-col items-center gap-10">
                         <div className="flex flex-col gap-10 w-full">
-                            <img src={preview} alt="" className="w-full h-48 flex items-center justify-center"/>
+                            <img src={preview} alt="" className="w-full h-96 flex items-center justify-center"/>
                             <input
                                 type="file"
                                 className="w-full h-12 md:h-13 lg:h-[59px] px-4 border border-gray dark:border-lightGray text-gray dark:text-lightGray outline-none  bg-transparent focus:ring-0 placeholder:text-gray focus:border-gray dark:focus:border-lightGray focus:outline-none"

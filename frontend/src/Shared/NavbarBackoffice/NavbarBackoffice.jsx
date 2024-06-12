@@ -1,11 +1,11 @@
 import { Link, NavLink } from "react-router-dom";
-// import useScrollPosition from "./useScrollPosition";
+import useScrollPosition from "./useScrollPosition";
 import { FaBars } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import { BiChevronDown, BiSun } from "react-icons/bi";
 import { IoMoonSharp } from "react-icons/io5";
 import { useEffect, useState } from "react";
-import Log from "../../ALMcomponents/Log/Log";
+
 
 const NavbarBackoffice = () => {
   // modal openar
@@ -14,6 +14,14 @@ const NavbarBackoffice = () => {
   const [isDarkMode, setIsDarkMode] = useState(
     localStorage.getItem("darkMode") === "true"
   );
+  // scrolling tracker
+  const scrollPosition = useScrollPosition();
+  // background color add and remover
+  const navbarBgColor =
+    scrollPosition > 100 ? "lg:bg-lightBlack" : "lg:bg-transparent";
+
+  const navbarTextColor =
+    scrollPosition > 100 ? "text-white dark:text-white" : "text-lightBlack dark:text-white";
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
@@ -35,7 +43,7 @@ const NavbarBackoffice = () => {
 
   return (
     <nav
-      className={` w-full lg:fixed font-Lora z-10 transition-all duration-300 bg-white dark:bg-lightBlack grid items-center `}
+    className={` w-full lg:fixed font-Lora z-10  lg:px-5 lg:py-2  transition-all duration-300 ${navbarBgColor} `}
     >
       <div className="Container3 ">
         <div className="flex flex-col lg:flex-row items-center justify-between">
@@ -117,7 +125,7 @@ const NavbarBackoffice = () => {
                   ? "pending"
                   : isActive
                   ? "active"
-                  : ""} text-lightBlack  dark:text-white hover:text-khaki dark:hover:text-khaki  lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 group relative`}
+                  : ""} ${navbarTextColor} hover:text-khaki dark:hover:text-khaki  lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 group relative`}
               to="/backoffice"
             >
               <span className="flex items-center">
@@ -142,7 +150,7 @@ const NavbarBackoffice = () => {
                   ? "pending"
                   : isActive
                   ? "active"
-                  : ""} text-lightBlack  dark:text-white hover:text-khaki dark:hover:text-khaki  lg:border-b-0 px-3 py-2 w-full block transition-all duration-300`}
+                  : ""} ${navbarTextColor} hover:text-khaki dark:hover:text-khaki  lg:border-b-0 px-3 py-2 w-full block transition-all duration-300`}
               to="/backoffice/rooms"
             >
               ROOMS
@@ -157,13 +165,13 @@ const NavbarBackoffice = () => {
               >
                 {isDarkMode ? (
                   <BiSun
-                    className="text-lightBlack dark:text-white hover:text-khaki dark:hover:text-khaki group-hover:rotate-90 rotate transition-all duration-300"
+                    className={`${navbarTextColor} dark:text-white hover:text-khaki dark:hover:text-khaki group-hover:rotate-90 rotate transition-all duration-300`}
                     title="Apply Light Mode"
                     size={35}
                   />
                 ) : (
                   <IoMoonSharp
-                    className="text-lightBlack dark:text-white hover:text-khaki dark:hover:text-khaki group-hover:rotate-[360deg] transition-all duration-300"
+                    className={`${navbarTextColor} hover:text-khaki dark:hover:text-khaki group-hover:rotate-[360deg] transition-all duration-300`}
                     title="Apply Dark Mode"
                     size={35}
                   />

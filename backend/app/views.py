@@ -26,16 +26,15 @@ def data_get(request):
     #rooms
     rooms = RoomSerializes(Room.objects.all(), many=True)
     for r in rooms.data:
-        id = r["id"]
         try :
-            banner = BannerSerializers(Banner.objects.get(room=id))
-            r["banner"] = banner.data
-            roomImage = RoomImgSerializers(RoomImg.objects.get(room=id))
-            r["image"] = roomImage.data
+            r["banner"] = BannerSerializers(Banner.objects.get(room=r["id"])).data
         except Banner.DoesNotExist:
             r["banner"] = None
+            
+        try:
+            r["image"] = RoomImgSerializers(RoomImg.objects.get(room=r["id"])).data
+        except Banner.DoesNotExist:
             r["image"] = None
-        
 
     data = {
         "banner" : banners.data,
@@ -102,6 +101,10 @@ def get_user(request):
 
 
 ########## rooms views ##########
+def get_room(request, id):
+    room = RoomImgSerializers(Room.objects.get(id=id))
+    return JsonResponse({"data":room.data})
+
 @api_view(['POST'])
 def create_roomImg(request):
     roomimg = RoomImgSerializers(data=request.data)
