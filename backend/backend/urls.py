@@ -20,6 +20,7 @@ urlpatterns = [
     path("api/rooms/<int:id>", get_room),
     path("api/rooms/create", create_room),
     path("api/roomsimg/create", create_roomImg),
+    path("api/rooms/modify/<int:id>", modify_room),
 
 
 

@@ -15,43 +15,40 @@ const RoomDetails = () => {
 
     const [room, setRoom] = useState(null)
     const [preview, setPreview] = useState(null)
+    const [roomImage, setRoomImage] = useState(null)
 
     const submitForm = (e) => {
-        // e.preventDefault()
-        // if (roomImage != null) {
-        //     const formRoom = new FormData();
-        //     formRoom.append("name", room.name)
-        //     formRoom.append("subtitle", room.subtitle)
-        //     formRoom.append("bed_number", room.bed_number)
-        //     formRoom.append("space", room.space)
-        //     formRoom.append("rating", room.rating)
-        //     formRoom.append("price", room.price)
-        //     formRoom.append("percentage_reduction", room.percentage_reduction)
-        //     if (room.disponibility == "true") {
-        //         formRoom.append("disponibility", true)
-        //     } else {
-        //         formRoom.append("disponibility", false)
-        //     }
-        //     formRoom.append("phone_number", room.phone_number)
-
-        //     axios.post("http://127.0.0.1:8000/api/rooms/create", formRoom)
-        //     .then(response=>{
-        //         // console.log(response.data);
-                
-        //     })
-        // }
+        e.preventDefault()
+        const formRoom = new FormData();
+        formRoom.append("name", room.name)
+        formRoom.append("subtitle", room.subtitle)
+        formRoom.append("bed_number", room.bed_number)
+        formRoom.append("space", room.space)
+        formRoom.append("rating", room.rating)
+        formRoom.append("price", room.price)
+        formRoom.append("percentage_reduction", room.percentage_reduction)
+        if (room.disponibility == "true") {
+            formRoom.append("disponibility", true)
+        } else {
+            formRoom.append("disponibility", false)
+        }
+        formRoom.append("phone_number", room.phone_number)
+        axios.put(`http://127.0.0.1:8000/api/rooms/modify/${id}`, formRoom)
+        .then(response=>{
+            console.log(response.data);
+        })
     }
 
     const handleInput = (e) => {
-        // const {name, value, files} = e.target
-        // if (name === 'image') {
-        //     setRoomImage(files[0])
-        //     setPreview(URL.createObjectURL(files[0]))
-        // } else if (name === "price" || name === "percentage_reduction") {
-        //     setRoom({ ...room, [name]: parseFloat(value)});
-        // } else {
-        //     setRoom({ ...room, [name]: value });
-        // }
+        const {name, value, files} = e.target
+        if (name === 'image') {
+            setRoomImage(files[0])
+            setPreview(URL.createObjectURL(files[0]))
+        } else if (name === "price" || name === "percentage_reduction") {
+            setRoom({ ...room, [name]: parseFloat(value)});
+        } else {
+            setRoom({ ...room, [name]: value });
+        }
     }
 
 
@@ -75,8 +72,12 @@ const RoomDetails = () => {
                 { room != null ?
                     <form className="bg-lightBlack  p-[30px] lg:p-[45px] 2xl:p-[61px]" onSubmit={submitForm}>
                         <div className="flex flex-col items-center gap-10">
-                            <div className="flex flex-col gap-10 w-full">
-                                <img src={preview} alt="" className="w-full h-96 flex items-center justify-center"/>
+                            <div className="flex flex-col gap-10 w-full items-center">
+                                { preview == null ?
+                                    <img src={"http://127.0.0.1:8000"+room.image.image} alt="" className="w-[960px] h-[456px] flex items-center justify-center"/>
+                                    :
+                                    <img src={preview} alt="" className="w-[960px] h-[456px] flex items-center justify-center"/>
+                                }
                                 <input
                                     type="file"
                                     className="w-full h-12 md:h-13 lg:h-[59px] px-4 border border-gray dark:border-lightGray text-gray dark:text-lightGray outline-none  bg-transparent focus:ring-0 placeholder:text-gray focus:border-gray dark:focus:border-lightGray focus:outline-none"
@@ -91,6 +92,7 @@ const RoomDetails = () => {
                                     placeholder="Name"
                                     name="name"
                                     onChange={handleInput}
+                                    value={room.name}
                                 />
                                 <input
                                     type="text"
@@ -98,6 +100,7 @@ const RoomDetails = () => {
                                     placeholder="Subtitle"
                                     name="subtitle"
                                     onChange={handleInput}
+                                    value={room.subtitle}
                                 />
                                 <input
                                     type="number"
@@ -105,6 +108,7 @@ const RoomDetails = () => {
                                     placeholder="Beds"
                                     name="bed_number"
                                     onChange={handleInput}
+                                    value={room.bed_number}
                                 />
                                 <input
                                     type="number"
@@ -112,6 +116,7 @@ const RoomDetails = () => {
                                     placeholder="Space"
                                     name="space"
                                     onChange={handleInput}
+                                    value={room.space}
                                 />
                                 <input
                                     type="number"
@@ -121,6 +126,7 @@ const RoomDetails = () => {
                                     placeholder="Rating"
                                     name="rating"
                                     onChange={handleInput}
+                                    value={room.rating}
                                 />
                                 <input
                                     type="number"
@@ -128,6 +134,7 @@ const RoomDetails = () => {
                                     placeholder="price"
                                     name="price"
                                     onChange={handleInput}
+                                    value={room.price}
                                 />
                                 <input
                                     type="number"
@@ -138,9 +145,11 @@ const RoomDetails = () => {
                                     placeholder="Reduction"
                                     name="percentage_reduction"
                                     onChange={handleInput}
+                                    value={room.percentage_reduction}
                                 />
                                     <select name="disponibility"
                                     className="h-12 md:h-13 lg:h-[59px] px-4 border border-gray dark:border-lightGray text-gray dark:text-lightGray outline-none  bg-transparent focus:ring-0 placeholder:text-gray focus:border-gray dark:focus:border-lightGray focus:outline-none w-5/12 box-border"
+                                    value={room.disponibility}
                                     onChange={handleInput}>
                                         <option value="">Disponibility</option>
                                         <option value={true}>Yes</option>
@@ -152,6 +161,7 @@ const RoomDetails = () => {
                                     placeholder="Phone number"
                                     name="phone_number"
                                     onChange={handleInput}
+                                    value={room.phone_number}
                                 />
                             </div>
                         </div>

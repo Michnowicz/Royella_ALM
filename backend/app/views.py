@@ -123,3 +123,13 @@ def create_room(request):
         return JsonResponse({"status": "success", "message": "Room created successfully", "data":room.data})
     else:
         return JsonResponse({"status": "error", "message": room.errors})
+    
+@api_view(["PUT"])
+def modify_room(request, id):
+    room = Room.objects.get(id=id)
+    serializer = RoomSerializes(room, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return JsonResponse({"status": "success", "message": "Room modified successfully", "data":serializer.data})
+    else:
+        return JsonResponse({"status": "error", "message": serializer.errors})

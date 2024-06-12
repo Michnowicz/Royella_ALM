@@ -23,6 +23,9 @@ const NavbarBackoffice = () => {
   const navbarTextColor =
     scrollPosition > 100 ? "text-white dark:text-white" : "text-lightBlack dark:text-white";
 
+  const navbarImage =
+    scrollPosition > 100 ? "/images/home-4/logo-2.png" : "/images/home-4/logo.png";
+
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
@@ -51,7 +54,7 @@ const NavbarBackoffice = () => {
           <div className=" w-48 lg:w-52 lg:p-4 hidden lg:block">
             <Link to="/">
               <img
-                src="/images/home-4/logo.png"
+                src={navbarImage}
                 className="dark:hidden"
                 alt="website_logo"
               />
@@ -68,7 +71,7 @@ const NavbarBackoffice = () => {
             <div className=" w-28  ">
               <Link to="/">
                 <img
-                  src="/images/home-4/logo.png"
+                  src={navbarImage}
                   className="dark:hidden"
                   alt="website_logo"
                 />
