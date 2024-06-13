@@ -8,11 +8,9 @@ import { useEffect, useState } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import axios from "axios"
 
-const BannerCreate = () => {
+const BannerCreate = ({roomNumber, setBanners, setRoomNumber}) => {
 
     const [chevron, setChevron] = useState(false)
-    const [bannerImage, setBannerImage] = useState(null)
-    const [preview, setPreview] = useState("")
     const [banner, setBanner] = useState(null)
 
     const chevronChange = () => {
@@ -20,31 +18,32 @@ const BannerCreate = () => {
     }
 
     const submitForm = (e) => {
-        const formImage = new FormData();
-        formImage.append("image",bannerImage);
         e.preventDefault()
-        const response= axios.post("http://127.0.0.1:8000/api/bannerimg/create", formImage)
+
+        const formBanner = new FormData();
+        formBanner.append("title",banner.title)
+        formBanner.append("subtitle",banner.subtitle)
+        formBanner.append("subtitle_bottom",banner.subtitle_bottom)
+        formBanner.append("room",banner.room)
+        
+        const response= axios.put("http://127.0.0.1:8000/api/banners/create", formBanner)
         .then(response=>{
-            // console.log(response);
+            console.log(response);
+            if (response.data.status == "success") {
+                setBanners(response.data.data)
+                setRoomNumber(response.data.data.length)
+            }
         })
     }
 
     const handleInput = (e) => {
-        const {name, value, files} = e.target
-        if (name === 'image') {
-            setBannerImage(files[0])
-            setPreview(URL.createObjectURL(files[0]))
-        } else {
-            setBanner({ ...banner, [name]: value });
-        }
+        const {name, value} = e.target
+        setBanner({ ...banner, [name]: value });
     }
 
-    // useEffect(()=>{
-    //     console.log(banner);
-    // },[banner])
-    // useEffect(()=>{
-    //     console.log(bannerImage);
-    // },[bannerImage])
+    useEffect(()=>{
+        console.log(banner);
+    },[banner])
 
     return (
         <div className="Container bg-whiteSmoke dark:bg-normalBlack px-4 md:px-7 lg:px-11 2xl:px-17 py-7 md:py-11 lg:py-15 xl:py-17 2xl:py-[100px]">
@@ -60,52 +59,37 @@ const BannerCreate = () => {
             </h2>
             { chevron === true ?
                 <form className="bg-lightBlack  p-[30px] lg:p-[45px] 2xl:p-[61px]" onSubmit={submitForm}>
-                    <div className="flex items-center gap-20 flex">
-                        <div className="w-2/4 min-w-96 flex flex-col gap-10">
-                            <img src={preview} alt="" className="w-96 h-48 flex items-center justify-center"/>
-                            <input
-                                type="file"
-                                className="w-full h-12 md:h-13 lg:h-[59px] px-4 border border-gray dark:border-lightGray text-gray dark:text-lightGray outline-none  bg-transparent focus:ring-0 placeholder:text-gray focus:border-gray dark:focus:border-lightGray focus:outline-none"
-                                name="image"
-                                onChange={handleInput}
-                            />
-                        </div>
-                        <div className="w-2/4 min-w-96">
+                    <div>
+                        <div className="flex items-center gap-10 flex-wrap justify-center">
                             <input
                                 type="text"
-                                className="w-full h-12 md:h-13 lg:h-[59px] px-4 border border-gray dark:border-lightGray text-gray dark:text-lightGray outline-none  bg-transparent focus:ring-0 placeholder:text-gray focus:border-gray dark:focus:border-lightGray focus:outline-none"
+                                className="w-1/2 h-12 md:h-13 lg:h-[59px] px-4 border border-gray dark:border-lightGray text-gray dark:text-lightGray outline-none  bg-transparent focus:ring-0 placeholder:text-gray focus:border-gray dark:focus:border-lightGray focus:outline-none"
                                 placeholder="Title"
                                 name="title"
                                 onChange={handleInput}
                             />
                             <input
                                 type="text"
-                                className="w-full h-12 md:h-13 lg:h-[59px] px-4 border border-gray dark:border-lightGray text-gray dark:text-lightGray outline-none  bg-transparent mt-4 focus:ring-0 placeholder:text-gray focus:border-gray dark:focus:border-lightGray focus:outline-none"
+                                className="w-1/2 h-12 md:h-13 lg:h-[59px] px-4 border border-gray dark:border-lightGray text-gray dark:text-lightGray outline-none  bg-transparent focus:ring-0 placeholder:text-gray focus:border-gray dark:focus:border-lightGray focus:outline-none"
                                 placeholder="Subtitle"
                                 name="subtitle"
                                 onChange={handleInput}
                             />
                             <input
                                 type="text"
-                                className="w-full h-12 md:h-13 lg:h-[59px] px-4 border border-gray dark:border-lightGray text-gray dark:text-lightGray outline-none  bg-transparent mt-4 focus:ring-0 placeholder:text-gray focus:border-gray dark:focus:border-lightGray focus:outline-none"
+                                className="w-1/2 h-12 md:h-13 lg:h-[59px] px-4 border border-gray dark:border-lightGray text-gray dark:text-lightGray outline-none  bg-transparent focus:ring-0 placeholder:text-gray focus:border-gray dark:focus:border-lightGray focus:outline-none"
                                 placeholder="Subtitle bottom"
                                 name="subtitle_bottom"
                                 onChange={handleInput}
                             />
                             <input
                                 type="number"
-                                className="w-full h-12 md:h-13 lg:h-[59px] px-4 border border-gray dark:border-lightGray text-gray dark:text-lightGray outline-none  bg-transparent mt-4 focus:ring-0 placeholder:text-gray focus:border-gray dark:focus:border-lightGray focus:outline-none"
-                                placeholder="Rating"
-                                max={5}
-                                min={0}
-                                name="rating"
-                                onChange={handleInput}
-                            />
-                            <input
-                                type="text"
-                                className="w-full h-12 md:h-13 lg:h-[59px] px-4 border border-gray dark:border-lightGray text-gray dark:text-lightGray outline-none  bg-transparent mt-4 focus:ring-0 placeholder:text-gray focus:border-gray dark:focus:border-lightGray focus:outline-none"
-                                placeholder="Phone number"
-                                name="phone_number"
+                                className="w-1/2 h-12 md:h-13 lg:h-[59px] px-4 border border-gray dark:border-lightGray text-gray dark:text-lightGray outline-none  bg-transparent focus:ring-0 placeholder:text-gray focus:border-gray dark:focus:border-lightGray focus:outline-none"
+                                placeholder="Room"
+                                max={roomNumber}
+                                min={1}
+                                step={1}
+                                name="room"
                                 onChange={handleInput}
                             />
                         </div>

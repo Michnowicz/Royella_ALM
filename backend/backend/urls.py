@@ -23,4 +23,7 @@ urlpatterns = [
     path("api/roomsimg/modify/<int:id>", modify_roomImg),
     path("api/rooms/modify/<int:id>", modify_room),
 
+    #banners
+    path("api/banners/create", create_banner),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

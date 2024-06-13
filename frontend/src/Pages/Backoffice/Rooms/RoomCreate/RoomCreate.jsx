@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import axios from "axios"
 
-const RoomCreate = () => {
+const RoomCreate = ({}) => {
 
     const [chevron, setChevron] = useState(false)
     const [roomImage, setRoomImage] = useState(null)
@@ -50,17 +50,14 @@ const RoomCreate = () => {
     }
 
     useEffect(()=> {
-        // console.log(status);
-        // console.log(roomID);
         if (status === "success") {
             const formRoomImg = new FormData()
             formRoomImg.append('image', roomImage)
             formRoomImg.append('room', parseInt(roomID))
-            // console.log(formRoomImg);
-            
+
             axios.post("http://127.0.0.1:8000/api/roomsimg/create", formRoomImg)
             .then(response=>{
-                // console.log(response.data);
+                console.log(response.data);
             })
         }
     },[status])

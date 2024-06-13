@@ -17,7 +17,7 @@ import json
 def data_get(request):
     #banners
     banners = BannerSerializers(Banner.objects.all(), many=True)
-    
+
     for b in banners.data:
         room = RoomSerializes(Room.objects.get(id=b["room"]))
         bannerImg = RoomImgSerializers(RoomImg.objects.get(room=b["room"]))
@@ -145,3 +145,16 @@ def modify_room(request, id):
         return JsonResponse({"status": "error", "message": serializer.errors})
     
 
+
+
+
+########## banner views ##########
+@api_view(["PUT"])
+def create_banner(request):
+    banner = BannerSerializers(data=request.data)
+    if banner.is_valid():
+        banner.save()
+        banners = BannerSerializers(Banner.objects.all(), many=True)
+        return JsonResponse({"status": "success", "message": "banner created successfully", "data":banners.data})
+    else:
+        return JsonResponse({"status": "error", "message": banner.errors})
