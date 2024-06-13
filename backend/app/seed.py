@@ -111,3 +111,27 @@ def run_banner():
         })
         pks = seeder.execute()
         print(pks)
+
+
+
+
+
+def run_hotelResort():
+    seeder=Seed.seeder()
+    seeder.add_entity(HotelResort, 1, {
+        "title" : lambda x : "LUXURY HOTEL AND RESORT",
+        "subtitle" : lambda x : "LUXURY BEST HOTEL IN CITY CALIFORNIA, USA",
+        "text" : lambda x : "Rapidiously myocardinate cross-platform intellectual capital after marketing model. Appropriately create interactive infrastructures after maintainable are Holisticly facilitate stand-alone inframe Compellingly create premier open data through economically.",
+    })
+    pks = seeder.execute()
+    print(pks)
+
+def run_hotelResortImg():
+    images = ["hr1.jpg", "hr2.jpg"]
+    seeder=Seed.seeder()
+    for i in range(2):
+        seeder.add_entity(HotelResortImg, 1, {
+            "image" : lambda x : "hotelresort/" + images[i],
+        })
+        pks = seeder.execute()
+        print(pks)

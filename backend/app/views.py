@@ -37,9 +37,15 @@ def data_get(request):
         except Banner.DoesNotExist:
             r["image"] = None
 
+    #luxury & hotel
+    hotelResort = HotelResortSerializers(HotelResort.objects.all(), many=True)
+    hotelResortImg = HotelResortImgSerializers(HotelResortImg.objects.all(), many=True)
+
     data = {
         "banner" : banners.data,
         "rooms" : rooms.data,
+        "hotelResort" : hotelResort.data,
+        "hotelResortImg" : hotelResortImg.data,
     }
     return JsonResponse({"data":data})
 
@@ -166,3 +172,8 @@ def delete_banner(request, id):
     banners = BannerSerializers(Banner.objects.all(), many=True)
     return Response({"status": "success", "message": "banner created successfully", "data":banners.data})
 
+
+
+
+
+########## hotel & resort views ##########

@@ -67,7 +67,8 @@ class HotelResort(models.Model):
     subtitle = models.CharField(max_length=64)
     text = models.TextField()
 
-
+class HotelResortImg(models.Model):
+    image = models.ImageField(upload_to="hotelresort/")
 
 # managers
 class Manager(models.Model):

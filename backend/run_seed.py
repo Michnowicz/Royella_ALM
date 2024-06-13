@@ -11,3 +11,6 @@ if __name__ == "__main__":
     # seed.run_Room()
     # seed.run_RoomImg()
     # seed.run_banner()
+
+    # seed.run_hotelResort()
+    # seed.run_hotelResortImg()

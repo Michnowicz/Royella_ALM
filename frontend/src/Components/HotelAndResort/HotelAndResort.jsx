@@ -4,7 +4,7 @@ import "keen-slider/keen-slider.min.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const HotelAndResort = () => {
+const HotelAndResort = ({hotelResort, hotelResortImg, roomNumber}) => {
   const [, setCurrentSlide] = useState(0);
   const [sliderRef] = useKeenSlider({
     breakpoints: {
@@ -35,7 +35,7 @@ const HotelAndResort = () => {
             <div className="keen-slider__slide number-slide1 ">
               <div className="">
                 <img
-                  src="/images/home-1/Hotel1.jpg"
+                  src={"http://127.0.0.1:8000"+hotelResortImg[0].image}
                   className="h-[85%] lg:h-[90%]"
                   alt="Hotel-slider-image"
                 />
@@ -44,7 +44,7 @@ const HotelAndResort = () => {
             <div className="keen-slider__slide number-slide1 ">
               <div className="">
                 <img
-                  src="/images/home-1/Hotel.png"
+                  src={"http://127.0.0.1:8000"+hotelResortImg[1].image}
                   className="h-[85%] md:h-[100%] lg:h-[90%]"
                   alt="Hotel-slider-image"
                 />
@@ -55,21 +55,18 @@ const HotelAndResort = () => {
           {/* text */}
           <div className="flex-1 font-Garamond  mt-5 md:mt-0 md:pl-8 p-5  lg:pl-10 2xl:pl-14">
             <h5 className="text-base text-khaki leading-[26px] font-medium">
-              LUXURY HOTEL AND RESORT
+              {hotelResort[0].title}
             </h5>
             <h1 className="text-[22px] sm:text-2xl md:text-[21px]  xl:text-3xl 2xl:text-[38px] leading-6 md:leading-7 lg:leading-[30px] 2xl:leading-[44px] text-lightBlack dark:text-white font-semibold my-4">
-              LUXURY BEST HOTEL IN CITY CALIFORNIA, USA
+            {hotelResort[0].subtitle}
             </h1>
             <p className="text-sm xl:text-base md:text-sm lg:text-base font-Lora text-gray dark:text-lightGray font-normal leading-[26px]">
-              Rapidiously myocardinate cross-platform intellectual capital after
-              marketing model. Appropriately create interactive infrastructures
-              after maintainable are Holisticly facilitate stand-alone inframe
-              Compellingly create premier open data through economically.
+              {hotelResort[0].text}
             </p>
             <div className="flex items-center mt-4 md:mt-3 lg:mt-4">
               <div>
                 <h1 className="text-4xl md:text-4xl lg:text-5xl xl:text-6xl  3xl:text-[70px] leading-[42px] text-khaki font-medium ">
-                  250 +
+                  {roomNumber} +
                 </h1>
                 <p className="text-sm sm:text-base md:text-sm lg:text-base leading-[26px] text-gray dark:text-lightGray font-normal font-Lora pt-5 xl:pt-7 md:w-[94px] lg:w-full">
                   Luxury Rooms

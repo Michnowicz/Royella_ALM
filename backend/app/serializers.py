@@ -30,8 +30,24 @@ class RoomSerializes(serializers.ModelSerializer):
 
 
 
+
 ########## banner ##########
 class BannerSerializers(serializers.ModelSerializer):
     class Meta:
         model = Banner
+        fields = '__all__'
+
+
+
+
+
+########## hotel & resort ##########
+class HotelResortImgSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = HotelResortImg
+        fields = '__all__'
+
+class HotelResortSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = HotelResort
         fields = '__all__'

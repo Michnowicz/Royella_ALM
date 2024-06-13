@@ -61,8 +61,11 @@ const Rooms = ({rooms}) => {
           random.push(rooms[randomID])
         } else {
           for (let i = 0; i < random.length; i++) {
-            if (random[i].id == randomID) {
-              flag = false
+            // console.log(i);
+            if (random[i] != undefined){
+              if (random[i].id == randomID) {
+                flag = false
+              }
             }
           }
           if (flag == true) {
@@ -268,15 +271,16 @@ const Rooms = ({rooms}) => {
 
               
               {/* slide */}
-              { randomRoom.length != 0 && randomRoom ?
+              { randomRoom.length != 0 && randomRoom != undefined ?
                 randomRoom.map((r,i) => (
+                  r != undefined ?
                   <div className="keen-slider__slide number-slide1 w-96" key={i}>
                     <div data-aos="fade-up-left" data-aos-duration="1000">
                       <div className="overflow-x-hidden 3xl:w-[410px] group relative">
                           <div className="relative">
                           <div className="overflow-hidden">
                               {
-                                  r.image != null ?
+                                  r.image != null && r.image != undefined ?
                                   <img
                                   src={"http://127.0.0.1:8000"+r.image.image}
                                   className="w-[410px] h-[320px] object-cover group-hover:scale-110 transition-all duration-300"
@@ -353,6 +357,8 @@ const Rooms = ({rooms}) => {
                       </div>
                     </div>
                 </div>
+                :
+                ""
                 ))
                 :
                 ""

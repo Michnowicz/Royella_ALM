@@ -74,17 +74,6 @@ const RoomCreate = ({}) => {
         }
     }
 
-    // useEffect(()=>{
-    //     if (room != null) {
-    //         console.log(room);
-    //     }
-    // },[room])
-    // useEffect(()=>{
-    //     if (roomImage != null) {
-    //         console.log(roomImage);
-    //     }
-    // },[roomImage])
-
     return (
         <div className="Container bg-whiteSmoke dark:bg-normalBlack px-7 md:px-10 lg:px-14 2xl:px-20 py-10 md:py-14 lg:py-18 xl:py-20 2xl:py-[100px]">
             <h2 className="text-Garamond text-[22px] sm:text-2xl md:text-3xl lg:text-4xl 2xl:text-[38px] leading-7 md:leading-8 lg:leading-9 xl:leading-10 2xl:leading-[44px] text-uppercase text-lightBlack dark:text-white font-semibold my-3 md:my-5 flex items-end cursor-pointer" onClick={chevronChange}>
