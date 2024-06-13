@@ -25,5 +25,6 @@ urlpatterns = [
 
     #banners
     path("api/banners/create", create_banner),
+    path("api/banners/delete/<int:id>", delete_banner),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

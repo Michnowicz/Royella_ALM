@@ -158,3 +158,11 @@ def create_banner(request):
         return JsonResponse({"status": "success", "message": "banner created successfully", "data":banners.data})
     else:
         return JsonResponse({"status": "error", "message": banner.errors})
+    
+@api_view(['DELETE'])
+def delete_banner(request, id):
+    banner = Banner.objects.get(id=id)
+    banner.delete()
+    banners = BannerSerializers(Banner.objects.all(), many=True)
+    return Response({"status": "success", "message": "banner created successfully", "data":banners.data})
+

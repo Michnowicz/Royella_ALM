@@ -9,6 +9,7 @@ import BannerCreate from "./BannerCreate/BannerCreate";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
+import axios from "axios"
 
 import { useOutletContext } from "react-router-dom";
 
@@ -28,10 +29,20 @@ const Banner = () => {
         }
     },[data])
 
-
     const [chevron, setChevron] = useState(false)
     const chevronChange = () => {
         setChevron(!chevron)
+    }
+
+    const handleDelete = async (id) => {
+        const response= await axios.delete(`http://127.0.0.1:8000/api/banners/delete/${id}`)
+        .then(response=>{
+            console.log(response);
+            if (response.data.status === "success") {
+                setBanners(response.data.data)
+                setRoomNumber(response.data.data.length)
+            }
+        })
     }
 
 
@@ -83,7 +94,7 @@ const Banner = () => {
                                     <td className="flex gap-3">
                                         <Link to={`/backoffice/banner/${b.id}`}
                                         className="bg-blue-600 h-10 2xl:h-[50px] text-white text-Garamond font-semibold px-5 hover-animBg after:rounded-none after:bg-normalBlack flex items-center">MODIFY</Link>
-                                        <button className="bg-red-600 h-10 2xl:h-[50px] text-white text-Garamond font-semibold px-5 hover-animBg after:rounded-none after:bg-normalBlack">DELETE</button>
+                                        <button className="bg-red-600 h-10 2xl:h-[50px] text-white text-Garamond font-semibold px-5 hover-animBg after:rounded-none after:bg-normalBlack" onClick={()=>handleDelete(b.id)}>DELETE</button>
                                     </td>
                                 </tr>
                             </>
