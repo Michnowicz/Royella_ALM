@@ -51,3 +51,23 @@ class HotelResortSerializers(serializers.ModelSerializer):
     class Meta:
         model = HotelResort
         fields = '__all__'
+
+
+
+
+
+########## hotel & facilities ##########
+class FacilitySerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Facility
+        fields = '__all__'
+
+class FacilityImgSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = FacilityImg
+        fields = '__all__'
+
+class FacilityIconSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = FacilityIcon
+        fields = '__all__'

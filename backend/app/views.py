@@ -37,15 +37,19 @@ def data_get(request):
         except Banner.DoesNotExist:
             r["image"] = None
 
-    #luxury & hotel
+    #hotel & resort
     hotelResort = HotelResortSerializers(HotelResort.objects.all(), many=True)
     hotelResortImg = HotelResortImgSerializers(HotelResortImg.objects.all(), many=True)
+
+    # hotel's facilities
+    facilities = FacilitySerializers(Facility.objects.all(), many=True)
 
     data = {
         "banner" : banners.data,
         "rooms" : rooms.data,
         "hotelResort" : hotelResort.data,
         "hotelResortImg" : hotelResortImg.data,
+        "facility" : facilities.data,
     }
     return JsonResponse({"data":data})
 

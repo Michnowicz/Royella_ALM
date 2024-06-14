@@ -135,3 +135,41 @@ def run_hotelResortImg():
         })
         pks = seeder.execute()
         print(pks)
+
+
+
+
+
+def run_facilityImg():
+    seeder=Seed.seeder()
+    for i in range (1, 7):
+        seeder.add_entity(FacilityImg, 1, {
+            "image" : lambda x : "facility/facility"+str(i)+".jpg"
+        })
+        pks = seeder.execute()
+        print(pks)
+
+def run_facilityIcon():
+    features = ["1", "2", "3", "4", "5", "1"]
+    seeder=Seed.seeder()
+    for i in range (6):
+        seeder.add_entity(FacilityIcon, 1, {
+            "icon" : lambda x : "facility/feature-"+features[i]+".jpg"
+        })
+        pks = seeder.execute()
+        print(pks)
+
+def run_facility():
+    titles = ["Room Services","Wi-Fi Internet","Smart Key","Breakfast","Swimming Pool","Room Service"]
+    images = [1, 2, 3, 4, 5, 6]
+    icons = [1, 2, 3, 4, 5, 1]
+
+    seeder=Seed.seeder()
+    for i in range(6):
+        seeder.add_entity(Facility, 1, {
+            "title" : lambda x : titles[i],
+            "image" : lambda x : FacilityImg.objects.get(id=images[i]),
+            "icon" : lambda x : FacilityIcon.objects.get(id=icons[i]),
+        })
+        pks = seeder.execute()
+        print(pks)

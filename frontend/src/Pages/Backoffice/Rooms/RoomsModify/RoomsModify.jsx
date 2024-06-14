@@ -11,6 +11,7 @@ import { useKeenSlider } from "keen-slider/react";
 import { BsArrowRight } from "react-icons/bs";
 import { FaStar } from "react-icons/fa";
 import "keen-slider/keen-slider.min.css";
+import { BiBed } from "react-icons/bi";
 
 const RoomModify = ({rooms}) => {
 
@@ -22,11 +23,11 @@ const RoomModify = ({rooms}) => {
         setChevron(!chevron)
     }
 
-    useEffect(()=>{
-        if (rooms != null) {
-            console.log(rooms);
-        }
-    },[])
+    // useEffect(()=>{
+    //     if (rooms != null) {
+    //         console.log(rooms);
+    //     }
+    // },[])
 
     return (
         <div className="Container bg-whiteSmoke dark:bg-normalBlack px-7 md:px-10 lg:px-14 2xl:px-20 py-10 md:py-14 lg:py-18 xl:py-20 2xl:py-[100px]">

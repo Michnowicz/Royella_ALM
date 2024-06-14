@@ -84,14 +84,18 @@ class Manager(models.Model):
 
 ########## About page ##########
 # facilities
+class FacilityImg(models.Model):
+    image = models.ImageField(upload_to="facility/")
+
+class FacilityIcon(models.Model):
+    icon = models.ImageField(upload_to="facility/")
+
 class Facility(models.Model):
     title = models.CharField(max_length=32)
-    subtitle = models.CharField(max_length=48)
-    description = models.CharField(max_length=255)
-    image = models.ImageField(upload_to="manager")
-    street = models.CharField(max_length=64)
-    city = models.CharField(max_length=32)
-    postal_code = models.CharField(max_length=5, validators=[RegexValidator('\d', message="The postal code must be a number.")])
+    # subtitle = models.CharField(max_length=48)
+    # description = models.CharField(max_length=255)
+    icon = models.ForeignKey(FacilityIcon, on_delete=models.SET_NULL, null=True)
+    image = models.ForeignKey(FacilityImg, on_delete=models.SET_NULL, null=True)
 
 
 # employees

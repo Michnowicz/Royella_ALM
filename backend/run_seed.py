@@ -14,3 +14,7 @@ if __name__ == "__main__":
 
     # seed.run_hotelResort()
     # seed.run_hotelResortImg()
+
+    # seed.run_facilityImg()
+    # seed.run_facilityIcon()
+    # seed.run_facility()

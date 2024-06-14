@@ -66,10 +66,12 @@ const Rooms = ({rooms}) => {
               if (random[i].id == randomID) {
                 flag = false
               }
+            } else {
+              flag = false
             }
           }
           if (flag == true) {
-            random.push(rooms[randomID-1])
+            random.push(rooms[randomID])
           }
         }
       }

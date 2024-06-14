@@ -1,4 +1,17 @@
-const HotelAndFacilities = () => {
+import { useEffect } from "react";
+import { BiBed } from "react-icons/bi";
+import { HiOutlineWifi } from "react-icons/hi";
+import { LuFileKey } from "react-icons/lu";
+import { MdOutlineFreeBreakfast } from "react-icons/md";
+import { TbSwimming } from "react-icons/tb";
+
+
+const HotelAndFacilities = ({facilities}) => {
+
+  useEffect(()=>{
+    console.log(facilities);
+  },[facilities])
+
   return (
     <section className="bg-lightBlack z-[1]">
       <div className="py-[110px] bg-[url('/images/home-1/section-shape2.png')] bg-no-repeat bg-top bg-opacity-[0.07]">
@@ -16,7 +29,7 @@ const HotelAndFacilities = () => {
                 alt="room_section_logo"
                 className="w-[50px] h-[50px]"
               />
-              <hr className="w-[100px] h-[1px] bg-[#3b3b3b] text-[#3b3b3b] " />
+              <hr className="w-[100px] h-[1px] bg-[#3b3b3b] text-[#3b3b3b]"/>
             </div>
             <h1 className="text-2xl md:text-3xl 2xl:text-[38px] leading-[38px] lg:leading-[44px] 2xl:leading-[52px] text-white mb-[6px] font-Garamond font-semibold uppercase">
               HOTEL’S FACILITIES
@@ -27,13 +40,16 @@ const HotelAndFacilities = () => {
               resource-leveling
             </p>
           </div>
+
+
+
           {/* HOTEL’S FACILITIES content */}
           <div
             className="grid items-center justify-center-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  2xl:grid-cols-6 3xl:grid-cols-6 gap-4  xl:gap-[26px] pt-[60px] pb-[110px] px-8 lg:px-10 xl:px-28 2xl:px-0"
             data-aos="fade-up"
             data-aos-duration="1000"
           >
-            <div className="h-[200px] w-[191px] pt-[37px] pb-[27px] border border-[#343434] text-center transition-all duration-500 relative z-[1] before:bg-[url('/images/home-1/feature-imgs-1.jpg')] before:absolute before:w-0 before:h-full before:left-[-0px] xl:before:right-[-222px] 3xl:before:left-[-222px] before:top-0 before:transition-all before:duration-500 before:bg-cover before:bg-center hover:before:w-[100%] hover:before:z-[1] md:hover:before:w-[114%] xl:hover:before:w-[116%]  group  after:absolute after:w-0 after:h-full after:left-0 after:top-0 after:hover:bg-[#272727] after:transition after:duration-500 after:z-[-1] after:hover:w-full">
+            <div className={`pt-[37px] pb-[27px] border border-[#343434] h-[200px] w-[191px] text-center transition-all duration-500 relative z-[1] before:absolute before:w-0 before:h-full before:left-[-0px] 2xl:before:left-[-222px] before:top-0 before:transition-all before:duration-500 before:bg-cover before:bg-center hover:before:w-[100%] hover:before:z-[1]  md:hover:before:w-[114%] xl:hover:before:w-[116%] after:absolute after:w-0 after:h-full after:left-0 after:top-0 after:hover:bg-[#272727] after:transition after:duration-500 after:z-[-1] after:hover:w-full before:bg-[url('/images/home-1/feature-imgs-1.jpg')]`}>
               <div>
                 <img
                   src="/images/home-1/feature-1.png"
@@ -49,7 +65,7 @@ const HotelAndFacilities = () => {
             </div>
 
             {/* facilities-2 */}
-            <div className="pt-[37px] pb-[27px] border border-[#343434] h-[200px] w-[191px] text-center transition-all duration-500 relative z-[1] before:bg-[url('/images/home-1/feature-imgs-1.jpg')] before:absolute before:w-0 before:h-full before:left-[-0px] 2xl:before:left-[-222px] before:top-0 before:transition-all before:duration-500 before:bg-cover before:bg-center hover:before:w-[100%] hover:before:z-[1]  md:hover:before:w-[114%] xl:hover:before:w-[116%] after:absolute after:w-0 after:h-full after:left-0 after:top-0 after:hover:bg-[#272727] after:transition after:duration-500 after:z-[-1] after:hover:w-full ">
+            <div className={`pt-[37px] pb-[27px] border border-[#343434] h-[200px] w-[191px] text-center transition-all duration-500 relative z-[1] before:absolute before:w-0 before:h-full before:left-[-0px] 2xl:before:left-[-222px] before:top-0 before:transition-all before:duration-500 before:bg-cover before:bg-center hover:before:w-[100%] hover:before:z-[1]  md:hover:before:w-[114%] xl:hover:before:w-[116%] after:absolute after:w-0 after:h-full after:left-0 after:top-0 after:hover:bg-[#272727] after:transition after:duration-500 after:z-[-1] after:hover:w-full before:bg-[url('/images/home-1/feature-imgs-1.jpg')]`}>
               <div>
                 <img
                   src="/images/home-1/feature-2.png"
@@ -67,6 +83,7 @@ const HotelAndFacilities = () => {
             {/* facilities-3 */}
             <div className="pt-[37px] pb-[27px] border border-[#343434] h-[200px] w-[191px] text-center transition-all duration-500 relative z-[1] before:bg-[url('/images/home-1/feature-imgs-1.jpg')] before:absolute before:w-0 before:h-full before:left-[-0px] 2xl:before:left-[-222px] before:top-0 before:transition-all before:duration-500 before:bg-cover before:bg-center  hover:before:w-[100%] hover:before:z-[1] md:hover:before:w-[114%] xl:hover:before:w-[116%] group after:absolute after:w-0 after:h-full after:left-0 after:top-0 after:hover:bg-[#272727] after:transition after:duration-500 after:z-[-1] after:hover:w-full ">
               <div>
+                {/* <LuFileKey className="mx-auto text-khaki text-6xl"/> */}
                 <img
                   src="/images/home-1/feature-3.png"
                   alt=""
@@ -82,6 +99,7 @@ const HotelAndFacilities = () => {
             {/* facilities-4 */}
             <div className="pt-[37px] pb-[27px] border border-[#343434] h-[200px] w-[191px] text-center transition-all duration-500 relative z-[1] before:bg-[url('/images/home-1/feature-imgs-1.jpg')] before:absolute before:w-0 before:h-full before:left-[-0px] 2xl:before:left-[-222px] before:top-0 before:transition-all before:duration-500 before:bg-cover before:bg-center  hover:before:w-[100%] hover:before:z-[1] md:hover:before:w-[114%] xl:hover:before:w-[116%] group after:absolute after:w-0 after:h-full after:left-0 after:top-0 after:hover:bg-[#272727] after:transition after:duration-500 after:z-[-1] after:hover:w-full ">
               <div>
+                {/* <MdOutlineFreeBreakfast className="mx-auto text-khaki text-6xl"/> */}
                 <img
                   src="/images/home-1/feature-4.png"
                   alt=""
@@ -98,6 +116,7 @@ const HotelAndFacilities = () => {
             {/* facilities-5 */}
             <div className="pt-[37px] pb-[27px] border border-[#343434] h-[200px] w-[191px] text-center transition-all duration-500 relative z-[1] before:bg-[url('/images/home-1/feature-imgs-1.jpg')] before:absolute before:w-0 before:h-full before:left-[-0px] 2xl:before:left-[-222px] before:top-0 before:transition-all before:duration-500 before:bg-cover before:bg-center  hover:before:w-[100%] hover:before:z-[1] md:hover:before:w-[114%] xl:hover:before:w-[116%] group after:absolute after:w-0 after:h-full after:left-0 after:top-0 after:hover:bg-[#272727] after:transition after:duration-500 after:z-[-1] after:hover:w-full ">
               <div>
+                {/* <TbSwimming className="mx-auto text-khaki text-6xl"/> */}
                 <img
                   src="/images/home-1/feature-5.png"
                   alt=""
@@ -113,6 +132,7 @@ const HotelAndFacilities = () => {
             {/* facilities-6 */}
             <div className="pt-[37px] pb-[27px] border border-[#343434] h-[200px] w-[191px] text-center transition-all duration-500 relative z-[1] before:bg-[url('/images/home-1/feature-imgs-1.jpg')] before:absolute before:w-0 before:h-full before:left-[-0px] 2xl:before:left-[-222px] before:top-0 before:transition-all before:duration-500 before:bg-cover before:bg-center  hover:before:w-[100%] hover:before:z-[1] md:hover:before:w-[114%] xl:hover:before:w-[116%] group after:absolute after:w-0 after:h-full after:left-0 after:top-0 after:hover:bg-[#272727] after:transition after:duration-500 after:z-[-1] after:hover:w-full ">
               <div>
+                {/* <BiBed className="mx-auto text-khaki text-6xl"/> */}
                 <img
                   src="/images/home-1/feature-1.png"
                   alt=""
