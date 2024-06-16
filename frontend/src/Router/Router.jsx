@@ -24,6 +24,7 @@ import ErrorPage from "../Shared/ErrorPage/ErrorPage";
 // Custom pages
 import Backoffice from "../Pages/Backoffice/Backoffice";
 import Banner from "../Pages/Backoffice/Banner/Banner";
+import BannerModify from "../Pages/Backoffice/Banner/BannerModify/BannerModify.jsx";
 import Rooms from "../Pages/Backoffice/Rooms/Rooms.jsx";
 import RoomDetailsModify from "../Pages/Backoffice/Rooms/RoomsModify/RoomDetail/RoomDetail.jsx"
 
@@ -94,6 +95,10 @@ const router = createBrowserRouter([
       {
         path: "/backoffice/banner",
         element: <Banner />,
+      },
+      {
+        path: "/backoffice/banner/:id",
+        element: <BannerModify/>,
       },
       {
         path: "/backoffice/rooms",

@@ -41,111 +41,33 @@ const HotelAndFacilities = ({facilities}) => {
             </p>
           </div>
 
+              <div
+                className="grid items-center justify-center-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  2xl:grid-cols-6 3xl:grid-cols-6 gap-4  xl:gap-[26px] pt-[60px] pb-[110px] px-8 lg:px-10 xl:px-28 2xl:px-0"
+                data-aos="fade-up"
+                data-aos-duration="1000"
+              >
+                { facilities.length != 0 ?
+                  facilities.map((f,i)=>(
+                    <div className={`pt-[37px] pb-[27px] border border-[#343434] h-[200px] w-[191px] text-center transition-all duration-500 relative z-[1] before:bg-[url('http://127.0.0.1:8000${f.image.image}')] before:absolute before:w-0 before:h-full before:left-[-0px] 2xl:before:left-[-222px] before:top-0 before:transition-all before:duration-500 before:bg-cover before:bg-center  hover:before:w-[100%] hover:before:z-[1] md:hover:before:w-[114%] xl:hover:before:w-[116%] group after:absolute after:w-0 after:h-full after:left-0 after:top-0 after:hover:bg-[#272727] after:transition after:duration-500 after:z-[-1] after:hover:w-full`} key={i}>
+                      <div>
+                        <img
+                          src={"http://127.0.0.1:8000"+f.icon.icon}
+                          alt=""
+                          className="mx-auto"
+                        />
+                      </div>
+                      <div className="">
+                        <h4 className="text-[22px] leading-[52px] font-Garamond text-white font-medium mt-[45px] relative before:absolute before:w-[1px] before:h-[25px] before:left-[50%] before:top-[-27px] before:bg-slate-500 before:group-hover:bg-khaki">
+                          {f.title}
+                        </h4>
+                      </div>
+                    </div>
+                  ))
+                  :
+                  ""
+                }
 
-
-          {/* HOTEL’S FACILITIES content */}
-          <div
-            className="grid items-center justify-center-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  2xl:grid-cols-6 3xl:grid-cols-6 gap-4  xl:gap-[26px] pt-[60px] pb-[110px] px-8 lg:px-10 xl:px-28 2xl:px-0"
-            data-aos="fade-up"
-            data-aos-duration="1000"
-          >
-            <div className={`pt-[37px] pb-[27px] border border-[#343434] h-[200px] w-[191px] text-center transition-all duration-500 relative z-[1] before:absolute before:w-0 before:h-full before:left-[-0px] 2xl:before:left-[-222px] before:top-0 before:transition-all before:duration-500 before:bg-cover before:bg-center hover:before:w-[100%] hover:before:z-[1]  md:hover:before:w-[114%] xl:hover:before:w-[116%] after:absolute after:w-0 after:h-full after:left-0 after:top-0 after:hover:bg-[#272727] after:transition after:duration-500 after:z-[-1] after:hover:w-full before:bg-[url('/images/home-1/feature-imgs-1.jpg')]`}>
-              <div>
-                <img
-                  src="/images/home-1/feature-1.png"
-                  alt=""
-                  className="mx-auto"
-                />
               </div>
-              <div className="">
-                <h4 className="text-[22px] leading-[52px] font-Garamond text-white font-medium mt-[45px] relative before:absolute before:w-[1px] before:h-[25px] before:left-[50%] before:top-[-27px] before:bg-slate-500 before:group-hover:bg-khaki">
-                  Room Services
-                </h4>
-              </div>
-            </div>
-
-            {/* facilities-2 */}
-            <div className={`pt-[37px] pb-[27px] border border-[#343434] h-[200px] w-[191px] text-center transition-all duration-500 relative z-[1] before:absolute before:w-0 before:h-full before:left-[-0px] 2xl:before:left-[-222px] before:top-0 before:transition-all before:duration-500 before:bg-cover before:bg-center hover:before:w-[100%] hover:before:z-[1]  md:hover:before:w-[114%] xl:hover:before:w-[116%] after:absolute after:w-0 after:h-full after:left-0 after:top-0 after:hover:bg-[#272727] after:transition after:duration-500 after:z-[-1] after:hover:w-full before:bg-[url('/images/home-1/feature-imgs-1.jpg')]`}>
-              <div>
-                <img
-                  src="/images/home-1/feature-2.png"
-                  alt=""
-                  className="mx-auto"
-                />
-              </div>
-              <div className="">
-                <h4 className="text-[22px] leading-[52px] font-Garamond text-white font-medium mt-[45px] relative before:absolute before:w-[1px] before:h-[25px] before:left-[50%] before:top-[-27px] before:bg-slate-500 before:group-hover:bg-khaki">
-                  Wi-Fi Internet
-                </h4>
-              </div>
-            </div>
-
-            {/* facilities-3 */}
-            <div className="pt-[37px] pb-[27px] border border-[#343434] h-[200px] w-[191px] text-center transition-all duration-500 relative z-[1] before:bg-[url('/images/home-1/feature-imgs-1.jpg')] before:absolute before:w-0 before:h-full before:left-[-0px] 2xl:before:left-[-222px] before:top-0 before:transition-all before:duration-500 before:bg-cover before:bg-center  hover:before:w-[100%] hover:before:z-[1] md:hover:before:w-[114%] xl:hover:before:w-[116%] group after:absolute after:w-0 after:h-full after:left-0 after:top-0 after:hover:bg-[#272727] after:transition after:duration-500 after:z-[-1] after:hover:w-full ">
-              <div>
-                {/* <LuFileKey className="mx-auto text-khaki text-6xl"/> */}
-                <img
-                  src="/images/home-1/feature-3.png"
-                  alt=""
-                  className="mx-auto"
-                />
-              </div>
-              <div className="">
-                <h4 className="text-[22px] leading-[52px] font-Garamond text-white font-medium mt-[45px] relative before:absolute before:w-[1px] before:h-[25px] before:left-[50%] before:top-[-27px] before:bg-slate-500 before:group-hover:bg-khaki">
-                  Smart Key
-                </h4>
-              </div>
-            </div>
-            {/* facilities-4 */}
-            <div className="pt-[37px] pb-[27px] border border-[#343434] h-[200px] w-[191px] text-center transition-all duration-500 relative z-[1] before:bg-[url('/images/home-1/feature-imgs-1.jpg')] before:absolute before:w-0 before:h-full before:left-[-0px] 2xl:before:left-[-222px] before:top-0 before:transition-all before:duration-500 before:bg-cover before:bg-center  hover:before:w-[100%] hover:before:z-[1] md:hover:before:w-[114%] xl:hover:before:w-[116%] group after:absolute after:w-0 after:h-full after:left-0 after:top-0 after:hover:bg-[#272727] after:transition after:duration-500 after:z-[-1] after:hover:w-full ">
-              <div>
-                {/* <MdOutlineFreeBreakfast className="mx-auto text-khaki text-6xl"/> */}
-                <img
-                  src="/images/home-1/feature-4.png"
-                  alt=""
-                  className="mx-auto"
-                />
-              </div>
-              <div className="">
-                <h4 className="text-[22px] leading-[52px] font-Garamond text-white font-medium mt-[45px] relative before:absolute before:w-[1px] before:h-[25px] before:left-[50%] before:top-[-27px] before:bg-slate-500 before:group-hover:bg-khaki">
-                  Breakfast
-                </h4>
-              </div>
-            </div>
-
-            {/* facilities-5 */}
-            <div className="pt-[37px] pb-[27px] border border-[#343434] h-[200px] w-[191px] text-center transition-all duration-500 relative z-[1] before:bg-[url('/images/home-1/feature-imgs-1.jpg')] before:absolute before:w-0 before:h-full before:left-[-0px] 2xl:before:left-[-222px] before:top-0 before:transition-all before:duration-500 before:bg-cover before:bg-center  hover:before:w-[100%] hover:before:z-[1] md:hover:before:w-[114%] xl:hover:before:w-[116%] group after:absolute after:w-0 after:h-full after:left-0 after:top-0 after:hover:bg-[#272727] after:transition after:duration-500 after:z-[-1] after:hover:w-full ">
-              <div>
-                {/* <TbSwimming className="mx-auto text-khaki text-6xl"/> */}
-                <img
-                  src="/images/home-1/feature-5.png"
-                  alt=""
-                  className="mx-auto"
-                />
-              </div>
-              <div className="">
-                <h4 className="text-[22px] leading-[52px] font-Garamond text-white font-medium mt-[45px] relative before:absolute before:w-[1px] before:h-[25px] before:left-[50%] before:top-[-27px] before:bg-slate-500 before:group-hover:bg-khaki">
-                  Swimming Pool
-                </h4>
-              </div>
-            </div>
-            {/* facilities-6 */}
-            <div className="pt-[37px] pb-[27px] border border-[#343434] h-[200px] w-[191px] text-center transition-all duration-500 relative z-[1] before:bg-[url('/images/home-1/feature-imgs-1.jpg')] before:absolute before:w-0 before:h-full before:left-[-0px] 2xl:before:left-[-222px] before:top-0 before:transition-all before:duration-500 before:bg-cover before:bg-center  hover:before:w-[100%] hover:before:z-[1] md:hover:before:w-[114%] xl:hover:before:w-[116%] group after:absolute after:w-0 after:h-full after:left-0 after:top-0 after:hover:bg-[#272727] after:transition after:duration-500 after:z-[-1] after:hover:w-full ">
-              <div>
-                {/* <BiBed className="mx-auto text-khaki text-6xl"/> */}
-                <img
-                  src="/images/home-1/feature-1.png"
-                  alt=""
-                  className="mx-auto"
-                />
-              </div>
-              <div className="">
-                <h4 className="text-[22px] leading-[52px] font-Garamond text-white font-medium mt-[45px] relative before:absolute before:w-[1px] before:h-[25px] before:left-[50%] before:top-[-27px] before:bg-slate-500 before:group-hover:bg-khaki">
-                  Room Service
-                </h4>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>

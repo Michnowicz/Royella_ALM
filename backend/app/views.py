@@ -43,6 +43,16 @@ def data_get(request):
 
     # hotel's facilities
     facilities = FacilitySerializers(Facility.objects.all(), many=True)
+    for f in facilities.data:
+        try :
+            f["icon"] = FacilityIconSerializers(FacilityIcon.objects.get(id=f["icon"])).data
+        except Banner.DoesNotExist:
+            f["icon"] = None
+            
+        try:
+            f["image"] = FacilityImgSerializers(FacilityImg.objects.get(id=f["image"])).data
+        except Banner.DoesNotExist:
+            f["image"] = None
 
     data = {
         "banner" : banners.data,
@@ -175,6 +185,20 @@ def delete_banner(request, id):
     banner.delete()
     banners = BannerSerializers(Banner.objects.all(), many=True)
     return Response({"status": "success", "message": "banner created successfully", "data":banners.data})
+
+@api_view(["PUT"])
+def modify_banner(request, id):
+    banner = Banner.objects.get(id=id)
+    serializer = BannerSerializers(banner, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return JsonResponse({"status": "success", "message": "Banner modified successfully", "data":serializer.data})
+    else:
+        return JsonResponse({"status": "error", "message": serializer.errors})
+    
+def get_banner_detail(request, id):
+    banner = BannerSerializers(Banner.objects.get(id=id))
+    return JsonResponse({"data":banner.data})
 
 
 

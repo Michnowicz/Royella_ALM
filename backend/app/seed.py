@@ -144,7 +144,7 @@ def run_facilityImg():
     seeder=Seed.seeder()
     for i in range (1, 7):
         seeder.add_entity(FacilityImg, 1, {
-            "image" : lambda x : "facility/facility"+str(i)+".jpg"
+            "image" : lambda x : "facility/facility"+str(i)+".png"
         })
         pks = seeder.execute()
         print(pks)

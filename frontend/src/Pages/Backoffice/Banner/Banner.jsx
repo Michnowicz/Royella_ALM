@@ -57,7 +57,7 @@ const Banner = () => {
 
 
     return (
-        <div className="Banner min-h-screen dark:bg-lightBlack dark:bg-lightBlack">
+        <div className="Banner min-h-screen dark:bg-lightBlack">
             <div className=" py-20 2xl:py-[120px] w-full bg-no-repeat bg-top bg-opacity-[0.07] flex flex-col gap-10">
                 <BannerCreate roomNumber={roomNumber} setBanners={setBanners} setRoomNumber={setRoomNumber}/>
 
@@ -74,10 +74,10 @@ const Banner = () => {
                     </h2>
 
                 { chevron === true && banners != null ?
-                <table className="table-auto w-full ">
+                <table className="table-auto w-full text-lightBlack dark:text-white">
                     <thead style={{borderBottom: "1px solid #acacac"}}>
                         <tr>
-                            <th className="text-left">id</th>
+                            <th className="text-left ">id</th>
                             <th className="text-left">title</th>
                             <th className="text-left">room_id</th>
                             <th className="text-left">actions</th>
@@ -88,7 +88,7 @@ const Banner = () => {
                         banners.map((b,i)=>(
                             <>
                                 <tr key={i} style={{borderBottom: "1px solid #acacac38"}} className="pt-1 pb-10">
-                                    <td>{b.id}</td>
+                                    <td >{b.id}</td>
                                     <td>{b.title}</td>
                                     <td>{b.room.id}</td>
                                     <td className="flex gap-3">
