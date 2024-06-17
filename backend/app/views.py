@@ -205,3 +205,22 @@ def get_banner_detail(request, id):
 
 
 ########## hotel & resort views ##########
+# def get_hotel_resort(request):
+#     hotelResort = HotelResortSerializers(HotelResort.objects.all(), many=True)
+#     hotelResortImg = HotelResortImgSerializers(HotelResortImg.objects.all(), many=True)
+
+#     data = {
+#         "hotel" : hotelResort.data,
+#         "image" : hotelResortImg.data,
+#     }
+#     return JsonResponse({"data":data})
+
+@api_view(["PUT"])
+def modify_hotel_resort(request):
+    hotelResort = HotelResort.objects.get(id=1)
+    serializer = HotelResortSerializers(hotelResort, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return JsonResponse({"status": "success", "message": "Hotel & resort section modified", "data":serializer.data})
+    else:
+        return JsonResponse({"status": "error", "message":serializer.errors})

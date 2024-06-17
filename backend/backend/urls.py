@@ -29,4 +29,8 @@ urlpatterns = [
     path("api/banners/modify/<int:id>", modify_banner),
     path("api/banners/get/<int:id>", get_banner_detail),
 
+    #hotel & resort
+    # path("api/hotelresort/get", get_hotel_resort),
+    path("api/hotelresort/modify", modify_hotel_resort),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
