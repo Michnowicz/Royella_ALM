@@ -71,3 +71,28 @@ class FacilityIconSerializers(serializers.ModelSerializer):
     class Meta:
         model = FacilityIcon
         fields = '__all__'
+
+
+
+
+
+########## Employees & manager ##########
+class EmployeesImgSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = EmployeesImg
+        fields = '__all__'
+
+class EmployeesSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Employees
+        fields = '__all__'
+
+class ManagerImgSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = ManagerImg
+        fields = '__all__'
+
+class ManagerSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Manager
+        fields = '__all__'

@@ -21,6 +21,8 @@ const Home1 = () => {
   const [roomNumber, setRoomNumber] = useState(null)
   
   const [facilities, setFacilities] = useState(null)
+  
+  const [manager, setManager] = useState(null)
 
   useEffect(()=>{
     if (banners == null) {
@@ -39,6 +41,8 @@ const Home1 = () => {
     setRoomNumber(response.data.data.rooms.length)
 
     setFacilities(response.data.data.facility)
+
+    setManager(response.data.data.manager)
   }
 
   return (
@@ -64,7 +68,11 @@ const Home1 = () => {
         :
         <p>loading ...</p>
       }
-      <Action />
+      { manager != null ?
+        <Action manager={manager}/>
+        :
+        <p>loading ...</p>
+      }
       <Facilities />
       <Offers />
       <Testimonial />

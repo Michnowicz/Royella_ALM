@@ -70,13 +70,33 @@ class HotelResort(models.Model):
 class HotelResortImg(models.Model):
     image = models.ImageField(upload_to="hotelresort/")
 
+
+
+
+
+# employees
+class EmployeesImg(models.Model):
+    image = models.ImageField(upload_to="employee/")
+
+class Employees(models.Model):
+    firstname = models.CharField(max_length=32)
+    lastname = models.CharField(max_length=32)
+    occupation = models.CharField(max_length=32)
+    image = models.ForeignKey(EmployeesImg, on_delete=models.SET_NULL, null=True)
+
 # managers
+class ManagerImg(models.Model):
+    image = models.ImageField(upload_to="manager/")
+    
+
 class Manager(models.Model):
     title = models.CharField(max_length=32)
     subtitle = models.CharField(max_length=48)
     description = models.CharField(max_length=255)
-    image = models.ImageField(upload_to="manager")
-    testimonial = models.ForeignKey(Testimony, on_delete=models.SET_NULL, null=True)
+    video = models.CharField(max_length=255, default="")
+    manager = models.ForeignKey(Employees, on_delete=models.SET_NULL, null=True)
+    image = models.ForeignKey(ManagerImg, on_delete=models.SET_NULL, null=True)
+
 
 
 
@@ -97,13 +117,6 @@ class Facility(models.Model):
     icon = models.ForeignKey(FacilityIcon, on_delete=models.SET_NULL, null=True)
     image = models.ForeignKey(FacilityImg, on_delete=models.SET_NULL, null=True)
 
-
-# employees
-class employees(models.Model):
-    firstname = models.CharField(max_length=32)
-    lastname = models.CharField(max_length=32)
-    occupation = models.CharField(max_length=32)
-    image = models.ImageField(upload_to="employe")
 
 
 # contact

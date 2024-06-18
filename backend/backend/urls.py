@@ -30,7 +30,11 @@ urlpatterns = [
     path("api/banners/get/<int:id>", get_banner_detail),
 
     #hotel & resort
-    # path("api/hotelresort/get", get_hotel_resort),
     path("api/hotelresort/modify", modify_hotel_resort),
+    path("api/hotelresortimg/modify/<int:id>", modify_hr_img),
+
+    #manager
+    path("api/manager/modify", modify_manager),
+    path("api/managerImg/modify", modify_managerImg),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

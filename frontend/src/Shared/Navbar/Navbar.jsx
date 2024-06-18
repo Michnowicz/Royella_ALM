@@ -125,37 +125,6 @@ const Navbar = () => {
                       </NavLink>
                     </li>
                   </div>
-                  <div className=" px-5 group hover:bg-khaki hover:text-white">
-                    <li className="hover:ml-3 duration-300  ">
-                      <NavLink to="/home2" className="py-2 block">
-                        Resort
-                      </NavLink>
-                    </li>
-                  </div>
-
-                  <div className=" px-5 group hover:bg-khaki hover:text-white">
-                    <li className="hover:ml-3 duration-300  ">
-                      <NavLink to="/home3" className="py-2 block">
-                        Hostel
-                      </NavLink>
-                    </li>
-                  </div>
-
-                  <div className=" px-5 group hover:bg-khaki hover:text-white">
-                    <li className="hover:ml-3 duration-300  ">
-                      <NavLink to="/home4" className="py-2 block">
-                        City Hotel
-                      </NavLink>
-                    </li>
-                  </div>
-
-                  <div className=" px-5 group hover:bg-khaki hover:text-white">
-                    <li className="hover:ml-3 duration-300  ">
-                      <NavLink to="/home5" className="py-2 block">
-                        Apartment
-                      </NavLink>
-                    </li>
-                  </div>
                 </ul>
               </div>
             </NavLink>

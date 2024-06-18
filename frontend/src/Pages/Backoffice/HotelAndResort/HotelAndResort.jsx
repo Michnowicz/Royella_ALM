@@ -26,6 +26,8 @@ const HotelAndResort = () => {
     const [data] = useOutletContext();
     const [hotelResort, setHotelResort] = useState(null)
     const [imageOne, setImageOne] = useState(null)
+    const [previewOne, setPreviewOne] = useState(null)
+    const [previewTwo, setPreviewTwo] = useState(null)
     const [imageTwo, setImageTwo] = useState(null)
     const [roomNumber, setRoomNumber] = useState(0)
     useEffect(()=>{
@@ -33,16 +35,27 @@ const HotelAndResort = () => {
             console.log(data);
             setHotelResort(data.hotelResort[0])
             // setHotelResortImg(data.hotelResortImg)
-            setImageOne(data.hotelResortImg[0])
-            setImageTwo(data.hotelResortImg[1])
+            setImageOne(data.hotelResortImg[0].image)
+            setImageTwo(data.hotelResortImg[1].image)
             setRoomNumber(data.rooms.length)
         }
     },[data])
+
+    
     const handleInput = (e) => {
-        const {name, value} = e.target
-        setHotelResort({ ...hotelResort, [name]: value });
+        const {name, value, files} = e.target
+        if (name == "imageOne") {
+            setImageOne(files[0])
+            setPreviewOne(URL.createObjectURL(files[0]))
+        } else if (name == "imageTwo") {
+            setImageTwo(files[0])
+            setPreviewTwo(URL.createObjectURL(files[0]))
+        } else {
+            setHotelResort({ ...hotelResort, [name]: value });
+        }
     }
 
+    // modify hotel and resort section
     const submitForm = (e) => {
         e.preventDefault()
         const formHR = new FormData();
@@ -55,18 +68,36 @@ const HotelAndResort = () => {
         })
     }
 
+    // modify hotel and resort images
+    const submitImageOne = (e) => {
+        e.preventDefault()
+        const formImageOne = new FormData()
+        formImageOne.append("image", imageOne)
+        console.log(formImageOne);
+        axios.put(`http://127.0.0.1:8000/api/hotelresortimg/modify/1`, formImageOne)
+        .then(response=>{
+            console.log(response);
+        })
+    }
+    const submitImageTwo = (e) => {
+        e.preventDefault()
+        const formImageTwo = new FormData()
+        formImageTwo.append("image", imageTwo)
+        console.log(formImageTwo);
+        axios.put(`http://127.0.0.1:8000/api/hotelresortimg/modify/2`, formImageTwo)
+        .then(response=>{
+            console.log(response);
+        })
+    }
 
 
     useEffect(()=>{
         if (hotelResort != null) {
-            console.log(hotelResort);
+            // console.log(hotelResort);
+            // console.log(imageOne);
+            // console.log(previewOne);
+            console.log(previewTwo);
         }
-        // if (imageOne != null) {
-        //     console.log(imageOne);
-        // }
-        // if (imageTwo != null) {
-        //     console.log(imageTwo);
-        // }
     },[hotelResort, imageOne, imageTwo])
 
 
@@ -74,11 +105,10 @@ const HotelAndResort = () => {
     return (
         <section className="dark:bg-mediumBlack py-20 2xl:py-[120px] min-h-screen">
             { hotelResort != null ?
-            <form
+            <div
                 className="Container  sm:overflow-hidden lg:overflow-auto p-20"
                 data-aos="fade-up"
                 data-aos-duration="1000"
-                onSubmit={submitForm}
             >
                 <div className="md:flex items-center justify-between">
                 <div
@@ -87,35 +117,69 @@ const HotelAndResort = () => {
                 >
                     {/* slider 1 */}
                     <div className="keen-slider__slide number-slide1 ">
-                    <div className="">
-                        { imageOne != null ?
+                    <form className="" onSubmit={submitImageOne}>
+                        { imageOne != null && previewOne == null ?
+                            <>
                             <img
-                            src={"http://127.0.0.1:8000"+imageOne.image}
+                            src={"http://127.0.0.1:8000"+imageOne}
                             className="h-[85%] lg:h-[90%]"
                             alt="Hotel-slider-image"
                             />
+                            </>
                             :
-                            ""
-                        }
-                    </div>
-                    </div>
-                    <div className="keen-slider__slide number-slide1 ">
-                    <div className="">
-                        { imageTwo != null ?
+                            <>
                             <img
-                            src={"http://127.0.0.1:8000"+imageTwo.image}
+                            src={previewOne}
                             className="h-[85%] md:h-[100%] lg:h-[90%]"
                             alt="Hotel-slider-image"
                             />
-                            :
-                            ""
+                            </>
                         }
+                        <input
+                            type="file"
+                            className="w-full text-gray dark:text-lightGray outline-none  bg-transparent focus:ring-0 placeholder:text-gray focus:outline-none"
+                            name="imageOne"
+                            onChange={handleInput}
+                        />
+                        <div className="flex items-center mt-6">
+                            <button type="submit" className="bg-khaki p-1 px-4 text-Garamond border border-khaki text-white mx-auto col-span-2  md:col-span-1 lg:col-span-1 relative z-10 before:absolute before:top-0 before:right-0 before:-z-10 before:w-0 before:h-full before:bg-lightBlack before:transition-all before:duration-500 hover:before:w-full hover:before:left-0">MODIFY</button>
+                        </div>
+                    </form>
                     </div>
+                    <div className="keen-slider__slide number-slide1 ">
+                    <form className="" onSubmit={submitImageTwo}>
+                        { imageTwo != null && previewTwo == null ?
+                            <>
+                            <img
+                            src={"http://127.0.0.1:8000"+imageTwo}
+                            className="h-[85%] lg:h-[90%]"
+                            alt="Hotel-slider-image"
+                            />
+                            </>
+                            :
+                            <>
+                            <img
+                            src={previewTwo}
+                            className="h-[85%] md:h-[100%] lg:h-[90%]"
+                            alt="Hotel-slider-image"
+                            />
+                            </>
+                        }
+                        <input
+                            type="file"
+                            className="w-full text-gray dark:text-lightGray outline-none  bg-transparent focus:ring-0 placeholder:text-gray focus:outline-none"
+                            name="imageTwo"
+                            onChange={handleInput}
+                        />
+                        <div className="flex items-center mt-6">
+                            <button type="submit" className="bg-khaki p-1 px-4 text-Garamond border border-khaki text-white mx-auto col-span-2  md:col-span-1 lg:col-span-1 relative z-10 before:absolute before:top-0 before:right-0 before:-z-10 before:w-0 before:h-full before:bg-lightBlack before:transition-all before:duration-500 hover:before:w-full hover:before:left-0">MODIFY</button>
+                        </div>
+                    </form>
                     </div>
                 </div>
 
                 {/* text */}
-                <div className="flex-1 font-Garamond  mt-5 md:mt-0 md:pl-8 p-5  lg:pl-10 2xl:pl-14">
+                <form className="flex-1 font-Garamond  mt-5 md:mt-0 md:pl-8 p-5  lg:pl-10 2xl:pl-14" onSubmit={submitForm}>
                     <h5 className="text-base text-khaki leading-[26px] font-medium">
                         <input 
                         type="text"
@@ -171,9 +235,9 @@ const HotelAndResort = () => {
                     <div className="flex items-center mt-6">
                         <button type="submit" className="w-[142px] h-10 lg:h-[50px] text-[15px] bg-khaki text-Garamond border border-khaki text-white mx-auto col-span-2  md:col-span-1 lg:col-span-1 relative z-10 before:absolute before:top-0 before:right-0 before:-z-10 before:w-0 before:h-full before:bg-lightBlack before:transition-all before:duration-500 hover:before:w-full hover:before:left-0">MODIFY</button>
                     </div>
+                </form>
                 </div>
-                </div>
-            </form>
+            </div>
             :
             ""
             }

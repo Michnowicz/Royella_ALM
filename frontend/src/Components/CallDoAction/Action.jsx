@@ -1,8 +1,18 @@
 import { BsPlay } from "react-icons/bs";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FsLightbox from "fslightbox-react";
-const Action = () => {
+
+
+
+const Action = ({manager}) => {
   const [toggler, setToggler] = useState(false);
+
+  useEffect(()=>{
+    if (manager != null) {
+      console.log(manager);
+    }
+  },[])
+
   return (
     <div className="dark:bg-mediumBlack dark:z-[-1]">
       <section className="Container mt-[-90px] dark:z-[1]">
@@ -13,15 +23,13 @@ const Action = () => {
             data-aos-duration="1000"
           >
             <h5 className="text-base text-khaki leading-[26px] font-semibold">
-              MANAGER
+              {manager.title}
             </h5>
             <h1 className="text-[22px] sm:text-2xl md:text-[28px] xl:text-[32px] 2xl:text-[38px] leading-[38px] lg:leading-[44px] text-lightBlack dark:text-white font-semibold">
-              LUXURY BEST HOTEL IN CITY CALIFORNIA, USA
+              {manager.subtitle}
             </h1>
             <p className="text-sm sm:text-base font-Lora text-gray dark:text-lightGray font-normal leading-[26px]">
-              Rapidiously myocardinate cross-platform intellectual capital after
-              model. Appropriately create interactive infrastructures after main
-              Holisticly facilitate stand-alone inframe
+              {manager.description}
             </p>
             <p className="text-sm sm:text-base font-Lora italic leading-[26px] underline  text-gray dark:text-lightGray font-normal ">
               “ Model. Appropriately create interactive infrastructures after
@@ -29,18 +37,18 @@ const Action = () => {
             </p>
             <div className="flex items-center space-x-6 pt-5">
               <img
-                src="/images/home-1/call-do-action-img.png"
+                src={"http://127.0.0.1:8000"+manager.manager.image.image}
                 className="w-[65px] h-[65px] object-cover"
                 alt=""
               />
 
               <div className="">
                 <h4 className="text-lg sm:text-[22px] leading-[26px] text-lightBlack dark:text-white font-semibold font-Garamond">
-                  John D. Alexon
+                  {manager.manager.firstname} {manager.manager.lastname}
                 </h4>
                 <p className="pt-1 text-base leading-[26px] font-normal text-gray dark:text-lightGray flex items-center font-Lora">
                   <span className="w-5 h-[1px] inline-block text-khaki bg-khaki mr-2"></span>
-                  Manger
+                  {manager.manager.occupation}
                 </p>
               </div>
             </div>
@@ -51,7 +59,7 @@ const Action = () => {
             data-aos-duration="1000"
           >
             <img
-              src="/images/home-1/action-img.png"
+              src={"http://127.0.0.1:8000"+manager.image.image}
               className="h-full w-full md:h-[80%] lg:h-full 2xl:h-[99%] "
               alt=""
             />
@@ -66,7 +74,7 @@ const Action = () => {
           </div>
           <FsLightbox
             toggler={toggler}
-            sources={["https://youtu.be/fFDyoI73viQ?si=GbDzAagjoa_0Nv2x"]}
+            sources={[manager.video]}
           />
         </div>
       </section>

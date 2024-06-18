@@ -34,7 +34,7 @@ def data_get(request):
             
         try:
             r["image"] = RoomImgSerializers(RoomImg.objects.get(room=r["id"])).data
-        except Banner.DoesNotExist:
+        except RoomImg.DoesNotExist:
             r["image"] = None
 
     #hotel & resort
@@ -46,13 +46,31 @@ def data_get(request):
     for f in facilities.data:
         try :
             f["icon"] = FacilityIconSerializers(FacilityIcon.objects.get(id=f["icon"])).data
-        except Banner.DoesNotExist:
+        except FacilityIcon.DoesNotExist:
             f["icon"] = None
             
         try:
             f["image"] = FacilityImgSerializers(FacilityImg.objects.get(id=f["image"])).data
-        except Banner.DoesNotExist:
+        except FacilityImg.DoesNotExist:
             f["image"] = None
+    
+    # manager
+    manager = ManagerSerializers(Manager.objects.get(id=1)).data
+    try:
+        manager["manager"] = EmployeesSerializers(Employees.objects.get(id=manager["manager"])).data
+        manager["image"] = ManagerImgSerializers(ManagerImg.objects.get(id=manager["image"])).data
+        manager["manager"]["image"] = EmployeesImgSerializers(EmployeesImg.objects.get(id=manager["manager"]["image"])).data
+    except Employees.DoesNotExist:
+        manager["manager"] = None
+
+    # employees
+    employees = EmployeesSerializers(Employees.objects.all(), many=True)
+    for e in employees.data:
+        try:
+            e["image"] = EmployeesImgSerializers(EmployeesImg.objects.get(id=e["image"])).data
+        except EmployeesImg.DoesNotExist:
+            e["image"] = ""
+
 
     data = {
         "banner" : banners.data,
@@ -60,8 +78,13 @@ def data_get(request):
         "hotelResort" : hotelResort.data,
         "hotelResortImg" : hotelResortImg.data,
         "facility" : facilities.data,
+        "manager" : manager,
+        "employees" : employees.data,
     }
     return JsonResponse({"data":data})
+
+
+
 
 
 
@@ -205,16 +228,6 @@ def get_banner_detail(request, id):
 
 
 ########## hotel & resort views ##########
-# def get_hotel_resort(request):
-#     hotelResort = HotelResortSerializers(HotelResort.objects.all(), many=True)
-#     hotelResortImg = HotelResortImgSerializers(HotelResortImg.objects.all(), many=True)
-
-#     data = {
-#         "hotel" : hotelResort.data,
-#         "image" : hotelResortImg.data,
-#     }
-#     return JsonResponse({"data":data})
-
 @api_view(["PUT"])
 def modify_hotel_resort(request):
     hotelResort = HotelResort.objects.get(id=1)
@@ -222,5 +235,41 @@ def modify_hotel_resort(request):
     if serializer.is_valid():
         serializer.save()
         return JsonResponse({"status": "success", "message": "Hotel & resort section modified", "data":serializer.data})
+    else:
+        return JsonResponse({"status": "error", "message":serializer.errors})
+
+
+@api_view(["PUT"])
+def modify_hr_img(request, id):
+    hr_img = HotelResortImg.objects.get(id=id)
+    serializer = HotelResortImgSerializers(hr_img, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return JsonResponse({"status": "success", "message": "Hotel & resort image modified", "data":serializer.data})
+    else:
+        return JsonResponse({"status": "error", "message":serializer.errors})
+    
+
+
+
+
+########## manager views ##########
+@api_view(["PUT"])
+def modify_manager(request):
+    manager = Manager.objects.get(id=1)
+    serializer = ManagerSerializers(manager, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return JsonResponse({"status": "success", "message": "manager modified", "data":serializer.data})
+    else:
+        return JsonResponse({"status": "error", "message":serializer.errors})
+
+@api_view(["PUT"])
+def modify_managerImg(request):
+    managerImg = ManagerImg.objects.get(id=1)
+    serializer = ManagerImgSerializers(managerImg, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return JsonResponse({"status": "success", "message": "manager image modified", "data":serializer.data})
     else:
         return JsonResponse({"status": "error", "message":serializer.errors})

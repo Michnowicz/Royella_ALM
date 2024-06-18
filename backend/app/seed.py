@@ -173,3 +173,61 @@ def run_facility():
         })
         pks = seeder.execute()
         print(pks)
+
+
+
+
+
+
+def run_employeesImg():
+    seeder=Seed.seeder()
+    for i in range (0,4):
+        seeder.add_entity(EmployeesImg, 1, {
+            "image": lambda x: "/employee/e"+str(i+1)+".jpg"
+        })
+        pks = seeder.execute()
+        print(pks)
+    for i in range (1,7):
+        seeder.add_entity(EmployeesImg, 1, {
+            "image": lambda x: "/employee/member-"+str(i)+".jpg"
+        })
+        pks = seeder.execute()
+        print(pks)
+
+def run_employee():
+    firstnames = ["John D.", "Valentina", "Leary", "Samantha", "Casey"]
+    lastnames = ["Alexon", "Kerry", "Mart", "Shen", "Loyd"]
+    occupations = ["Manager", "Product Manager", "Sales Admin", "HR Officer", "Accountant"]
+    images = [5, 2, 7, 4, 9 ]
+
+    seeder=Seed.seeder()
+    for i in range(0,5):
+        seeder.add_entity(Employees, 1, {
+            "firstname": lambda x: firstnames[i],
+            "lastname": lambda x: lastnames[i],
+            "occupation": lambda x: occupations[i],
+            "image": lambda x: EmployeesImg.objects.get(id=images[i]), 
+        })
+        pks = seeder.execute()
+        print(pks)
+
+
+
+def run_managerImg():
+    seeder = Seed.seeder()
+    seeder.add_entity(ManagerImg, 1, {
+        "image": lambda x: "manager/m1.jpg",
+    })
+
+def run_manager():
+    seeder=Seed.seeder()
+    seeder.add_entity(Manager, 1, {
+            "title": lambda x: "MANAGER",
+            "subtitle": lambda x: "LUXURY BEST HOTEL IN CITY CALIFORNIA, USA",
+            "description": lambda x: "Rapidiously myocardinate cross-platform intellectual capital after model. Appropriately create interactive infrastructures after main Holisticly facilitate stand-alone inframe",
+            "video": lambda x: "https://www.youtube.com/watch?v=N28NyPl_8KI",
+            "manager": lambda x: Employees.objects.get(id=1),
+            "image": lambda x: ManagerImg.objects.get(id=1),
+        })
+    pks = seeder.execute()
+    print(pks)
