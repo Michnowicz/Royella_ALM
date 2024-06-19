@@ -58,7 +58,7 @@ const Banner = () => {
 
     return (
         <div className="Banner min-h-screen dark:bg-lightBlack">
-            <div className=" py-20 2xl:py-[120px] w-full bg-no-repeat bg-top bg-opacity-[0.07] flex flex-col gap-10">
+            <div className=" py-24 2xl:py-[120px] w-full bg-no-repeat bg-top bg-opacity-[0.07] flex flex-col gap-10">
                 <BannerCreate roomNumber={roomNumber} setBanners={setBanners} setRoomNumber={setRoomNumber}/>
 
                 <div className="Container bg-whiteSmoke dark:bg-normalBlack px-4 md:px-7 lg:px-11 2xl:px-17 py-7 md:py-11 lg:py-15 xl:py-17 2xl:py-[100px]">

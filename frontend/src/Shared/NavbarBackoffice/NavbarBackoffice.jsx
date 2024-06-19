@@ -5,9 +5,17 @@ import { IoMdClose } from "react-icons/io";
 import { BiChevronDown, BiSun } from "react-icons/bi";
 import { IoMoonSharp } from "react-icons/io5";
 import { useEffect, useState } from "react";
+import Log from "../../ALMcomponents/Log/LogBack"
 
 
-const NavbarBackoffice = () => {
+const NavbarBackoffice = ({user, setUser, token, setToken}) => {
+  // const [token, setToken] = useState("")
+  useEffect(()=>{
+    if (token != "") {
+      console.log(token);
+    }
+  },[token])
+
   // modal openar
   const [isOpen, setIsOpen] = useState(false);
   // dark mode toggle bar
@@ -129,7 +137,7 @@ const NavbarBackoffice = () => {
                   : isActive
                   ? "active"
                   : ""} ${navbarTextColor} hover:text-khaki dark:hover:text-khaki  lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 group relative`}
-              to="/backoffice"
+              to="/backoffice/dashboard"
             >
               <span className="flex items-center">
                 Home
@@ -172,6 +180,8 @@ const NavbarBackoffice = () => {
             >
               ROOMS
             </NavLink>
+
+            <Log scrollPosition={scrollPosition} token={token} setToken={setToken} user={user} setUser={setUser}/>
             
             {/* large device visible button and search icon */}
 

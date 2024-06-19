@@ -30,7 +30,7 @@ const Rooms = () => {
 
     return (
         <div className="Banner min-h-screen dark:bg-lightBlack dark:bg-lightBlack">
-            <div className=" py-20 2xl:py-[120px] w-full bg-no-repeat bg-top bg-opacity-[0.07]">
+            <div className=" py-24 2xl:py-[120px] w-full bg-no-repeat bg-top bg-opacity-[0.07]">
                 {
                     rooms != null && rooms.length > 0 ?
                     <RoomCreate/>

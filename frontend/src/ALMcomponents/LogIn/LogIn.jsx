@@ -32,7 +32,7 @@ export default function LogIn({logIn, setLogIn, setToken}) {
 
         const response = await axios.post("http://127.0.0.1:8000/api/login",user)
         .then(response => {
-            console.log(response.data)
+            // console.log(response.data)
             if (response.data.status == "success" ) {
                 localStorage.setItem("access_token", response.data.access_token)
                 setToken(response.data.access_token)

@@ -34,14 +34,10 @@ const Home1 = () => {
     console.log(response.data.data);
     setBanners(response.data.data.banner)
     setRooms(response.data.data.rooms)
-
     setHotelResort(response.data.data.hotelResort)
     setHotelResortImg(response.data.data.hotelResortImg)
-
     setRoomNumber(response.data.data.rooms.length)
-
     setFacilities(response.data.data.facility)
-
     setManager(response.data.data.manager)
   }
 

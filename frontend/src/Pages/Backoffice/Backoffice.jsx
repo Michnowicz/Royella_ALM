@@ -7,6 +7,7 @@ import "aos/dist/aos.css";
 import HelmetChanger from "../../Shared/Helmet/Helmet";
 import NavbarBackoffice from "../../Shared/NavbarBackoffice/NavbarBackoffice";
 import axios from "axios"
+import Connect from "./Connect/Connect";
 
 const Backoffice = () => {
   useEffect(() => {
@@ -14,8 +15,32 @@ const Backoffice = () => {
     AOS.refresh();
   }, []);
 
-  const [data, setData] = useState(null)
 
+  const [user, setUser] = useState(null)
+  const [token, setToken] = useState("")
+  useEffect(()=>{
+    console.log(token);
+    fetchToken()
+  },[token])
+  const fetchToken = async () => {
+    if (token !== "" && user == null) {
+      const response = await axios.get("http://127.0.0.1:8000/api/user/get",
+      {headers: {
+          'Authorization' : `Bearer ${token}`
+      }})
+      console.log(response.data.user);
+      setUser(response.data.user)
+    } else if (localStorage.getItem('access_token') !== null && localStorage.getItem('access_token') !== undefined && user == null) {
+      const response = await axios.get("http://127.0.0.1:8000/api/user/get",
+      {headers: {
+          'Authorization' : `Bearer ${localStorage.getItem('access_token')}`
+      }})
+      console.log(response.data.user);
+      setUser(response.data.user)
+    }
+  }
+
+  const [data, setData] = useState(null)
   useEffect(()=>{
     if (data == null) {
       fetchData()
@@ -27,14 +52,18 @@ const Backoffice = () => {
       setData(response.data.data)
   }
 
+  
+
   return (
     <>
       <HelmetChanger title="Hotel Booking" />
       <ScrollToTop />
       <GoToTop />
-      <NavbarBackoffice/>
+      <NavbarBackoffice setUser={setUser} user={user} token={token} setToken={setToken}/>
       <div>
-        {
+        { user == null ?
+          <Connect/>
+          :
           data  ?
           <Outlet context={[data]}/>
           :

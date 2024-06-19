@@ -6,13 +6,15 @@ import axios from "axios"
 import LogIn from "../LogIn/LogIn.jsx"
 import SignIn from "../SignIn/SignIn.jsx"
 
-const Log = () => {
+const Log = ({scrollPosition, token, setToken, user, setUser}) => {
+
+  const navbarTextColor =
+    scrollPosition > 100 ? "text-white dark:text-white" : "text-lightBlack dark:text-white";
 
   const [logIn, setLogIn] = useState(false)
   const [signIn, setSignIn] = useState(false)
-  const [token, setToken] = useState("")
+  // const [token, setToken] = useState("")
   const [message, setMessage] = useState("")
-  const [user, setUser] = useState({})
 
   const handleclick = (e) => {
     document.body.style.overflow = "hidden"
@@ -34,6 +36,7 @@ const Log = () => {
         setMessage(response.data.message)
         // console.log(response.data);
         setToken("")
+        setUser(null)
       }
     )
   }
@@ -49,10 +52,7 @@ const Log = () => {
       {headers: {
           'Authorization' : `Bearer ${token}`
       }})
-      .then(response => {
-          setUser(response.data.user)
-          // console.log(response.data);
-      })
+      // console.log(response.data);
   }
 
 
@@ -68,8 +68,8 @@ const Log = () => {
       <SignIn signIn={signIn} setSignIn={setSignIn}/>
 
       {/* {Connection menu} */}
-      <NavLink className={`text-lightBlack lg:text-white dark:text-white  lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 group relative `} to="#">
-        <span className="flex items-center pl-5 pr-5">
+      <NavLink className={ `${navbarTextColor}  lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 group relative `} to="#">
+        <span className="flex items-center pl-5 pr-5 ">
           CONNECTION
           <BiChevronDown className="ml-1"/>
         </span>
@@ -80,8 +80,8 @@ const Log = () => {
               <>
                 <div className=" px-5 group hover:bg-khaki hover:text-white">
                   {
-                    user.role != 2 ?
-                    <NavLink to="/backoffice/dashboard" className="py-2 block">
+                    user != null && user.role != 2 ?
+                    <NavLink to="/backoffice/dashboard" className={`py-2 block`}>
                       BACKOFFICE
                     </NavLink>
                     :
@@ -106,6 +106,7 @@ const Log = () => {
                     SIGN IN
                   </li>
                 </div>
+                
               </>
             }
           </ul>
