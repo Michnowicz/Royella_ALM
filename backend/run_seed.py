@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
     # seed.run_facilityImg()
     # seed.run_facilityIcon()
-    # seed.run_facility()
+    seed.run_facility()
 
     # seed.run_employeesImg()
     # seed.run_employee()

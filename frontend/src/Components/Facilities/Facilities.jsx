@@ -2,6 +2,8 @@ import { HiArrowLongRight } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 
 const Facilities = () => {
+  
+
   return (
     <div className="dark:bg-mediumBlack ">
       <section className="Container py-[120px] md:py-0 md:pb-[120px] lg:py-[120px]">
@@ -25,8 +27,11 @@ const Facilities = () => {
             </Link>
           </div>
         </div>
+
         {/* facilities container */}
         <div className="">
+
+          
           {/* facilities section -1  */}
           <hr className="text-[#e8e8e8] dark:text-[#383838] mb-10 mt-10" />
           <div
@@ -50,6 +55,7 @@ const Facilities = () => {
               <h4 className="text-base font-semibold text-khaki leading-[26px] pb-[6px] uppercase mt-2 md:mt-0">
                 Fitness
               </h4>
+
               <h1 className="text-2xl md:text-3xl 2xl:text-[32px] leading-[26px] font-semibold text-lightBlack dark:text-white">
                 <Link to="/service_details"> Gym Training Grounds</Link>
               </h1>
@@ -59,6 +65,7 @@ const Facilities = () => {
                 after model. Appropriately create interactive infrastructures
                 after are Holisticly facilitate stand-alone
               </p>
+
               <Link to="/service_details">
                 <HiArrowLongRight
                   size={30}
