@@ -55,12 +55,12 @@ def data_get(request):
             f["image"] = None
 
     # facility section
-    faciliesSection = FacilitySectionSerializers(FacilitySection.objects.all(), many=True)
-    for f in faciliesSection.data:
+    facilitiesSection = FacilitySectionSerializers(FacilitySection.objects.all(), many=True)
+    for f in facilitiesSection.data:
         try:
             f["facility_info"] = f["facility"]
             f["facility_info"] = FacilitySerializers(Facility.objects.get(id=f["facility"])).data
-            # f["facility_info"]["icon"] = FacilityIconSerializers(FacilityIcon.objects.get(id=f["facility_info"]["icon"])).data
+            f["facility_info"]["icon"] = FacilityIconSerializers(FacilityIcon.objects.get(id=f["facility_info"]["icon"])).data
             f["facility_info"]["image"] = FacilityImgSerializers(FacilityImg.objects.get(id=f["facility_info"]["image"])).data
         except Facility.DoesNotExist:
             f["facility_info"] = None
@@ -90,7 +90,7 @@ def data_get(request):
         "hotelResort" : hotelResort.data,
         "hotelResortImg" : hotelResortImg.data,
         "facility" : facilities.data,
-        "facilitySection" : faciliesSection.data,
+        "facilitySection" : facilitiesSection.data,
         "manager" : manager,
         "employees" : employees.data,
     }

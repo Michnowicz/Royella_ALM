@@ -69,11 +69,15 @@ const Facilities = ({facilitiesSection}) => {
                   data-aos-duration="1000"
                 >
                   <div className="relative w-full h-[100%] md:pr-[30px]">
-                    <img
-                      src={"http://127.0.0.1:8000"+f.facility.image.image}
-                      alt=""
-                      className="w-full h-full"
-                    />
+                    { f.facility_info.image != undefined ?
+                        <img
+                        src={"http://127.0.0.1:8000"+f.facility_info.image.image}
+                        alt=""
+                        className="w-full h-full"
+                        />
+                      :
+                      ""
+                    }
                     <div className=" hidden md:block absolute -top-[0px] md:-right-[12%] -right-[7%] xl:-right-[5%]">
                       <h2 className="text-3xl md:text-4xl lg:text-[40px] leading-[38px] text-khaki font-Garamond">
                         {`0${f.id}`}
@@ -127,11 +131,15 @@ const Facilities = ({facilitiesSection}) => {
                   </div>
 
                   <div className="w-full  md:pl-[30px] relative mt-5 md:mt-0">
-                    <img
-                      src={"http://127.0.0.1:8000"+f.facility.image.image}
-                      alt=""
-                      className="w-full h-full"
-                    />
+                    { f.facility_info.image != undefined ?
+                        <img
+                        src={"http://127.0.0.1:8000"+f.facility_info.image.image}
+                        alt=""
+                        className="w-full h-full"
+                        />
+                      :
+                      ""
+                    }
                     <div className="hidden md:block absolute -top-[0px] -left-[12%] xl:-left-[6%]">
                       <h1 className="text-3xl md:text-4xl lg:text-[40px] leading-[38px] text-khaki  font-Garamond">
                         {`0${f.id}`}
