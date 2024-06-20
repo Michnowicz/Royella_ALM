@@ -8,9 +8,9 @@ import { TbSwimming } from "react-icons/tb";
 
 const HotelAndFacilities = ({facilities}) => {
 
-  useEffect(()=>{
-    console.log(facilities);
-  },[facilities])
+  // useEffect(()=>{
+  //   console.log(facilities);
+  // },[facilities])
 
   return (
     <section className="bg-lightBlack z-[1]">

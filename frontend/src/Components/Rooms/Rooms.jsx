@@ -81,9 +81,9 @@ const Rooms = ({rooms}) => {
 
 
 
-  useEffect(()=>{
-    console.log(randomRoom);
-  },[randomRoom])
+  // useEffect(()=>{
+  //   console.log(randomRoom);
+  // },[randomRoom])
 
 
 

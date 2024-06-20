@@ -21,6 +21,7 @@ const Home1 = () => {
   const [roomNumber, setRoomNumber] = useState(null)
   
   const [facilities, setFacilities] = useState(null)
+  const [facilitiesSection, setFacilitiesSection] = useState(null)
   
   const [manager, setManager] = useState(null)
 
@@ -38,6 +39,8 @@ const Home1 = () => {
     setHotelResortImg(response.data.data.hotelResortImg)
     setRoomNumber(response.data.data.rooms.length)
     setFacilities(response.data.data.facility)
+    setFacilitiesSection(response.data.data.facilitySection)
+
     setManager(response.data.data.manager)
   }
 
@@ -69,7 +72,11 @@ const Home1 = () => {
         :
         <p>loading ...</p>
       }
-      <Facilities />
+      { facilitiesSection != null && facilitiesSection != undefined ?
+      <Facilities facilitiesSection={facilitiesSection}/>
+      :
+      ""
+      }
       <Offers />
       <Testimonial />
       <LatestBlog />

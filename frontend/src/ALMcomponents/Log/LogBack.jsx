@@ -75,18 +75,12 @@ const Log = ({scrollPosition, token, setToken, user, setUser}) => {
         </span>
         <div className="absolute pt-4 lg:pt-8 z-20">
           <ul className="shadow-2xl hidden group-hover:block rounded-sm bg-white text-black w-60 text-left dark:bg-normalBlack dark:text-white transition-all duration-500 text-sm  py-4">
-            {
-              token != "" ?
+              { user != null && user.role != 2 ?
               <>
                 <div className=" px-5 group hover:bg-khaki hover:text-white">
-                  {
-                    user != null && user.role != 2 ?
                     <NavLink to="/backoffice/dashboard" className={`py-2 block`}>
                       BACKOFFICE
                     </NavLink>
-                    :
-                    ""
-                  }
                 </div>
                 <div className=" px-5 group hover:bg-khaki hover:text-white">
                   <li className="hover:ml-3 duration-300 py-2" onClick={handleclick} id="disconnect">
@@ -94,7 +88,7 @@ const Log = ({scrollPosition, token, setToken, user, setUser}) => {
                   </li>
                 </div>
               </>
-              :
+                :
               <>
                 <div className="px-5 group hover:bg-khaki hover:text-white">
                   <li className="hover:ml-3 duration-300 py-2" onClick={handleclick} id="login">
@@ -106,9 +100,8 @@ const Log = ({scrollPosition, token, setToken, user, setUser}) => {
                     SIGN IN
                   </li>
                 </div>
-                
               </>
-            }
+              }
           </ul>
         </div>
         

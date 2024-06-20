@@ -161,10 +161,6 @@ def run_facilityIcon():
 
 def run_facility():
     titles = ["Room Services","Wi-Fi Internet","Smart Key","Breakfast","Swimming Pool","Room Service"]
-    categories = ["Rooms", "Connexion", "Protection", "Foods", "Fitness", "Rooms"]
-    subtitles = ["Full Room Service", "Best Connexion", "Protection Policy", "The Restaurant Center", "Indoor Swimming Pool", "Full Room Service"]
-    description = "Rapidiously myocardinate cross-platform intellectual capital after model. Appropriately create interactive infrastructures after are Holisticly facilitate stand-alone"
-    display = [0, 0, 0, 0, 0, 0]
     images = [1, 2, 3, 4, 5, 6]
     icons = [1, 2, 3, 4, 5, 1]
 
@@ -172,16 +168,28 @@ def run_facility():
     for i in range(6):
         seeder.add_entity(Facility, 1, {
             "title" : lambda x : titles[i],
-            "category" : lambda x: categories[i],
-            "subtitle" : lambda x: subtitles[i],
-            "description": lambda x: description,
-            "display": lambda x: display[i],
             "image" : lambda x : FacilityImg.objects.get(id=images[i]),
             "icon" : lambda x : FacilityIcon.objects.get(id=icons[i]),
         })
         pks = seeder.execute()
         print(pks)
 
+def run_facilitySection():
+    categories = ["Rooms", "Connexion", "Foods", "Fitness"]
+    subtitles = ["Full Room Service", "Best Connexion", "The Restaurant Center", "Indoor Swimming Pool"]
+    description = "Rapidiously myocardinate cross-platform intellectual capital after model. Appropriately create interactive infrastructures after are Holisticly facilitate stand-alone"
+    id = [1, 2, 4, 5]
+
+    seeder=Seed.seeder()
+    for i in range(4):
+        seeder.add_entity(FacilitySection, 1, {
+            "category" : lambda x: categories[i],
+            "subtitle" : lambda x: subtitles[i],
+            "description": lambda x: description,
+            "facility" : lambda x: Facility.objects.get(id=id[i]),
+        })
+        pks = seeder.execute()
+        print(pks)
 
 
 

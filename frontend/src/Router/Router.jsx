@@ -30,6 +30,7 @@ import RoomDetailsModify from "../Pages/Backoffice/Rooms/RoomsModify/RoomDetail/
 import HotelAndResort from "../Pages/Backoffice/HotelAndResort/HotelAndResort.jsx";
 import Manager from "../Pages/Backoffice/Manager/Manager.jsx"
 import Dashboard from "../Pages/Backoffice/Dashboard/Dashboard.jsx";
+import Facilities from "../Pages/Backoffice/Facilities/Facilities.jsx";
 
 // Starting React Router.
 const router = createBrowserRouter([
@@ -122,7 +123,11 @@ const router = createBrowserRouter([
       {
         path: "/backoffice/manager",
         element: <Manager/>,
-      }
+      },
+      {
+        path: "/backoffice/facilities",
+        element: <Facilities/>,
+      },
     ],
   },
 ]);

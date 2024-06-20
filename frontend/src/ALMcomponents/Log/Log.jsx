@@ -12,7 +12,7 @@ const Log = () => {
   const [signIn, setSignIn] = useState(false)
   const [token, setToken] = useState("")
   const [message, setMessage] = useState("")
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState(null)
 
   const handleclick = (e) => {
     document.body.style.overflow = "hidden"
@@ -34,25 +34,49 @@ const Log = () => {
         setMessage(response.data.message)
         // console.log(response.data);
         setToken("")
+        setUser(null)
       }
     )
   }
 
+  // const fetchTokenTwo = async () => {
+  //   if (token !== "" && user == null) {
+  //     const response = await axios.get("http://127.0.0.1:8000/api/user/get",
+  //     {headers: {
+  //         'Authorization' : `Bearer ${token}`
+  //     }})
+  //     console.log(response.data.user);
+  //     setUser(response.data.user)
+  //   } else if (localStorage.getItem('access_token') !== null && localStorage.getItem('access_token') !== undefined && user == null) {
+  //     const response = await axios.get("http://127.0.0.1:8000/api/user/get",
+  //     {headers: {
+  //         'Authorization' : `Bearer ${localStorage.getItem('access_token')}`
+  //     }})
+  //     console.log(response.data.user);
+  //     setUser(response.data.user)
+  //   }
+  // }
+
   // verify if the user is connected
   useEffect(()=>{
-    if (token != "") {
       fetchToken()
-    }
   },[token])
   const fetchToken = async () => {
+    if (token !== "" && user == null) {
       const response = await axios.get("http://127.0.0.1:8000/api/user/get",
       {headers: {
           'Authorization' : `Bearer ${token}`
       }})
-      .then(response => {
-          setUser(response.data.user)
-          // console.log(response.data);
-      })
+      console.log(response.data.user);
+      setUser(response.data.user)
+    } else if (localStorage.getItem('access_token') !== null && localStorage.getItem('access_token') !== undefined && user == null) {
+      const response = await axios.get("http://127.0.0.1:8000/api/user/get",
+      {headers: {
+          'Authorization' : `Bearer ${localStorage.getItem('access_token')}`
+      }})
+      console.log(response.data.user);
+      setUser(response.data.user)
+    }
   }
 
 
@@ -75,18 +99,12 @@ const Log = () => {
         </span>
         <div className="absolute pt-4 lg:pt-8 z-20">
           <ul className="shadow-2xl hidden group-hover:block rounded-sm bg-white text-black w-60 text-left dark:bg-normalBlack dark:text-white transition-all duration-500 text-sm  py-4">
-            {
-              token != "" ?
+          { user != null && user.role != 2 ?
               <>
                 <div className=" px-5 group hover:bg-khaki hover:text-white">
-                  {
-                    user.role != 2 ?
-                    <NavLink to="/backoffice/dashboard" className="py-2 block">
+                    <NavLink to="/backoffice/dashboard" className={`py-2 block`}>
                       BACKOFFICE
                     </NavLink>
-                    :
-                    ""
-                  }
                 </div>
                 <div className=" px-5 group hover:bg-khaki hover:text-white">
                   <li className="hover:ml-3 duration-300 py-2" onClick={handleclick} id="disconnect">
@@ -94,7 +112,7 @@ const Log = () => {
                   </li>
                 </div>
               </>
-              :
+                :
               <>
                 <div className="px-5 group hover:bg-khaki hover:text-white">
                   <li className="hover:ml-3 duration-300 py-2" onClick={handleclick} id="login">
@@ -107,7 +125,7 @@ const Log = () => {
                   </li>
                 </div>
               </>
-            }
+              }
           </ul>
         </div>
         

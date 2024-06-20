@@ -35,6 +35,9 @@ export default function Dashboard() {
                                 <NavLink to="/backoffice/manager" className="text-lightBlack dark:text-white dark:hover:text-khaki py-2 block pl-2 text-lg font-semibold hover:text-khaki">
                                     Manager
                                 </NavLink>
+                                <NavLink to="/backoffice/facilities" className="text-lightBlack dark:text-white dark:hover:text-khaki py-2 block pl-2 text-lg font-semibold hover:text-khaki">
+                                    Facilities
+                                </NavLink>
                             </div>
                             :
                             ""

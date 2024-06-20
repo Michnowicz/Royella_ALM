@@ -53,6 +53,18 @@ def data_get(request):
             f["image"] = FacilityImgSerializers(FacilityImg.objects.get(id=f["image"])).data
         except FacilityImg.DoesNotExist:
             f["image"] = None
+
+    # facility section
+    faciliesSection = FacilitySectionSerializers(FacilitySection.objects.all(), many=True)
+    for f in faciliesSection.data:
+        try:
+            f["facility_info"] = f["facility"]
+            f["facility_info"] = FacilitySerializers(Facility.objects.get(id=f["facility"])).data
+            # f["facility_info"]["icon"] = FacilityIconSerializers(FacilityIcon.objects.get(id=f["facility_info"]["icon"])).data
+            f["facility_info"]["image"] = FacilityImgSerializers(FacilityImg.objects.get(id=f["facility_info"]["image"])).data
+        except Facility.DoesNotExist:
+            f["facility_info"] = None
+
     
     # manager
     manager = ManagerSerializers(Manager.objects.get(id=1)).data
@@ -78,6 +90,7 @@ def data_get(request):
         "hotelResort" : hotelResort.data,
         "hotelResortImg" : hotelResortImg.data,
         "facility" : facilities.data,
+        "facilitySection" : faciliesSection.data,
         "manager" : manager,
         "employees" : employees.data,
     }
@@ -268,6 +281,21 @@ def modify_manager(request):
 def modify_managerImg(request):
     managerImg = ManagerImg.objects.get(id=1)
     serializer = ManagerImgSerializers(managerImg, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return JsonResponse({"status": "success", "message": "manager image modified", "data":serializer.data})
+    else:
+        return JsonResponse({"status": "error", "message":serializer.errors})
+    
+
+
+
+
+########## facilities views ##########
+@api_view(["PUT"])
+def modify_facility(request, id):
+    facility = FacilitySection.objects.get(id=id)
+    serializer = FacilitySectionSerializers(facility, data=request.data)
     if serializer.is_valid():
         serializer.save()
         return JsonResponse({"status": "success", "message": "manager image modified", "data":serializer.data})

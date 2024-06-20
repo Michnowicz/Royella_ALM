@@ -112,12 +112,14 @@ class FacilityIcon(models.Model):
 
 class Facility(models.Model):
     title = models.CharField(max_length=32)
-    category = models.CharField(max_length=32)
-    subtitle = models.CharField(max_length=48)
-    description = models.CharField(max_length=255)
-    display = models.IntegerField()
     icon = models.ForeignKey(FacilityIcon, on_delete=models.SET_NULL, null=True)
     image = models.ForeignKey(FacilityImg, on_delete=models.SET_NULL, null=True)
+
+class FacilitySection(models.Model):
+    category = models.CharField(max_length=32, default="")
+    subtitle = models.CharField(max_length=48, default="")
+    description = models.CharField(max_length=255, default="")
+    facility = models.ForeignKey(Facility,on_delete=models.SET_NULL, null=True)
 
 
 

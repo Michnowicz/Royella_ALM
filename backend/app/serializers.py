@@ -72,7 +72,10 @@ class FacilityIconSerializers(serializers.ModelSerializer):
         model = FacilityIcon
         fields = '__all__'
 
-
+class FacilitySectionSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = FacilitySection
+        fields = '__all__'
 
 
 

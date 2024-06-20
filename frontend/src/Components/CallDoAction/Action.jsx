@@ -7,11 +7,11 @@ import FsLightbox from "fslightbox-react";
 const Action = ({manager}) => {
   const [toggler, setToggler] = useState(false);
 
-  useEffect(()=>{
-    if (manager != null) {
-      console.log(manager);
-    }
-  },[])
+  // useEffect(()=>{
+  //   if (manager != null) {
+  //     console.log(manager);
+  //   }
+  // },[])
 
   return (
     <div className="dark:bg-mediumBlack dark:z-[-1]">

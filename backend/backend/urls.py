@@ -37,4 +37,7 @@ urlpatterns = [
     path("api/manager/modify", modify_manager),
     path("api/managerImg/modify", modify_managerImg),
 
+    # facility
+    path("api/facilitysection/modify/<int:id>", modify_facility),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

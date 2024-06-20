@@ -19,7 +19,7 @@ const Backoffice = () => {
   const [user, setUser] = useState(null)
   const [token, setToken] = useState("")
   useEffect(()=>{
-    console.log(token);
+    // console.log(token);
     fetchToken()
   },[token])
   const fetchToken = async () => {
@@ -28,14 +28,14 @@ const Backoffice = () => {
       {headers: {
           'Authorization' : `Bearer ${token}`
       }})
-      console.log(response.data.user);
+      // console.log(response.data.user);
       setUser(response.data.user)
     } else if (localStorage.getItem('access_token') !== null && localStorage.getItem('access_token') !== undefined && user == null) {
       const response = await axios.get("http://127.0.0.1:8000/api/user/get",
       {headers: {
           'Authorization' : `Bearer ${localStorage.getItem('access_token')}`
       }})
-      console.log(response.data.user);
+      // console.log(response.data.user);
       setUser(response.data.user)
     }
   }

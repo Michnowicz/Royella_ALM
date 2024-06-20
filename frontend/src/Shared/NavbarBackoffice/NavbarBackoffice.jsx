@@ -166,6 +166,13 @@ const NavbarBackoffice = ({user, setUser, token, setToken}) => {
                       </NavLink>
                     </li>
                   </div>
+                  <div className=" px-5 group hover:bg-khaki hover:text-white">
+                    <li className="hover:ml-3 duration-300  ">
+                      <NavLink to="/backoffice/facilities" className="py-2 block">
+                        Facilities
+                      </NavLink>
+                    </li>
+                  </div>
                 </ul>
               </div>
             </NavLink>
