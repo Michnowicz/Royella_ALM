@@ -8,6 +8,7 @@ import HelmetChanger from "../../Shared/Helmet/Helmet";
 import NavbarBackoffice from "../../Shared/NavbarBackoffice/NavbarBackoffice";
 import axios from "axios"
 import Connect from "./Connect/Connect";
+import Access from "./Access/Access";
 
 const Backoffice = () => {
   useEffect(() => {
@@ -63,6 +64,9 @@ const Backoffice = () => {
       <div>
         { user == null ?
           <Connect/>
+          :
+          user.role == 2 ?
+          <Access/>
           :
           data  ?
           <Outlet context={[data]}/>

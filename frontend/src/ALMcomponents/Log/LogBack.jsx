@@ -89,6 +89,13 @@ const Log = ({scrollPosition, token, setToken, user, setUser}) => {
                 </div>
               </>
                 :
+                user != null && user.role == 2 ?
+                <div className=" px-5 group hover:bg-khaki hover:text-white">
+                  <li className="hover:ml-3 duration-300 py-2" onClick={handleclick} id="disconnect">
+                    DISCONNECT
+                  </li>
+                </div>
+                :
               <>
                 <div className="px-5 group hover:bg-khaki hover:text-white">
                   <li className="hover:ml-3 duration-300 py-2" onClick={handleclick} id="login">
