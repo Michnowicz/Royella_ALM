@@ -137,7 +137,7 @@ class Contact(models.Model):
 
 # blog
 class BlogImg(models.Model):
-    image = models.ImageField()
+    image = models.ImageField(upload_to="blog/")
 
 class Categories(models.Model):
     name = models.CharField(max_length=32)
@@ -145,5 +145,6 @@ class Categories(models.Model):
 class Blog(models.Model):
     title = models.CharField(max_length=125, default="")
     image = models.ForeignKey(BlogImg, on_delete=models.SET_NULL, null=True)
+    data = models.DateField()
     category = models.ManyToManyField(Categories)
 

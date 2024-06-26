@@ -247,3 +247,27 @@ def run_manager():
         })
     pks = seeder.execute()
     print(pks)
+
+
+
+
+def run_blogImg():
+    seeder=Seed.seeder()
+    
+    for i in range(1,9):
+        seeder.add_entity(BlogImg, 1, {
+            "image" : lambda x: "blog/b"+str(i)+".jpg",
+        })
+        pks = seeder.execute()
+        print(pks)
+
+def run_categories():
+    seeder=Seed.seeder()
+    categories = ["Luxury Hotels", "Restaurants", "Spa Center", "Health Club", "Industrial", "Uncategories"]
+
+    for i in range(6):
+        seeder.add_entity(Categories, 1, {
+            "name" : lambda x: categories[i],
+        })
+        pks = seeder.execute()
+        print(pks)
