@@ -130,3 +130,20 @@ class Contact(models.Model):
     street = models.CharField(max_length=64)
     city = models.CharField(max_length=32)
     postal_code = models.CharField(max_length=5, validators=[RegexValidator('\d', message="The postal code must be a number.")])
+
+
+
+
+
+# blog
+class BlogImg(models.Model):
+    image = models.ImageField()
+
+class Categories(models.Model):
+    name = models.CharField(max_length=32)
+
+class Blog(models.Model):
+    title = models.CharField(max_length=125, default="")
+    image = models.ForeignKey(BlogImg, on_delete=models.SET_NULL, null=True)
+    category = models.ManyToManyField(Categories)
+
