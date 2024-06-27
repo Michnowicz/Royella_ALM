@@ -2,7 +2,7 @@ from django_seed import Seed
 from .models import *
 import random
 from django.contrib.auth.hashers import make_password
-
+from datetime import datetime  
 
 def run_roles():
     roles = ["admin","user","receptionist","editor","webmaster"]
@@ -271,3 +271,36 @@ def run_categories():
         })
         pks = seeder.execute()
         print(pks)
+
+def run_tags():
+    seeder=Seed.seeder()
+    tags = ["Luxury Hotels", "Interior Design", "Spa Center", "Luxury Restaurant", "Luxury Hotel", "Health Club"]
+
+    for i in range(6):
+        seeder.add_entity(Tags, 1, {
+            "name" : lambda x: tags[i],
+        })
+        pks = seeder.execute()
+        print(pks)
+
+def run_blogs():
+    titles = ["How to Book a Room online Step by Step Guide",
+            "How to Book a Room online Step by Step Guide",
+            "5 Discount Period every year for Valuable Clients",
+            "Luxury Hotel for Traveling Spot USA, California",
+            "Luxury Hotel for Traveling Spot Europe, Berlin",
+            "Top 10 Best Hotel & Resort in Sandigo, USA",
+            "Best Hotels around Europe",
+            "Best Hotel In Asia"
+            ]
+    dates = ["2023-10-08", "2024-04-29", "2022-04-30", "2024-06-13","2023-07-02","2022-08-28","2023-09-11","2023-10-21"]
+    images=[1,2,3,4,5,6,7,8]
+    categories=[1,2,3,1,2,4,5,6]
+    tags=[[1,2,3],[2,3,4],[3,4,5],[5,6,1],[1,5],[3,6],[4,2],[1]]
+
+    for i in range(len(titles)):
+        b1 = Blog(title=titles[i], date=dates[i], image=BlogImg.objects.get(id=images[i]), category=Categories.objects.get(id=categories[i]))
+        b1.save()
+        for j in range(len(tags[i])):
+            t = Tags.objects.get(id=tags[i][j])
+            b1.tags.add(t)

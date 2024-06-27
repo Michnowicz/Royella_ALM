@@ -142,9 +142,14 @@ class BlogImg(models.Model):
 class Categories(models.Model):
     name = models.CharField(max_length=32)
 
+class Tags(models.Model):
+    name = models.CharField(max_length=32)
+
 class Blog(models.Model):
     title = models.CharField(max_length=125, default="")
     image = models.ForeignKey(BlogImg, on_delete=models.SET_NULL, null=True)
-    data = models.DateField()
-    category = models.ManyToManyField(Categories)
+    date = models.DateField()
+    tags = models.ManyToManyField(Tags)
+    category = models.ForeignKey(Categories, on_delete=models.SET_NULL, null=True)
+
 

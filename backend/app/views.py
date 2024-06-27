@@ -301,3 +301,9 @@ def modify_facility(request, id):
         return JsonResponse({"status": "success", "message": "manager image modified", "data":serializer.data})
     else:
         return JsonResponse({"status": "error", "message":serializer.errors})
+    
+
+
+
+
+########## blog views ##########

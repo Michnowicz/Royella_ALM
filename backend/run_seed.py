@@ -26,4 +26,6 @@ if __name__ == "__main__":
     # seed.run_manager()
 
     # seed.run_blogImg()
-    seed.run_categories()
+    # seed.run_categories()
+    # seed.run_tags()
+    seed.run_blogs()
