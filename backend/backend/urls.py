@@ -42,5 +42,6 @@ urlpatterns = [
 
     #blogs
     path("api/blogs/get", get_blogs),
+    path("api/searchbar/get", get_searchBar),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

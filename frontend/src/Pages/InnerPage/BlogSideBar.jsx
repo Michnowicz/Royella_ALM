@@ -1,11 +1,49 @@
 import { FaSearch } from "react-icons/fa";
 import { BiChevronsRight } from "react-icons/bi";
 import { Link } from "react-router-dom";
-const BlogSideBar = ({search ,setSearch}) => {
+import axios from "axios";
+import { useState, useEffect } from "react";
+
+const BlogSideBar = ({search ,setSearch,setCategorySearch}) => {
+  const [tags, setTags] = useState(null)
+  const [categories, setCategories] = useState(null)
+
+
+  useEffect(()=>{
+    fetchData()
+  },[])
+  const fetchData = async () => {
+    const response = await axios.get("http://127.0.0.1:8000/api/searchbar/get")
+    // console.log(response.data.data);
+    setTags(response.data.data.tags)
+    setCategories(response.data.data.categories)
+  }
+  
   const handleSearch = (e) => {
     setSearch(e.target.value.toLowerCase())
   }
+  const handleCategory = (category) => {
+    if (category === "Uncategories") {
+      setCategorySearch("")
+    } else {
+      setCategorySearch(category)
+    }
+  }
 
+
+
+  useEffect(()=>{
+    if (tags !== null) {
+      console.log(tags);
+    }
+    if (categories !== null) {
+      console.log(categories);
+    }
+  },[tags, categories])
+
+
+
+  
   return (
     <>
       {/* blog search bar*/}
@@ -108,60 +146,23 @@ const BlogSideBar = ({search ,setSearch}) => {
         </h2>
         <div className="pt-10">
           <ul className=" " data-aos="fade-up" data-aos-duration="1000">
-            <li className="flex items-center group transition-all duration-300 border-b-[1px] cursor-pointer border-lightGray dark:border-gray pb-3 ">
-              <BiChevronsRight
-                size={16}
-                className="text-lightBlack dark:text-white group-hover:text-khaki mr-2"
-              />
-              <span className="text-sm xl:text-base 2xl:text-lg leading-[26px] text-lightBlack group-hover:text-khaki font-medium font-Garamond dark:text-white">
-                Luxury Hotels
-              </span>
-            </li>
-            <li className="flex items-center group transition-all duration-300 border-b-[1px] cursor-pointer border-lightGray dark:border-gray py-3">
-              <BiChevronsRight
-                size={16}
-                className="text-lightBlack dark:text-white group-hover:text-khaki mr-2"
-              />
-              <span className="text-sm xl:text-base 2xl:text-lg leading-[26px] text-lightBlack group-hover:text-khaki font-medium font-Garamond dark:text-white">
-                Restaurants
-              </span>
-            </li>
-            <li className="flex items-center group transition-all duration-300 border-b-[1px] cursor-pointer border-lightGray dark:border-gray py-3">
-              <BiChevronsRight
-                size={16}
-                className="text-lightBlack dark:text-white group-hover:text-khaki mr-2"
-              />
-              <span className="text-sm xl:text-base 2xl:text-lg leading-[26px] text-lightBlack group-hover:text-khaki font-medium font-Garamond dark:text-white">
-                SPA Center
-              </span>
-            </li>
-            <li className="flex items-center group transition-all duration-300 border-b-[1px] cursor-pointer border-lightGray dark:border-gray py-3">
-              <BiChevronsRight
-                size={16}
-                className="text-lightBlack dark:text-white group-hover:text-khaki mr-2"
-              />
-              <span className="text-sm xl:text-base 2xl:text-lg leading-[26px] text-lightBlack group-hover:text-khaki font-medium font-Garamond dark:text-white">
-                Health Club
-              </span>
-            </li>
-            <li className="flex items-center group transition-all duration-300 border-b-[1px] cursor-pointer border-lightGray dark:border-gray py-3">
-              <BiChevronsRight
-                size={16}
-                className="text-lightBlack dark:text-white group-hover:text-khaki mr-2"
-              />
-              <span className="text-sm xl:text-base 2xl:text-lg leading-[26px] text-lightBlack group-hover:text-khaki font-medium font-Garamond dark:text-white">
-                Industrial
-              </span>
-            </li>
-            <li className="flex items-center group transition-all duration-300 cursor-pointer pt-3">
-              <BiChevronsRight
-                size={16}
-                className="text-lightBlack dark:text-white group-hover:text-khaki mr-2"
-              />
-              <span className="text-sm xl:text-base 2xl:text-lg leading-[26px] text-lightBlack group-hover:text-khaki font-medium font-Garamond dark:text-white">
-                Uncategories
-              </span>
-            </li>
+            { categories !== null ?
+              categories.map((c,i)=>(
+                <li className="flex items-center group transition-all duration-300 border-b-[1px] cursor-pointer border-lightGray dark:border-gray pb-3" key={i}>
+                  <BiChevronsRight
+                    size={16}
+                    className="text-lightBlack dark:text-white group-hover:text-khaki mr-2"
+                  />
+                  <span className="text-sm xl:text-base 2xl:text-lg leading-[26px] text-lightBlack group-hover:text-khaki font-medium font-Garamond dark:text-white"
+                  onClick={()=>handleCategory(c.name)}
+                  >
+                    {c.name}
+                  </span>
+                </li>
+              ))
+              :
+              ""
+            }
           </ul>
         </div>
       </div>
@@ -172,31 +173,17 @@ const BlogSideBar = ({search ,setSearch}) => {
         </h2>
         <div className="pt-10 " data-aos="fade-up" data-aos-duration="1000">
           <div className="grid items-center grid-cols-2 md:grid-cols-1 2xl:grid-cols-2 gap-3 sm:gap-5  ">
-            <div className="px-2 sm:px-4 py-2 bg-white dark:bg-lightBlack hover:bg-khaki transition-all duration-300 group">
-              <h1 className="text-sm sm:text-base leading-6 lg:leading-[30px] font-Garamond text-[#101010] dark:text-white font-medium  group-hover:text-white">
-                Luxury Hotel
-              </h1>
-            </div>
-            <div className="px-2 sm:px-4 py-2 bg-white dark:bg-lightBlack hover:bg-khaki transition-all duration-300 group">
-              <h1 className="text-sm sm:text-base leading-6 lg:leading-[30px] font-Garamond text-[#101010] dark:text-white font-medium  group-hover:text-white">
-                Interior Design
-              </h1>
-            </div>
-            <div className="px-2 sm:px-4 py-2 bg-white dark:bg-lightBlack hover:bg-khaki transition-all duration-300 group">
-              <h1 className="text-sm sm:text-base leading-6 lg:leading-[30px] font-Garamond text-[#101010] dark:text-white font-medium  group-hover:text-white">
-                SPA Center
-              </h1>
-            </div>
-            <div className="px-2 sm:px-4 py-2 bg-white dark:bg-lightBlack hover:bg-khaki transition-all duration-300 group">
-              <h1 className="text-sm sm:text-base leading-6 lg:leading-[30px] font-Garamond text-[#101010] dark:text-white font-medium  group-hover:text-white">
-                Luxury Restaurant
-              </h1>
-            </div>
-            <div className="px-2 sm:px-4 py-2 bg-white dark:bg-lightBlack hover:bg-khaki transition-all duration-300 group">
-              <h1 className="text-sm sm:text-base leading-6 lg:leading-[30px] font-Garamond text-[#101010] dark:text-white font-medium  group-hover:text-white">
-                Luxury Hotel
-              </h1>
-            </div>
+            { tags !== null ?
+              tags.map((t,i)=>(
+              <div className="px-2 sm:px-4 py-2 bg-white dark:bg-lightBlack hover:bg-khaki transition-all duration-300 group" key={i}>
+                <h1 className="text-sm sm:text-base leading-6 lg:leading-[30px] font-Garamond text-[#101010] dark:text-white font-medium  group-hover:text-white">
+                  {t.name}
+                </h1>
+              </div>
+              ))
+              :
+              ""
+            }
           </div>
         </div>
       </div>

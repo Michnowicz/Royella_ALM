@@ -310,3 +310,13 @@ def modify_facility(request, id):
 def get_blogs(request):
     blogs = BlogSerializers(Blog.objects.all(), many=True)
     return JsonResponse({"blogs":blogs.data})
+
+def get_searchBar(request):
+    tags = TagsSerializers(Tags.objects.all(), many=True)
+    categories = CategoriesSerializers(Categories.objects.all(), many=True)
+
+    data = {
+        "tags": tags.data,
+        "categories": categories.data,
+    }
+    return JsonResponse({"data":data})

@@ -8,23 +8,23 @@ import { useEffect, useState } from "react";
 const Blog = () => {
   const [blogs, setBlogs] = useState(null)
   const [search, setSearch] = useState("")
+  const [categorySearch, setCategorySearch] = useState("")
   const months = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"]
 
   useEffect(()=>{
     fetchBlog()
   },[])
-
   const fetchBlog = async () => {
     const response = await axios.get("http://127.0.0.1:8000/api/blogs/get")
-    // console.log(response.data.blogs);
+    console.log(response.data.blogs);
     setBlogs(response.data.blogs)
   }
 
-  useEffect(()=>{
-    if (blogs !== null) {
-      console.log(blogs);
-    }
-  },[blogs])
+  // useEffect(()=>{
+  //   if (blogs !== null) {
+  //     console.log(blogs);
+  //   }
+  // },[blogs])
   useEffect(()=>{
     if (search !== "") {
       console.log(search);
@@ -43,7 +43,7 @@ const Blog = () => {
               {/* Blog */}
               {
                 blogs != null ?
-                blogs.filter(b => b.title.toLowerCase().includes(search)).map((b,i)=>(
+                blogs.filter(b => b.title.toLowerCase().includes(search) && b.category.name.includes(categorySearch)).map((b,i)=>(
                   <div
                     className="overflow-hidden 3xl:w-[410px] group"
                     data-aos="fade-up"
@@ -148,7 +148,7 @@ const Blog = () => {
           </div>
           <div className="col-span-6 md:col-span-3 lg:col-span-2">
             {/* imported Blog Sidebar */}
-            <BlogSideBar search={search} setSearch={setSearch}/>
+            <BlogSideBar search={search} setSearch={setSearch} setCategorySearch={setCategorySearch} />
           </div>
         </div>
       </div>
