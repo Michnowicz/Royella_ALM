@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 const Blog = () => {
   const [blogs, setBlogs] = useState(null)
+  const [search, setSearch] = useState("")
   const months = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"]
 
   useEffect(()=>{
@@ -24,6 +25,11 @@ const Blog = () => {
       console.log(blogs);
     }
   },[blogs])
+  useEffect(()=>{
+    if (search !== "") {
+      console.log(search);
+    }
+  },[search])
 
 
 
@@ -37,7 +43,7 @@ const Blog = () => {
               {/* Blog */}
               {
                 blogs != null ?
-                blogs.map((b,i)=>(
+                blogs.filter(b => b.title.toLowerCase().includes(search)).map((b,i)=>(
                   <div
                     className="overflow-hidden 3xl:w-[410px] group"
                     data-aos="fade-up"
@@ -142,7 +148,7 @@ const Blog = () => {
           </div>
           <div className="col-span-6 md:col-span-3 lg:col-span-2">
             {/* imported Blog Sidebar */}
-            <BlogSideBar />
+            <BlogSideBar search={search} setSearch={setSearch}/>
           </div>
         </div>
       </div>

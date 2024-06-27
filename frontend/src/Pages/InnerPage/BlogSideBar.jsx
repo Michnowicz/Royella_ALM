@@ -1,7 +1,11 @@
 import { FaSearch } from "react-icons/fa";
 import { BiChevronsRight } from "react-icons/bi";
 import { Link } from "react-router-dom";
-const BlogSideBar = () => {
+const BlogSideBar = ({search ,setSearch}) => {
+  const handleSearch = (e) => {
+    setSearch(e.target.value.toLowerCase())
+  }
+
   return (
     <>
       {/* blog search bar*/}
@@ -16,6 +20,8 @@ const BlogSideBar = () => {
             type="text"
             className=" px-5 py-[5px] w-full h-12 md:h-14 text-base
                   border-none outline-none rounded-md text-gray dark:text-lightGray focus:border-none placeholder:text-[#515151] focus:ring-0 focus:outline-none dark:bg-lightBlack"
+            value={search}
+            onChange={handleSearch}
           />
           <Link
             to="#"
