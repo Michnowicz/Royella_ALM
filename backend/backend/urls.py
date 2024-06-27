@@ -40,4 +40,7 @@ urlpatterns = [
     # facility
     path("api/facilitysection/modify/<int:id>", modify_facility),
 
+    #blogs
+    path("api/blogs/get", get_blogs),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

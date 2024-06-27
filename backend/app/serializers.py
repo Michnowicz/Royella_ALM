@@ -99,3 +99,32 @@ class ManagerSerializers(serializers.ModelSerializer):
     class Meta:
         model = Manager
         fields = '__all__'
+
+
+
+
+
+########## blogs & categories & tags ##########
+class CategoriesSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Categories
+        fields= '__all__'
+
+class TagsSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Tags
+        fields= '__all__'
+
+class BlogImgSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = BlogImg
+        fields = '__all__'
+
+class BlogSerializers(serializers.ModelSerializer):
+    tags = TagsSerializers(read_only=True, many=True)
+    category = CategoriesSerializers(read_only=True)
+    image = BlogImgSerializers(read_only=True)
+
+    class Meta:
+        model = Blog
+        fields = '__all__'

@@ -307,3 +307,6 @@ def modify_facility(request, id):
 
 
 ########## blog views ##########
+def get_blogs(request):
+    blogs = BlogSerializers(Blog.objects.all(), many=True)
+    return JsonResponse({"blogs":blogs.data})
