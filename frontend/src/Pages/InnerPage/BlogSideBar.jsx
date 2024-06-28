@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-const BlogSideBar = ({search ,setSearch,setCategorySearch}) => {
+const BlogSideBar = ({search ,setSearch,setCategorySearch, tagSearch, setTagSearch}) => {
   const [tags, setTags] = useState(null)
   const [categories, setCategories] = useState(null)
 
@@ -29,17 +29,52 @@ const BlogSideBar = ({search ,setSearch,setCategorySearch}) => {
       setCategorySearch(category)
     }
   }
-
-
-
-  useEffect(()=>{
-    if (tags !== null) {
-      console.log(tags);
+  const handleTag = (e,tag) => {
+    // console.log(e.target.nodeName);
+    if (tagSearch === tag) {
+      setTagSearch("")
+    } else {
+      setTagSearch(tag)
     }
-    if (categories !== null) {
-      console.log(categories);
+
+    // div color on click
+    if (e.target.nodeName === "DIV") {
+      Array.from(e.target.parentElement.children).forEach(element => {
+        if (element.className.includes("bg-white") && e.target.id === element.id) {
+          console.log(element.id);
+          element.className = "px-2 sm:px-4 py-2 bg-khaki text-white dark:bg-lightBlack transition-all duration-300 group"
+          element.firstChild.className = "text-sm sm:text-base leading-6 lg:leading-[30px] font-Garamond text-white dark:text-white font-medium  group-hover:text-white"
+        } else {
+          element.className = "px-2 sm:px-4 py-2 bg-white dark:bg-lightBlack hover:bg-khaki transition-all duration-300 group"
+          element.firstChild.className = "text-sm sm:text-base leading-6 lg:leading-[30px] font-Garamond text-[#101010] dark:text-white font-medium  group-hover:text-white"
+        }
+      });
+    } else {
+      Array.from(e.target.parentElement.parentElement.children).forEach(element => {
+        if (element.className.includes("bg-white") && e.target.parentElement.id === element.id) {
+          console.log(element.id);
+          element.className = "px-2 sm:px-4 py-2 bg-khaki text-white dark:bg-lightBlack transition-all duration-300 group"
+          element.firstChild.className = "text-sm sm:text-base leading-6 lg:leading-[30px] font-Garamond text-white dark:text-white font-medium  group-hover:text-white"
+        } else {
+          element.className = "px-2 sm:px-4 py-2 bg-white dark:bg-lightBlack hover:bg-khaki transition-all duration-300 group"
+          element.firstChild.className = "text-sm sm:text-base leading-6 lg:leading-[30px] font-Garamond text-[#101010] dark:text-white font-medium  group-hover:text-white"
+        }
+      });
     }
-  },[tags, categories])
+  }
+
+
+
+
+  // useEffect(()=>{
+  //   if (tags !== null) {
+  //     console.log(tags);
+  //   }
+  //   if (categories !== null) {
+  //     console.log(categories);
+  //   }
+  //   console.log(tagSearch);
+  // },[tags, categories, tagSearch])
 
 
 
@@ -175,7 +210,8 @@ const BlogSideBar = ({search ,setSearch,setCategorySearch}) => {
           <div className="grid items-center grid-cols-2 md:grid-cols-1 2xl:grid-cols-2 gap-3 sm:gap-5  ">
             { tags !== null ?
               tags.map((t,i)=>(
-              <div className="px-2 sm:px-4 py-2 bg-white dark:bg-lightBlack hover:bg-khaki transition-all duration-300 group" key={i}>
+              <div className="px-2 sm:px-4 py-2 bg-white dark:bg-lightBlack hover:bg-khaki transition-all duration-300 group" id={i} key={i}
+              onClick={(e)=>handleTag(e,t.name)}>
                 <h1 className="text-sm sm:text-base leading-6 lg:leading-[30px] font-Garamond text-[#101010] dark:text-white font-medium  group-hover:text-white">
                   {t.name}
                 </h1>

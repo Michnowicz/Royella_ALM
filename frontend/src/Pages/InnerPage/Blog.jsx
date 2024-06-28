@@ -9,8 +9,10 @@ const Blog = () => {
   const [blogs, setBlogs] = useState(null)
   const [filteredBlogs, setFilteredBlogs] = useState(null)
   const [paginatedBlogs, setPaginatedBlogs] = useState(null)
+
   const [search, setSearch] = useState("")
   const [categorySearch, setCategorySearch] = useState("")
+  const [tagSearch, setTagSearch] = useState("")
 
   const [page, setPage] = useState(0)
   const [pageNumber, setPageNumber] = useState(0)
@@ -34,14 +36,32 @@ const Blog = () => {
   useEffect(()=>{
     if (blogs !== null) {
       // filter all blogs by category
-      const filter = blogs.filter(b => b.category.name.includes(categorySearch))
+      const filtered = blogs.filter(b => b.category.name.includes(categorySearch))
       // setFilteredBlogs(blogs.filter(b => b.title.toLowerCase().includes(search) && b.category.name.includes(categorySearch)))
-      setFilteredBlogs(filter)
-      getPageNumber(filter.length)
+      if (tagSearch === "") {
+        setFilteredBlogs(filtered)
+        getPageNumber(filtered.length)
+      } else {
+        const tagged = []
+        filtered.forEach(f => {
+          // console.log(f.tags);
+          f.tags.forEach(tag => {
+            if (tag.name === tagSearch) {
+              tagged.push(f)
+            }
+          });
+        });
+        setFilteredBlogs(tagged)
+        getPageNumber(tagged.length)
+        // console.log(filtered[0].tags[0].name.includes(tagSearch));
+      }
+
+      // setFilteredBlogs(filtered)
+      // getPageNumber(filtered.length)
       setPage(1)
-      // console.log(filter);
+      // console.log(filtered);
     }
-  },[categorySearch])
+  },[categorySearch, tagSearch])
 
   useEffect(()=>{
     if (filteredBlogs !== null) {
@@ -52,7 +72,7 @@ const Blog = () => {
           setPaginatedBlogs(filteredBlogs.slice(0, 6))
         } else {
           const n = page * 6
-          console.log(n);
+          // console.log(n);
           if (filteredBlogs.length < n) {
             // console.log(filteredBlogs.slice((n - 1)));
             setPaginatedBlogs(filteredBlogs.slice(n - 6))
@@ -63,9 +83,9 @@ const Blog = () => {
       }
     }
   },[page, filteredBlogs])
-  useEffect(()=>{
-    console.log(paginatedBlogs);
-  },[paginatedBlogs])
+  // useEffect(()=>{
+  //   console.log(paginatedBlogs);
+  // },[paginatedBlogs])
 
   const getPageNumber = (pageLength) => {
     // number of pages for pagination
@@ -94,23 +114,22 @@ const Blog = () => {
       setPage(page-1)
     } else if (e.target.id === "pageNumber") {
       setPage(parseInt(e.target.innerText))
-      // console.log(e.target.innerText);
     }
   }
 
 
 
 
-  useEffect(()=>{
-    if (page !== null) {
-      console.log(page);
-    }
-  },[page])
-  useEffect(()=>{
-    if (pageNumber !== null) {
-      console.log(pageNumber);
-    }
-  },[pageNumber])
+  // useEffect(()=>{
+  //   if (page !== null) {
+  //     console.log(page);
+  //   }
+  // },[page])
+  // useEffect(()=>{
+  //   if (pageNumber !== null) {
+  //     console.log(pageNumber);
+  //   }
+  // },[pageNumber])
   // useEffect(()=>{
   //   if (search !== "") {
   //     console.log(search);
@@ -132,7 +151,7 @@ const Blog = () => {
               {
                 paginatedBlogs != null ?
                 // blogs.filter(b => b.title.toLowerCase().includes(search) && b.category.name.includes(categorySearch)).map((b,i)=>(
-                  paginatedBlogs.map((b,i)=>(
+                  paginatedBlogs.filter(b => b.title.toLowerCase().includes(search)).map((b,i)=>(
                   <div
                     className="overflow-hidden 3xl:w-[410px] group"
                     data-aos="fade-up"
@@ -240,7 +259,7 @@ const Blog = () => {
           </div>
           <div className="col-span-6 md:col-span-3 lg:col-span-2">
             {/* imported Blog Sidebar */}
-            <BlogSideBar search={search} setSearch={setSearch} setCategorySearch={setCategorySearch} />
+            <BlogSideBar search={search} setSearch={setSearch} setCategorySearch={setCategorySearch} setTagSearch={setTagSearch} tagSearch={tagSearch} />
           </div>
         </div>
       </div>
