@@ -7,29 +7,117 @@ import { useEffect, useState } from "react";
 
 const Blog = () => {
   const [blogs, setBlogs] = useState(null)
+  const [filteredBlogs, setFilteredBlogs] = useState(null)
+  const [paginatedBlogs, setPaginatedBlogs] = useState(null)
   const [search, setSearch] = useState("")
   const [categorySearch, setCategorySearch] = useState("")
+
+  const [page, setPage] = useState(0)
+  const [pageNumber, setPageNumber] = useState(0)
   const months = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"]
+
+
 
   useEffect(()=>{
     fetchBlog()
   },[])
   const fetchBlog = async () => {
     const response = await axios.get("http://127.0.0.1:8000/api/blogs/get")
-    console.log(response.data.blogs);
+    // console.log(response.data.blogs);
     setBlogs(response.data.blogs)
+    setFilteredBlogs(response.data.blogs)
+
+    getPageNumber(response.data.blogs.length)
+    setPage(1)
   }
 
-  // useEffect(()=>{
-  //   if (blogs !== null) {
-  //     console.log(blogs);
-  //   }
-  // },[blogs])
   useEffect(()=>{
-    if (search !== "") {
-      console.log(search);
+    if (blogs !== null) {
+      // filter all blogs by category
+      const filter = blogs.filter(b => b.category.name.includes(categorySearch))
+      // setFilteredBlogs(blogs.filter(b => b.title.toLowerCase().includes(search) && b.category.name.includes(categorySearch)))
+      setFilteredBlogs(filter)
+      getPageNumber(filter.length)
+      setPage(1)
+      // console.log(filter);
     }
-  },[search])
+  },[categorySearch])
+
+  useEffect(()=>{
+    if (filteredBlogs !== null) {
+      if (filteredBlogs.length <= 6) {
+        setPaginatedBlogs(filteredBlogs)
+      } else {
+        if (page === 1) {
+          setPaginatedBlogs(filteredBlogs.slice(0, 6))
+        } else {
+          const n = page * 6
+          console.log(n);
+          if (filteredBlogs.length < n) {
+            // console.log(filteredBlogs.slice((n - 1)));
+            setPaginatedBlogs(filteredBlogs.slice(n - 6))
+          } else {
+            setPaginatedBlogs(filteredBlogs.slice(n - 6, n))
+          }
+        }
+      }
+    }
+  },[page, filteredBlogs])
+  useEffect(()=>{
+    console.log(paginatedBlogs);
+  },[paginatedBlogs])
+
+  const getPageNumber = (pageLength) => {
+    // number of pages for pagination
+    const n = pageLength
+    const pages = []
+    if (n < 6) {
+      pages.push(1)
+    } else if (n % 6 === 0) {
+      for (let index = 1; index <= Math.floor(n/6); index++) {
+        pages.push(index)
+      }
+    } else {
+      for (let index = 1; index <= (Math.floor(n/6)+1); index++) {
+        pages.push(index)
+      }
+    }
+    // console.log(pages);
+    setPageNumber(pages)
+  }
+
+
+  const changePage = (e) => {
+    if (e.target.id === "arrowRight" && page < pageNumber.length) {
+      setPage(page+1)
+    } else if (e.target.id === "arrowLeft" && page > 1) {
+      setPage(page-1)
+    } else if (e.target.id === "pageNumber") {
+      setPage(parseInt(e.target.innerText))
+      // console.log(e.target.innerText);
+    }
+  }
+
+
+
+
+  useEffect(()=>{
+    if (page !== null) {
+      console.log(page);
+    }
+  },[page])
+  useEffect(()=>{
+    if (pageNumber !== null) {
+      console.log(pageNumber);
+    }
+  },[pageNumber])
+  // useEffect(()=>{
+  //   if (search !== "") {
+  //     console.log(search);
+  //   }
+  // },[search])
+
+
 
 
 
@@ -42,8 +130,9 @@ const Blog = () => {
             <div className="grid items-center gap-5 2xl:gap-y-[30px] grid-cols-1 lg:grid-cols-2">
               {/* Blog */}
               {
-                blogs != null ?
-                blogs.filter(b => b.title.toLowerCase().includes(search) && b.category.name.includes(categorySearch)).map((b,i)=>(
+                paginatedBlogs != null ?
+                // blogs.filter(b => b.title.toLowerCase().includes(search) && b.category.name.includes(categorySearch)).map((b,i)=>(
+                  paginatedBlogs.map((b,i)=>(
                   <div
                     className="overflow-hidden 3xl:w-[410px] group"
                     data-aos="fade-up"
@@ -56,7 +145,6 @@ const Blog = () => {
                         // src="/images/home-1/blog-1.jpg "
                         className="w-full h-full object-cover"
                         alt=""
-                        
                       />
                     </div>
                     <div className="font-Garamond border border-[#ddd] dark:border-gray border-t-0">
@@ -107,43 +195,47 @@ const Blog = () => {
                 ""
               }
             </div>
-            <div className="flex items-center gap-3 mt-10">
-              <span className="w-[40px] h-[40px] lg:w-[50px] lg:h-[50px]  dark:bg-lightBlack border-[1px] border-lightGray dark:border-gray bg-white  hover:bg-khaki dark:hover:bg-khaki grid items-center justify-center  cursor-pointer group">
+            <div className="flex items-center gap-3 mt-10" onClick={(e) =>changePage(e)}>
+              <span className="w-[40px] h-[40px] lg:w-[50px] lg:h-[50px]  dark:bg-lightBlack border-[1px] border-lightGray dark:border-gray bg-white  hover:bg-khaki dark:hover:bg-khaki grid items-center justify-center  cursor-pointer group"
+              id="arrowLeft"
+              >
                 <BsArrowLeft
                   size={20}
                   className="text-lightBlack dark:text-white group-hover:text-white"
+                  id="arrowLeft"
                 />
               </span>
-              <span className="w-[40px] h-[40px] lg:w-[50px] lg:h-[50px]  dark:bg-lightBlack border-[1px] border-lightGray dark:border-gray bg-white  hover:bg-khaki dark:hover:bg-khaki grid items-center justify-center font-semibold cursor-pointer group">
-                <span
-                  size={20}
-                  className="text-lightBlack dark:text-white group-hover:text-white"
+              { pageNumber !== null ?
+              Array.from(pageNumber).map((p,i)=>(
+                <span className="w-[40px] h-[40px] lg:w-[50px] lg:h-[50px]  dark:bg-lightBlack border-[1px] border-lightGray dark:border-gray bg-white  hover:bg-khaki dark:hover:bg-khaki grid items-center justify-center font-semibold cursor-pointer group" 
+                key={i}
+                value = {p}
+                id = "pageNumber"
                 >
-                  1
+                  <span
+                    size={20}
+                    className="text-lightBlack dark:text-white group-hover:text-white"
+                    value = {p}
+                    id = "pageNumber"
+                  >
+                    {p}
+                  </span>
                 </span>
-              </span>
-              <span className="w-[40px] h-[40px] lg:w-[50px] lg:h-[50px]  dark:bg-lightBlack border-[1px] border-lightGray dark:border-gray bg-white  hover:bg-khaki dark:hover:bg-khaki grid items-center justify-center font-semibold cursor-pointer group">
-                <span
-                  size={20}
-                  className="text-lightBlack dark:text-white group-hover:text-white"
-                >
-                  2
-                </span>
-              </span>
-              <span className="w-[40px] h-[40px] lg:w-[50px] lg:h-[50px]  dark:bg-lightBlack border-[1px] border-lightGray dark:border-gray bg-white  hover:bg-khaki dark:hover:bg-khaki grid items-center justify-center font-semibold cursor-pointer group">
-                <span
-                  size={20}
-                  className="text-lightBlack dark:text-white group-hover:text-white"
-                >
-                  3
-                </span>
-              </span>
-              <span className="w-[40px] h-[40px] lg:w-[50px] lg:h-[50px]  dark:bg-lightBlack border-[1px] border-lightGray dark:border-gray bg-white  hover:bg-khaki dark:hover:bg-khaki grid items-center justify-center  cursor-pointer group">
+              ))
+                :
+                ""
+              }
+
+              <span className="w-[40px] h-[40px] lg:w-[50px] lg:h-[50px]  dark:bg-lightBlack border-[1px] border-lightGray dark:border-gray bg-white  hover:bg-khaki dark:hover:bg-khaki grid items-center justify-center  cursor-pointer group"
+              id="arrowRight"
+              >
                 <BsArrowRight
                   size={20}
                   className="text-lightBlack dark:text-white group-hover:text-white"
+                  id="arrowRight"
                 />
               </span>
+
             </div>
           </div>
           <div className="col-span-6 md:col-span-3 lg:col-span-2">
