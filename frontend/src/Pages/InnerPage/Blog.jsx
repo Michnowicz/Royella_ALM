@@ -37,7 +37,6 @@ const Blog = () => {
     if (blogs !== null) {
       // filter all blogs by category
       const filtered = blogs.filter(b => b.category.name.includes(categorySearch))
-      // setFilteredBlogs(blogs.filter(b => b.title.toLowerCase().includes(search) && b.category.name.includes(categorySearch)))
       if (tagSearch === "") {
         setFilteredBlogs(filtered)
         getPageNumber(filtered.length)
@@ -53,13 +52,8 @@ const Blog = () => {
         });
         setFilteredBlogs(tagged)
         getPageNumber(tagged.length)
-        // console.log(filtered[0].tags[0].name.includes(tagSearch));
       }
-
-      // setFilteredBlogs(filtered)
-      // getPageNumber(filtered.length)
       setPage(1)
-      // console.log(filtered);
     }
   },[categorySearch, tagSearch])
 
@@ -112,12 +106,23 @@ const Blog = () => {
       setPage(page+1)
     } else if (e.target.id === "arrowLeft" && page > 1) {
       setPage(page-1)
-    } else if (e.target.id === "pageNumber") {
+    } else if (e.target.id === "pageNumber" || e.target.id === "pageNumberSpan") {
       setPage(parseInt(e.target.innerText))
     }
   }
 
-
+  useEffect(()=>{
+    const spans = document.querySelectorAll("#pageNumberSpan");
+    Array.from(spans).forEach(s => {
+      if (s.getAttribute("value") == page) {
+        s.className = "w-[40px] h-[40px] lg:w-[50px] lg:h-[50px]  dark:bg-khaki border-[1px] border-khaki dark:border-gray bg-khaki  hover:bg-khaki dark:hover:bg-khaki grid items-center justify-center font-semibold cursor-pointer group"
+        s.firstChild.className = "text-white dark:text-white group-hover:text-white"
+      } else {
+        s.className = "w-[40px] h-[40px] lg:w-[50px] lg:h-[50px]  dark:bg-lightBlack border-[1px] border-lightGray dark:border-gray bg-white  hover:bg-khaki dark:hover:bg-khaki grid items-center justify-center  cursor-pointer group"
+        s.firstChild.className = "text-lightBlack dark:text-white group-hover:text-white"
+      }
+    });
+  },[page])
 
 
   // useEffect(()=>{
@@ -187,7 +192,7 @@ const Blog = () => {
                           </h2>
                         </Link>
                       </div>
-                      <div className="  border-t-[1px] border-[#ddd] dark:border-gray py-2 sm:py-3 md:py-4 xl:py-5">
+                      <div className="border-t-[1px] border-[#ddd] dark:border-gray py-2 sm:py-3 md:py-4 xl:py-5">
                         <Link
                           to={`/blog_details/${b.id}`}
                           className="px-[30px] flex items-center justify-between "
@@ -226,10 +231,11 @@ const Blog = () => {
               </span>
               { pageNumber !== null ?
               Array.from(pageNumber).map((p,i)=>(
-                <span className="w-[40px] h-[40px] lg:w-[50px] lg:h-[50px]  dark:bg-lightBlack border-[1px] border-lightGray dark:border-gray bg-white  hover:bg-khaki dark:hover:bg-khaki grid items-center justify-center font-semibold cursor-pointer group" 
+                <span
+                className="w-[40px] h-[40px] lg:w-[50px] lg:h-[50px]  dark:bg-lightBlack border-[1px] border-lightGray dark:border-gray bg-white  hover:bg-khaki dark:hover:bg-khaki grid items-center justify-center font-semibold cursor-pointer group" 
                 key={i}
                 value = {p}
-                id = "pageNumber"
+                id = "pageNumberSpan"
                 >
                   <span
                     size={20}
