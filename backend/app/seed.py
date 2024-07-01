@@ -2,7 +2,8 @@ from django_seed import Seed
 from .models import *
 import random
 from django.contrib.auth.hashers import make_password
-from datetime import datetime  
+from datetime import datetime
+from faker import Faker
 
 def run_roles():
     roles = ["admin","user","receptionist","editor","webmaster"]
@@ -18,12 +19,11 @@ def run_roles():
 
 
 def run_user_images():
-    images = ["dc.jpg", "furi.png", "hn.png", "samus.png", "sk.png"]
     seeder = Seed.seeder()
 
     for i in range (5):
         seeder.add_entity(UserImg, 1, {
-            "image" : lambda x : "user/" + images[i],
+            "image" : lambda x : "user/u3.png",
         })
         pks = seeder.execute()
         print(pks)
@@ -251,15 +251,7 @@ def run_manager():
 
 
 
-def run_blogImg():
-    seeder=Seed.seeder()
-    
-    for i in range(1,9):
-        seeder.add_entity(BlogImg, 1, {
-            "image" : lambda x: "blog/b"+str(i)+".jpg",
-        })
-        pks = seeder.execute()
-        print(pks)
+
 
 def run_categories():
     seeder=Seed.seeder()
@@ -293,14 +285,94 @@ def run_blogs():
             "Best Hotels around Europe",
             "Best Hotel In Asia"
             ]
-    dates = ["2023-10-08", "2024-04-29", "2022-04-30", "2024-06-13","2023-07-02","2022-08-28","2023-09-11","2023-10-21"]
+    textTitles = "Rapidiously myocardinate cross-platform intellectual capital after marketing model. Appropriately create interactive infrastructures after maintainable are Holisticly facilitate stand-alone inframe extend state of the art benefits via web-enabled value. Completely fabricate extensible infomediaries rather than reliable e-services. Dramatically whiteboard alternative\n\nConveniently fashion pandemic potentialities for team driven technologies. Proactively orchestrate robust systems rather than user-centric vortals. Distinctively seize top-line e-commerce with premier intellectual capital. Efficiently strategize goal-oriented"
+    sb = "Rules & Regulations"
+    sbText = "Collaboratively redefine cutting-edge infrastructures whereas open main convergence energistically simplify discover. Quickly leverage others collaborative innovation after next- generation applications."
+    # sbList = ["Phosfluorescently envisioneer process done.", "Rapidiously deliver progressive experiences rather", "Professionally actualize intuitive products via multifunctiona.", "Conveniently extend covalent metrics."]
+    sbTextTwo = "Interactively visualize top-line internal or organic sources rather than top-line niche markets. Continually unleash 24/7 opportunities after high standards in process improvements. Uniquely deploy impactful are methodologies with reliable information. Synergistically revolutionize fully researched manufactured items with optimal materials competently envisioneer.\n\nHolisticly innovate global ROI with user-centric total linkage. Collaboratively e-enable efficient markets with multifunctional e-business. Continually incentivize sustainable products for B2B"
+    dates = ["2023-10-08", "2024-04-29", "2022-04-30", "2024-01-13","2023-07-02","2022-08-28","2023-09-11","2023-10-21"]
     images=[1,2,3,4,5,6,7,8]
     categories=[1,2,3,1,2,4,5,6]
     tags=[[1,2,3],[2,3,4],[3,4,5],[5,6,1],[1,5],[3,6],[4,2],[1]]
 
-    for i in range(len(titles)):
-        b1 = Blog(title=titles[i], date=dates[i], image=BlogImg.objects.get(id=images[i]), category=Categories.objects.get(id=categories[i]))
+
+    for i in range(15):
+        # print(random.randint(0, len(titles)-1))
+        fake = Faker()
+        b1 = Blog(
+                title=titles[random.randint(0, len(titles)-1)],
+                title_text = textTitles,
+                subtitle = sb,
+                subtitle_text = sbText,
+                subtitle_text2 = sbTextTwo,
+                subtitle_list1 = fake.paragraph(nb_sentences=1),
+                subtitle_list2 = fake.paragraph(nb_sentences=1),
+                subtitle_list3 = fake.paragraph(nb_sentences=1),
+                subtitle_list4 = fake.paragraph(nb_sentences=1),
+                date=dates[random.randint(0, len(titles)-1)],
+                # image=BlogImg.objects.get(id=images[random.randint(0, len(titles)-1)]),
+                category=Categories.objects.get(id=categories[random.randint(0, len(titles)-1)])
+                )
         b1.save()
-        for j in range(len(tags[i])):
-            t = Tags.objects.get(id=tags[i][j])
+        random_tags = random.randint(0,7)
+        for j in range(len(tags[random_tags])):
+            t = Tags.objects.get(id=tags[random_tags][j])
             b1.tags.add(t)
+
+def run_blogImg():
+    seeder=Seed.seeder()
+    
+    for i in range(1,16):
+        for j in range(3):
+            seeder.add_entity(BlogImg, 1, {
+                "blog" : lambda x : Blog.objects.get(id=i),
+                "image" : lambda x : "blog/b"+str(random.randint(1, 8))+".jpg",
+            })
+            pks = seeder.execute()
+            print(pks)
+
+def run_comment():
+    seeder=Seed.seeder()
+
+    dates = ["2024-05-20", "2024-05-10", "2024-05-03", "2024-05-12", "2024-05-07"]
+    
+    for i in range(20):
+        fake = Faker()
+        name = fake.first_name()
+        last_name = fake.last_name()
+        sentences = random.randint(1,3)
+        text = fake.paragraph(nb_sentences=sentences)
+
+        seeder.add_entity(Comment, 1, {
+            "blog" : lambda x : Blog.objects.get(id=random.randint(1,14)),
+            "name" : lambda x :name+""+last_name,
+            "email" : lambda x : name+"@mail.com",
+            "date" : lambda x : dates[random.randint(0,4)],
+            "text" : lambda x : sentences,
+            "image" : lambda x : "user/u"+str(random.randint(1,3))+".png",
+        })
+        pks = seeder.execute()
+        print(pks)
+
+def run_reply():
+    seeder=Seed.seeder()
+
+    dates = ["2024-06-20", "2024-06-10", "2024-06-03", "2024-06-12", "2024-06-07"]
+    
+    for i in range(10):
+        fake = Faker()
+        name = fake.first_name()
+        last_name = fake.last_name()
+        sentences = random.randint(1,3)
+        text = fake.paragraph(nb_sentences=sentences)
+
+        seeder.add_entity(Reply, 1, {
+            "comment" : lambda x : Comment.objects.get(id=random.randint(1,20)),
+            "name" : lambda x :name+""+last_name,
+            "email" : lambda x : name+"@mail.com",
+            "date" : lambda x : dates[random.randint(0,4)],
+            "text" : lambda x : sentences,
+            "image" : lambda x : "user/u"+str(random.randint(1,3))+".png",
+        })
+        pks = seeder.execute()
+        print(pks)

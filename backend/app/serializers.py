@@ -115,16 +115,30 @@ class TagsSerializers(serializers.ModelSerializer):
         model = Tags
         fields= '__all__'
 
-class BlogImgSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = BlogImg
-        fields = '__all__'
 
 class BlogSerializers(serializers.ModelSerializer):
     tags = TagsSerializers(read_only=True, many=True)
     category = CategoriesSerializers(read_only=True)
-    image = BlogImgSerializers(read_only=True)
+    # image = BlogImgSerializers(read_only=True)
 
     class Meta:
         model = Blog
+        fields = '__all__'
+
+class BlogImgSerializers(serializers.ModelSerializer):
+    blogs = BlogSerializers(read_only=True, many=True)
+    class Meta:
+        model = BlogImg
+        fields = '__all__'
+
+class CommentSerializers(serializers.ModelSerializer):
+    # blog = BlogSerializers(read_only=True, many=True)
+    class Meta:
+        model = Comment
+        fields = '__all__'
+
+class ReplySerializers(serializers.ModelSerializer):
+    # comment = CommentSerializers(read_only=True, many=True)
+    class Meta:
+        model = Reply
         fields = '__all__'

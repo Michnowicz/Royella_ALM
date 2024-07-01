@@ -309,7 +309,11 @@ def modify_facility(request, id):
 ########## blog views ##########
 def get_blogs(request):
     blogs = BlogSerializers(Blog.objects.all(), many=True)
+    for b in blogs.data:
+        images =  BlogImgSerializers(BlogImg.objects.filter(blog_id=b["id"]), many=True)
+        b["images"] = images.data
     return JsonResponse({"blogs":blogs.data})
+
 
 def get_searchBar(request):
     tags = TagsSerializers(Tags.objects.all(), many=True)

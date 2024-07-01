@@ -136,8 +136,7 @@ class Contact(models.Model):
 
 
 # blog
-class BlogImg(models.Model):
-    image = models.ImageField(upload_to="blog/")
+
 
 class Categories(models.Model):
     name = models.CharField(max_length=32)
@@ -147,9 +146,36 @@ class Tags(models.Model):
 
 class Blog(models.Model):
     title = models.CharField(max_length=125, default="")
-    image = models.ForeignKey(BlogImg, on_delete=models.SET_NULL, null=True)
+    title_text = models.TextField()
+    subtitle = models.CharField(max_length=125, default="")
+    subtitle_text = models.TextField()
+    subtitle_text2 = models.TextField()
+    subtitle_list1 = models.CharField(max_length=125)
+    subtitle_list2 = models.CharField(max_length=125)
+    subtitle_list3 = models.CharField(max_length=125)
+    subtitle_list4 = models.CharField(max_length=125)
+    # image = models.ForeignKey(BlogImg, on_delete=models.SET_NULL, null=True)
     date = models.DateField()
     tags = models.ManyToManyField(Tags)
     category = models.ForeignKey(Categories, on_delete=models.SET_NULL, null=True)
 
 
+class BlogImg(models.Model):
+    blog = models.ForeignKey(Blog, on_delete=models.SET_NULL, null=True)
+    image = models.ImageField(upload_to="blog/")
+
+class Comment(models.Model):
+    blog = models.ForeignKey(Blog, on_delete=models.SET_NULL, null=True)
+    name = models.CharField(max_length=150)
+    email = models.CharField(max_length=150, null=True)
+    date = models.DateField()
+    text = models.TextField()
+    image = models.CharField(max_length=255)
+
+class Reply(models.Model):
+    comment = models.ForeignKey(Comment, on_delete=models.SET_NULL, null=True)
+    name = models.CharField(max_length=150)
+    email = models.CharField(max_length=150, null=True)
+    date = models.DateField()
+    text = models.TextField()
+    image = models.CharField(max_length=255)

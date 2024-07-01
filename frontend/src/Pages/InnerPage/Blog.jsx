@@ -135,11 +135,6 @@ const Blog = () => {
   //     console.log(pageNumber);
   //   }
   // },[pageNumber])
-  // useEffect(()=>{
-  //   if (search !== "") {
-  //     console.log(search);
-  //   }
-  // },[search])
 
 
 
@@ -165,7 +160,7 @@ const Blog = () => {
                   >
                     <div className="relative w-full h-full">
                       <img
-                        src={"http://127.0.0.1:8000"+b.image.image}
+                        src={"http://127.0.0.1:8000"+b.images[0].image}
                         // src="/images/home-1/blog-1.jpg "
                         className="w-full h-full object-cover"
                         alt=""
