@@ -324,3 +324,27 @@ def get_searchBar(request):
         "categories": categories.data,
     }
     return JsonResponse({"data":data})
+
+def get_popular_post(request):
+    blogs = BlogSerializers(Blog.objects.all(), many=True)
+    popular_posts = []
+    max_count = []
+    for b in blogs.data:
+        images =  BlogImgSerializers(BlogImg.objects.filter(blog_id=b["id"]), many=True)
+        b["images"] = images.data
+        comments = CommentSerializers(Comment.objects.filter(blog_id=b["id"]), many=True)
+        b["comments"] = len(comments.data)
+        for c in comments.data:
+            replies = ReplySerializers(Reply.objects.filter(comment_id=c["id"]), many=True)
+            b["comments"] += len(replies.data)
+        max_count.append(b["comments"])
+
+    print(max_count)
+    max_count.sort(reverse=True)
+
+    for m in max_count:
+        for b in blogs.data:
+            if b["comments"] == m and len(popular_posts) < 3:
+                popular_posts.append(b)
+    
+    return JsonResponse({"count":max_count, "blogs":popular_posts})
