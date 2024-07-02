@@ -348,7 +348,7 @@ def run_comment():
             "name" : lambda x :name+""+last_name,
             "email" : lambda x : name+"@mail.com",
             "date" : lambda x : dates[random.randint(0,4)],
-            "text" : lambda x : sentences,
+            "text" : lambda x : text,
             "image" : lambda x : "user/u"+str(random.randint(1,3))+".png",
         })
         pks = seeder.execute()
@@ -371,7 +371,7 @@ def run_reply():
             "name" : lambda x :name+""+last_name,
             "email" : lambda x : name+"@mail.com",
             "date" : lambda x : dates[random.randint(0,4)],
-            "text" : lambda x : sentences,
+            "text" : lambda x : text,
             "image" : lambda x : "user/u"+str(random.randint(1,3))+".png",
         })
         pks = seeder.execute()

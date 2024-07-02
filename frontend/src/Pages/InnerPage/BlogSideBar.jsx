@@ -7,16 +7,23 @@ import { useState, useEffect } from "react";
 const BlogSideBar = ({search ,setSearch,setCategorySearch, tagSearch, setTagSearch}) => {
   const [tags, setTags] = useState(null)
   const [categories, setCategories] = useState(null)
+  const [posts, setPosts] = useState(null)
+  const months = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"]
 
 
   useEffect(()=>{
     fetchData()
+    fetchPopularPosts()
   },[])
   const fetchData = async () => {
     const response = await axios.get("http://127.0.0.1:8000/api/searchbar/get")
     // console.log(response.data.data);
     setTags(response.data.data.tags)
     setCategories(response.data.data.categories)
+  }
+  const fetchPopularPosts = async () => {
+    const response = await axios.get("http://127.0.0.1:8000/api/popularpost/get")
+    setPosts(response.data.blogs)
   }
   
   const handleSearch = (e) => {
@@ -53,14 +60,10 @@ const BlogSideBar = ({search ,setSearch,setCategorySearch, tagSearch, setTagSear
 
 
   // useEffect(()=>{
-  //   if (tags !== null) {
-  //     console.log(tags);
+  //   if (posts !== null) {
+  //     console.log(posts);
   //   }
-  //   if (categories !== null) {
-  //     console.log(categories);
-  //   }
-  //   console.log(tagSearch);
-  // },[tags, categories, tagSearch])
+  // },[posts])
 
 
 
@@ -97,66 +100,35 @@ const BlogSideBar = ({search ,setSearch,setCategorySearch, tagSearch, setTagSear
           Popular Post
         </h2>
         <div className="pt-10">
+          { posts != undefined ?
+          posts.map((p,i)=>(
           <Link
-            to="/blog_details"
-            className="flex items-center"
+            to={`/blog_details/${p.id}`}
+            className={i==0 ? "flex items-center" : "mt-5 md:mt-[30px] flex items-center"}
             data-aos="fade-up"
             data-aos-duration="1000"
+            key={i}
           >
             <img
-              src="/images/inner/details-post-1.jpg"
+              // src="/images/inner/details-post-1.jpg"
+              src={"http://127.0.0.1:8000"+p.images[0].image}
               className=" mr-3 2xl:mr-5 "
+              style={{height: "80px", width: "80px" }}
               alt=""
             />
             <div className="text-left">
               <h4 className="text-base 2xl:text-lg leading-6 text-[#101010] dark:text-white font-medium font-Garamond hover:underline underline-offset-4">
-                5 Discount Period every year for Valuable Clients
+                {p.title}
               </h4>
               <p className="text-sm md:text-[13px] 2xl:text-sm leading-[26px] font-Lora text-gray dark:text-lightGray font-normal">
-                August 10, 2023
+              {months[parseInt(p.date.slice(5,7))-1]} {p.date.slice(8,10)}, {p.date.slice(0,4)}
               </p>
             </div>
           </Link>
-          <Link
-            to="/blog_details"
-            className="mt-5 md:mt-[30px] flex items-center"
-            data-aos="fade-up"
-            data-aos-duration="1000"
-          >
-            <img
-              src="/images/inner/details-post-2.jpg"
-              className=" mr-3 2xl:mr-5 "
-              alt=""
-            />
-            <div className="text-left">
-              <h4 className="text-base 2xl:text-lg leading-6 text-[#101010] dark:text-white font-medium font-Garamond hover:underline underline-offset-4">
-                Pre Booking Benifits for the Traveller on our Hotel
-              </h4>
-              <p className="text-sm md:text-[13px] 2xl:text-sm leading-[26px] font-Lora text-gray dark:text-lightGray font-normal">
-                October 10, 2023
-              </p>
-            </div>
-          </Link>
-          <Link
-            to="/blog_details"
-            className="mt-5 md:mt-[30px] flex items-center"
-            data-aos="fade-up"
-            data-aos-duration="1000"
-          >
-            <img
-              src="/images/inner/details-post-3.jpg"
-              className=" mr-3 2xl:mr-5 "
-              alt=""
-            />
-            <div className="text-left">
-              <h4 className="text-base 2xl:text-lg leading-6 text-[#101010] dark:text-white font-medium font-Garamond hover:underline underline-offset-4">
-                How to Book a Room online Step by Step Guide
-              </h4>
-              <p className="text-sm md:text-[13px] 2xl:text-sm leading-[26px] font-Lora text-gray dark:text-lightGray font-normal">
-                September 10, 2023
-              </p>
-            </div>
-          </Link>
+          ))
+          :
+          ""
+          }
         </div>
       </div>
 

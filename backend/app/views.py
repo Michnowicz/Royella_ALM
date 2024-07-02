@@ -347,4 +347,18 @@ def get_popular_post(request):
             if b["comments"] == m and len(popular_posts) < 3:
                 popular_posts.append(b)
     
-    return JsonResponse({"count":max_count, "blogs":popular_posts})
+    return JsonResponse({"blogs":popular_posts})
+
+
+def get_blog_detail(request,id):
+    blog = BlogSerializers(Blog.objects.get(id=id)).data
+    blog["images"] =  BlogImgSerializers(BlogImg.objects.filter(blog=blog["id"]), many=True).data
+
+    blog["comments"] = CommentSerializers(Comment.objects.filter(blog_id=blog["id"]), many=True).data
+    count = len(blog["comments"])
+    for c in blog["comments"]:
+        c["replies"] = ReplySerializers(Reply.objects.filter(comment_id=c["id"]), many=True).data
+        count += len(c["replies"])
+
+
+    return JsonResponse({"blog":blog, "count": count})
