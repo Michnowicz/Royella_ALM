@@ -46,4 +46,7 @@ urlpatterns = [
     path("api/searchbar/get", get_searchBar),
     path("api/popularpost/get", get_popular_post),
 
+    #comments
+    path("api/comments/create", create_comment),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

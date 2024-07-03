@@ -362,3 +362,14 @@ def get_blog_detail(request,id):
 
 
     return JsonResponse({"blog":blog, "count": count})
+
+
+@api_view(["PUT"])
+def create_comment(request):
+    comment = CommentSerializers(data=request.data)
+    if comment.is_valid():
+        comment.save()
+        comments = CommentSerializers(Comment.objects.all(), many=True)
+        return JsonResponse({"status": "success", "message": "banner created successfully", "data":comments.data})
+    else:
+        return JsonResponse({"status": "error", "message": comment.errors})

@@ -14,6 +14,7 @@ const BlogDetails = () => {
   const {id} = useParams()
   const [blog, setBlog] = useState(null)
   const [count, setCount] = useState(0)
+  const [comment, setComment] = useState("")
 
 
   useEffect(()=>{
@@ -25,14 +26,42 @@ const BlogDetails = () => {
     setCount(response.data.count)
   }
 
+  const handleInput = (e) => {
+    const {name, value} = e.target
+    setComment({...comment, [name]: value})
+  }
+
+  const createComment = async (e) => {
+    e.preventDefault()
+
+    const formComment = new FormData()
+    formComment.append("name", comment.name)
+    formComment.append("email", comment.email)
+    formComment.append("text", comment.text)
+    formComment.append("image", "user/u3.png")
+    formComment.append("blog", id)
+    const date = new Date()
+    // const day = date.getDate()
+    // const month = date.getMonth() + 1
+    // const year = date.getFullYear()
+    // formComment.append("date", `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`)
+    formComment.append("date", `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
+    
+    const response = await axios.put(`http://127.0.0.1:8000/api/comments/create`, formComment)
+    
+    if (response.data.status == "success") {
+      fetchData()
+    }
+  }
+
   useEffect(()=>{
-    if (blog != null) {
-      console.log(blog);
+    if (comment != null) {
+      console.log(comment);
     }
-    if (count != 0) {
-      console.log(count);
-    }
-  },[blog,count])
+  },[comment])
+
+
+
 
   return (
     <div>
@@ -305,9 +334,9 @@ const BlogDetails = () => {
                                     {months[parseInt(r.date.slice(5,7))-1]} {r.date.slice(8,10)}, {r.date.slice(0,4)}
                                   </span>
                                 </div>
-                                <span className="text-[13px] sm:text-[15px] font-Lora font-normal text-gray dark:text-lightGray cursor-pointer">
+                                {/* <span className="text-[13px] sm:text-[15px] font-Lora font-normal text-gray dark:text-lightGray cursor-pointer">
                                   REPLY
-                                </span>
+                                </span> */}
                               </div>
                               <p className="text-sm sm:text-[15px] font-Lora font-normal text-gray dark:text-lightGray mt-3 xl:mt-[15px]">
                                 {r.text}
@@ -331,38 +360,42 @@ const BlogDetails = () => {
                 <h3 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl 2xl:text-[32px] text-lightBlack dark:text-white font-semibold font-Garamond mb-5 2xl:mb-[30px]">
                   Leave A Comments
                 </h3>
-                <div>
+                <form onSubmit={createComment}>
                   <div className="flex sm:flex-row flex-col items-center  gap-5 mb-5">
                     <input
                       type="text"
-                      name=""
+                      name="name"
                       className="w-full h-[50px] border-none outline-none focus:ring-0 placeholder:text-base placeholder:text-lightGray placeholder:leading-[38px] placeholder:font-Lora placeholder:font-normal px-5 dark:bg-normalBlack bg-whiteSmoke dark:text-white"
                       placeholder="Your Name"
                       id=""
+                      onChange={handleInput}
                     />
                     <input
                       type="email"
-                      name=""
+                      name="email"
                       className="w-full h-[50px] border-none outline-none focus:ring-0 placeholder:text-base placeholder:text-lightGray placeholder:leading-[38px] placeholder:font-Lora placeholder:font-normal px-5 dark:bg-normalBlack bg-whiteSmoke dark:text-white"
                       placeholder="Email Address"
                       id=""
+                      onChange={handleInput}
                     />
                   </div>
                   <div className="grid items-center gap-5 mb-5 md:mb-0">
                     <input
                       type="text"
-                      name=""
+                      name="website"
                       className="w-full h-[50px] border-none outline-none focus:ring-0 placeholder:text-base placeholder:text-lightGray placeholder:leading-[38px] placeholder:font-Lora placeholder:font-normal px-5 dark:bg-normalBlack bg-whiteSmoke dark:text-white"
                       placeholder="Your Website"
                       id=""
+                      onChange={handleInput}
                     />
 
                     <textarea
                       className="w-full h-[160px]  border-none outline-none focus:ring-0 placeholder:text-base placeholder:text-lightGray placeholder:leading-[38px] placeholder:font-Lora placeholder:font-normal px-5 dark:bg-normalBlack bg-whiteSmoke dark:text-white resize-none"
                       placeholder="Type Your Comment"
-                      name=""
+                      name="text"
                       id=""
                       cols="30"
+                      onChange={handleInput}
                     ></textarea>
                     <div className="flex items-center">
                       <input
@@ -375,9 +408,9 @@ const BlogDetails = () => {
                         Save your email info in the browser for next comments.
                       </p>
                     </div>
-                    <button className="btn-primary">Submit Now</button>
+                    <button className="btn-primary" type="submit">Submit Now</button>
                   </div>
-                </div>
+                </form>
               </div>
             </div>
           </div>
