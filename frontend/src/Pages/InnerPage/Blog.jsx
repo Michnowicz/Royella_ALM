@@ -5,7 +5,7 @@ import BlogSideBar from "./BlogSideBar";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const Blog = () => {
+export default function Blog () {
   const [blogs, setBlogs] = useState(null)
   const [filteredBlogs, setFilteredBlogs] = useState(null)
   const [paginatedBlogs, setPaginatedBlogs] = useState(null)
@@ -166,6 +166,7 @@ const Blog = () => {
                         alt=""
                       />
                     </div>
+                    
                     <div className="font-Garamond border border-[#ddd] dark:border-gray border-t-0">
                       <div className="py-6 px-[30px] ">
                         <div className="flex items-center space-x-6 ">
@@ -268,4 +269,3 @@ const Blog = () => {
   );
 };
 
-export default Blog;

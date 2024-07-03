@@ -188,6 +188,39 @@ const NavbarBackoffice = ({user, setUser, token, setToken}) => {
               ROOMS
             </NavLink>
 
+            <NavLink
+              className={`${({ isActive, isPending }) =>
+                isPending
+                  ? "pending"
+                  : isActive
+                  ? "active"
+                  : ""} ${navbarTextColor} hover:text-khaki dark:hover:text-khaki  lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 group relative`}
+              to="/backoffice/dashboard"
+            >
+              <span className="flex items-center">
+                Blog
+                <BiChevronDown className="ml-1" />
+              </span>
+              <div className="absolute pt-5 lg:pt-8 z-20">
+                <ul className="shadow-2xl hidden group-hover:block rounded-sm bg-white text-black w-[200px] text-left dark:bg-normalBlack dark:text-white transition-all duration-500 text-sm py-4 ">
+                  <div className=" px-5 group hover:bg-khaki hover:text-white">
+                    <li className="hover:ml-3 duration-300  ">
+                      <NavLink to="/backoffice/blog/create" className="py-2 block">
+                        Create Blog
+                      </NavLink>
+                    </li>
+                  </div>
+                  <div className=" px-5 group hover:bg-khaki hover:text-white">
+                    <li className="hover:ml-3 duration-300  ">
+                      <NavLink to="/backoffice/blog/modify" className="py-2 block">
+                        Modify Blog
+                      </NavLink>
+                    </li>
+                  </div>
+                </ul>
+              </div>
+            </NavLink>
+
             <Log scrollPosition={scrollPosition} token={token} setToken={setToken} user={user} setUser={setUser}/>
             
             {/* large device visible button and search icon */}

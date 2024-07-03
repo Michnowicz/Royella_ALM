@@ -383,3 +383,12 @@ def create_reply(request):
         return JsonResponse({"status": "success", "message": "banner created successfully"})
     else:
         return JsonResponse({"status": "error", "message": reply.errors})
+    
+
+@api_view(["GET","PUT"])
+def create_blog(request):
+    if request.method == 'GET':
+        categories = CategoriesSerializers(Categories.objects.all(), many=True).data
+        tags = TagsSerializers(Tags.objects.all(), many=True).data
+        return JsonResponse({"categories": categories, "tags": tags})
+

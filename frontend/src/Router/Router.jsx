@@ -31,6 +31,7 @@ import HotelAndResort from "../Pages/Backoffice/HotelAndResort/HotelAndResort.js
 import Manager from "../Pages/Backoffice/Manager/Manager.jsx"
 import Dashboard from "../Pages/Backoffice/Dashboard/Dashboard.jsx";
 import Facilities from "../Pages/Backoffice/Facilities/Facilities.jsx";
+import BlogCreate from "../Pages/Backoffice/BlogCreate/BlogCreate.jsx";
 
 // Starting React Router.
 const router = createBrowserRouter([
@@ -129,8 +130,8 @@ const router = createBrowserRouter([
         element: <Facilities/>,
       },
       {
-        path: "/backoffice/blogs",
-        // element: <Blogs/>,
+        path: "/backoffice/blog/create",
+        element: <BlogCreate/>,
       },
     ],
   },
