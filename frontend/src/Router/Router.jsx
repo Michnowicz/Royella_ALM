@@ -128,6 +128,10 @@ const router = createBrowserRouter([
         path: "/backoffice/facilities",
         element: <Facilities/>,
       },
+      {
+        path: "/backoffice/blogs",
+        // element: <Blogs/>,
+      },
     ],
   },
 ]);

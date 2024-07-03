@@ -87,13 +87,11 @@ def run_RoomImg():
     seeder=Seed.seeder()
     for i in range(6):
         seeder.add_entity(RoomImg, 1, {
-            "image": lambda x : images[i],
+            "image": lambda x : "banner/"+images[i],
             "room": lambda x: Room.objects.get(id=i+1),
         })
         pks = seeder.execute()
         print(pks)
-
-
 
 
 def run_banner():
@@ -144,7 +142,7 @@ def run_facilityImg():
     seeder=Seed.seeder()
     for i in range (1, 7):
         seeder.add_entity(FacilityImg, 1, {
-            "image" : lambda x : "facility/facility"+str(i)+".png"
+            "image" : lambda x : "facility/facility"+str(i)+".jpg"
         })
         pks = seeder.execute()
         print(pks)
@@ -154,7 +152,7 @@ def run_facilityIcon():
     seeder=Seed.seeder()
     for i in range (6):
         seeder.add_entity(FacilityIcon, 1, {
-            "icon" : lambda x : "facility/feature-"+features[i]+".jpg"
+            "icon" : lambda x : "facility/feature-"+features[i]+".png"
         })
         pks = seeder.execute()
         print(pks)

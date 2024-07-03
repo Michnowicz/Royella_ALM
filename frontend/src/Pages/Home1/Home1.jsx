@@ -32,7 +32,7 @@ const Home1 = () => {
   },[])
   const fetchAll = async () => {
     const response = await axios.get("http://127.0.0.1:8000/api/all/get")
-    console.log(response.data.data);
+    // console.log(response.data.data);
     setBanners(response.data.data.banner)
     setRooms(response.data.data.rooms)
     setHotelResort(response.data.data.hotelResort)

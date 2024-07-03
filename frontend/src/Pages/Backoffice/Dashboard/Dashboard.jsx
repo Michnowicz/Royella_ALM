@@ -51,6 +51,14 @@ export default function Dashboard() {
                         </NavLink>
                         </h2>
                     </div>
+
+                    <div className="Container bg-whiteSmoke dark:bg-normalBlack px-4 md:px-7 lg:px-11 2xl:px-17 py-7 md:py-11 lg:py-15 xl:py-17 2xl:py-[100px]">
+                        <h2 className="text-Garamond text-[22px] sm:text-2xl md:text-3xl lg:text-4xl 2xl:text-[38px] leading-7 md:leading-8 lg:leading-9 xl:leading-10 2xl:leading-[44px] text-uppercase text-lightBlack dark:text-white font-semibold my-3 md:my-5 flex items-end cursor-pointer dark:hover:text-khaki hover:text-khaki" onClick={chevronChange}>
+                        <NavLink to="/backoffice/blogs">
+                            BLOGS
+                        </NavLink>
+                        </h2>
+                    </div>
                 </div>
             </div>
     )
