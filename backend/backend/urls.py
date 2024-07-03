@@ -48,5 +48,6 @@ urlpatterns = [
 
     #comments
     path("api/comments/create", create_comment),
+    path("api/reply/create", create_reply),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

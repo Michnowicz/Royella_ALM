@@ -373,3 +373,13 @@ def create_comment(request):
         return JsonResponse({"status": "success", "message": "banner created successfully", "data":comments.data})
     else:
         return JsonResponse({"status": "error", "message": comment.errors})
+
+
+@api_view(["PUT"])
+def create_reply(request):
+    reply = ReplySerializers(data=request.data)
+    if reply.is_valid():
+        reply.save()
+        return JsonResponse({"status": "success", "message": "banner created successfully"})
+    else:
+        return JsonResponse({"status": "error", "message": reply.errors})

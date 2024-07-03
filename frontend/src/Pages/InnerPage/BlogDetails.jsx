@@ -4,6 +4,7 @@ import BlogSideBar from "./BlogSideBar";
 import { BiChevronsRight } from "react-icons/bi";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import ReplyCreate from "../../ALMcomponents/ReplyCreate/ReplyCreate";
 
 const BlogDetails = () => {
   const location = useLocation();
@@ -15,11 +16,17 @@ const BlogDetails = () => {
   const [blog, setBlog] = useState(null)
   const [count, setCount] = useState(0)
   const [comment, setComment] = useState("")
+  const [reply, setReply] = useState(null)
 
 
   useEffect(()=>{
     fetchData()
   },[id])
+  useEffect(()=>{
+    if (reply === 0) {
+      fetchData()
+    }
+  },[reply])
   const fetchData = async () => {
     const response = await axios.get(`http://127.0.0.1:8000/api/blogs/${id}`)
     setBlog(response.data.blog)
@@ -29,6 +36,10 @@ const BlogDetails = () => {
   const handleInput = (e) => {
     const {name, value} = e.target
     setComment({...comment, [name]: value})
+  }
+
+  const handleReply = (replyID) => {
+    setReply(replyID)
   }
 
   const createComment = async (e) => {
@@ -41,10 +52,6 @@ const BlogDetails = () => {
     formComment.append("image", "user/u3.png")
     formComment.append("blog", id)
     const date = new Date()
-    // const day = date.getDate()
-    // const month = date.getMonth() + 1
-    // const year = date.getFullYear()
-    // formComment.append("date", `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`)
     formComment.append("date", `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
     
     const response = await axios.put(`http://127.0.0.1:8000/api/comments/create`, formComment)
@@ -297,7 +304,7 @@ const BlogDetails = () => {
                                 {months[parseInt(c.date.slice(5,7))-1]} {c.date.slice(8,10)}, {c.date.slice(0,4)}
                                 </span>
                               </div>
-                              <span className="text-[13px] sm:text-[15px] font-Lora font-normal text-gray dark:text-lightGray cursor-pointer">
+                              <span className="text-[13px] sm:text-[15px] font-Lora font-normal text-gray dark:text-lightGray cursor-pointer" onClick={()=>handleReply(c.id)}>
                                 REPLY
                               </span>
                             </div>
@@ -345,6 +352,11 @@ const BlogDetails = () => {
                           </div>
                         </div>
                       ))
+                      :
+                      ""
+                      }
+                      { reply != null && c.id == reply ?
+                      <ReplyCreate replyID={reply} setReplyID={setReply} />
                       :
                       ""
                       }
