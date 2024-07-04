@@ -391,4 +391,53 @@ def create_blog(request):
         categories = CategoriesSerializers(Categories.objects.all(), many=True).data
         tags = TagsSerializers(Tags.objects.all(), many=True).data
         return JsonResponse({"categories": categories, "tags": tags})
+    
+    if request.method == "PUT":
+        data = request.data
+        # tagsArray = data["tags"].split(",")
+        # tags = data["tags"].split(",")
+        # for id in (tagsArray):
+        #     tags.append(Tags.objects.get(id=id))
+        blog = {
+            "title" : data["title"],
+            "title_text" : data["title_text"],
+            "subtitle" : data["subtitle"],
+            "subtitle_text" : data["subtitle_text"],
+            "subtitle_text2" : data["subtitle_text2"],
+            "subtitle_list1" : data["subtitle_list1"],
+            "subtitle_list2" : data["subtitle_list2"],
+            "subtitle_list3" : data["subtitle_list3"],
+            "subtitle_list4" : data["subtitle_list4"],
+            "date" : data["date"],
+        }
 
+        serializer = BlogSerializers(data=blog)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse({"status":"success", "data": serializer.data})
+        else:
+            return JsonResponse({"status": "error", "message": serializer.errors, "data": tags})
+
+@api_view(["PUT"])
+def create_blogImg(request):
+    blogImg = BlogImgSerializers(data=request.data)
+    if blogImg.is_valid():
+        blogImg.save()
+        return JsonResponse({"status":"success"})
+    else:
+        return JsonResponse({"status": "error", "message": blogImg.errors})
+
+
+    # blogImg1 = BlogImgSerializers(data={"image":data["image1"], "blog": id})
+    # if blogImg1.is_valid():
+    #         blogImg1.save()
+    #         blogImg2 = BlogImgSerializers(data={"image":data["image2"], "blog": id})
+    #         if blogImg2.is_valid():
+    #             blogImg2.save()
+    # blogImg3 = BlogImgSerializers(data={"image":data["image3"], "blog": id})
+
+
+
+
+
+    return JsonResponse({"status":"success", "data": blog})

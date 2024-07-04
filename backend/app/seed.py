@@ -295,7 +295,6 @@ def run_blogs():
 
 
     for i in range(15):
-        # print(random.randint(0, len(titles)-1))
         fake = Faker()
         b1 = Blog(
                 title=titles[random.randint(0, len(titles)-1)],
@@ -308,7 +307,6 @@ def run_blogs():
                 subtitle_list3 = fake.paragraph(nb_sentences=1),
                 subtitle_list4 = fake.paragraph(nb_sentences=1),
                 date=dates[random.randint(0, len(titles)-1)],
-                # image=BlogImg.objects.get(id=images[random.randint(0, len(titles)-1)]),
                 category=Categories.objects.get(id=categories[random.randint(0, len(titles)-1)])
                 )
         b1.save()

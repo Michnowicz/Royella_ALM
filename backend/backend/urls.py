@@ -46,6 +46,7 @@ urlpatterns = [
     path("api/searchbar/get", get_searchBar),
     path("api/popularpost/get", get_popular_post),
     path("api/blog/create", create_blog),
+    path("api/blogimage/create", create_blogImg),
 
     #comments
     path("api/comments/create", create_comment),

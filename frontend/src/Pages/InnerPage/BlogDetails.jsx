@@ -62,10 +62,10 @@ const BlogDetails = () => {
   }
 
   useEffect(()=>{
-    if (comment != null) {
-      console.log(comment);
+    if (blog != null) {
+      console.log(blog);
     }
-  },[comment])
+  },[blog])
 
 
 

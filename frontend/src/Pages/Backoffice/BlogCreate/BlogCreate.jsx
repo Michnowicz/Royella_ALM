@@ -13,6 +13,7 @@ export default function BlogCreate() {
 
     const [images, setImages] = useState({image1: "", image2: "", image3: ""})
     const [preview, setPreview] = useState({image1: "", image2: "", image3: ""})
+    const [status, setStatus] = useState(0)
 
 
     useEffect(()=>{
@@ -20,8 +21,8 @@ export default function BlogCreate() {
     },[])
     const fetchData = async () => {
         const response = await axios.get("http://127.0.0.1:8000/api/blog/create")
-        console.log(response.data.categories);
-        console.log(response.data.tags);
+        // console.log(response.data.categories);
+        // console.log(response.data.tags);
         setCategories(response.data.categories)
         setTags(response.data.tags)
     }
@@ -36,14 +37,9 @@ export default function BlogCreate() {
         }
     }
 
-    const submitForm = (e) => {
-        e.preventDefault()
-    }
-
     const handleTags = (e) => {
         const allTags = document.querySelectorAll(".tags")
         const selected = []
-
         Array.from(allTags).forEach(t => {
             if (t.id == e.target.id) {
                 if (t.className.includes("selected")) {
@@ -56,10 +52,49 @@ export default function BlogCreate() {
                 selected.push(t.id)
             }
         });
-        console.log(selected);
+        setSelectedTags(selected)
+    }
+
+
+    const submitForm = (e) => {
+        e.preventDefault()
+        // const formBlog = new FormData();
+        // formBlog.append("title", blog.title)
+        // formBlog.append("title_text", blog.title_text)
+        // formBlog.append("subtitle", blog.subtitle)
+        // formBlog.append("subtitle_text", blog.subtitle_text)
+        // formBlog.append("subtitle_text2", blog.subtitle_text2)
+        // formBlog.append("subtitle_list1", blog.subtitle_list1)
+        // formBlog.append("subtitle_list2", blog.subtitle_list2)
+        // formBlog.append("subtitle_list3", blog.subtitle_list3)
+        // formBlog.append("subtitle_list4", blog.subtitle_list4)
+        // const date = new Date()
+        // formBlog.append("date", `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
+        // formBlog.append("category", blog.category)
+
+        // axios.put("http://127.0.0.1:8000/api/blog/create", formBlog)
+        // .then(response=>{
+        //     if (response.data.status == "success") {
+        //         setStatus(parseInt(response.data.data.id))
+        //     }
+        // })
         
     }
 
+    useEffect(()=>{
+        if (status != 0) {
+            for (const i in images) {
+                // console.log(images[i]);
+                const formImage = new FormData();
+                formImage.append("image", images[i])
+                formImage.append("blog", status)
+                axios.put(`http://127.0.0.1:8000/api/blogimage/create`, formImage)
+                .then( response => {
+                    console.log(response);
+                })
+            }
+        }
+    },[status])
 
     useEffect(()=>{
         console.log(images);
@@ -73,8 +108,8 @@ export default function BlogCreate() {
     
     return(
         
-        <div className="Banner min-h-screen dark:bg-lightBlack max-w-full">
-            <div className=" py-24 2xl:py-[120px] w-full bg-no-repeat bg-top bg-opacity-[0.07] flex flex-col gap-10">
+        <div className="Banner min-h-screen dark:bg-lightBlack max-w-full flex justify-center">
+            <div className=" py-24 2xl:py-[120px] w-full bg-no-repeat bg-top bg-opacity-[0.07] flex flex-col gap-10" style={{maxWidth: "1100px"}}>
                 <h2 className="text-Garamond text-[22px] sm:text-2xl md:text-3xl lg:text-4xl 2xl:text-[38px] leading-7 md:leading-8 lg:leading-9 xl:leading-10 2xl:leading-[44px] text-uppercase text-lightBlack dark:text-white font-semibold my-3 md:my-5 flex items-end cursor-pointer ml-5">
                     Create Blog
                 </h2>
@@ -97,7 +132,7 @@ export default function BlogCreate() {
                                     </h2>
                                     <p className="text-base font-Garamond text-gray dark:text-lightGray my-5">
                                     <span className="flex gap-5">
-                                        <select name="category" id="" onChange={handleInput}>
+                                        <select name="category" onChange={handleInput} className="border-gray dark:border-lightGray text-gray dark:text-lightGray bg-transparent focus:ring-0 placeholder:text-gray focus:border-gray dark:focus:border-lightGray focus:outline-none">
                                             <option value="">-----</option>
                                             { categories != null ?
                                             categories.map((c,i)=>(
@@ -121,7 +156,7 @@ export default function BlogCreate() {
                                         />
                                     </h2>
                                     <p className="text-sm lg:text-base leading-6 text-gray dark:text-lightGray font-normal font-Garamond">
-                                        <textarea name="title_text" className="w-full" rows={5} onChange={handleInput} placeholder="Title text"></textarea>
+                                        <textarea name="title_text" className="w-full border-gray dark:border-lightGray text-gray dark:text-lightGray bg-transparent focus:ring-0 placeholder:text-gray focus:border-gray dark:focus:border-lightGray focus:outline-none" rows={5} onChange={handleInput} placeholder="Title text"></textarea>
                                     </p>
                                 </div>
 
@@ -138,7 +173,7 @@ export default function BlogCreate() {
                                         />
                                     </h2>
                                     <p className="text-sm lg:text-base leading-6 text-gray dark:text-lightGray font-normal font-Garamond">
-                                        <textarea name="subtitle_text" className="w-full" rows={5} onChange={handleInput} placeholder="Subtitle text"></textarea>
+                                        <textarea name="subtitle_text" className="w-full border-gray dark:border-lightGray text-gray dark:text-lightGray bg-transparent focus:ring-0 placeholder:text-gray focus:border-gray dark:focus:border-lightGray focus:outline-none" rows={5} onChange={handleInput} placeholder="Subtitle text"></textarea>
                                     </p>
                                     <ul className="space-y-2 lg:space-y-3 mt-5">
                                         <li className="flex items-center ">
@@ -216,7 +251,7 @@ export default function BlogCreate() {
                                     </div>
                                 </div>
                                 <p className="text-sm lg:text-base leading-6 text-gray dark:text-lightGray font-normal font-Lora">
-                                    <textarea name="subtitle_text2" className="w-full" rows={5} onChange={handleInput} placeholder="Subtitle text2"></textarea>
+                                    <textarea name="subtitle_text2" className="w-full border-gray dark:border-lightGray text-gray dark:text-lightGray bg-transparent focus:ring-0 placeholder:text-gray focus:border-gray dark:focus:border-lightGray focus:outline-none" rows={5} onChange={handleInput} placeholder="Subtitle text2"></textarea>
                                 </p>
 
                                 <div
