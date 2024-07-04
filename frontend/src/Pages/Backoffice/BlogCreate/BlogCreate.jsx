@@ -58,27 +58,26 @@ export default function BlogCreate() {
 
     const submitForm = (e) => {
         e.preventDefault()
-        // const formBlog = new FormData();
-        // formBlog.append("title", blog.title)
-        // formBlog.append("title_text", blog.title_text)
-        // formBlog.append("subtitle", blog.subtitle)
-        // formBlog.append("subtitle_text", blog.subtitle_text)
-        // formBlog.append("subtitle_text2", blog.subtitle_text2)
-        // formBlog.append("subtitle_list1", blog.subtitle_list1)
-        // formBlog.append("subtitle_list2", blog.subtitle_list2)
-        // formBlog.append("subtitle_list3", blog.subtitle_list3)
-        // formBlog.append("subtitle_list4", blog.subtitle_list4)
-        // const date = new Date()
-        // formBlog.append("date", `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
-        // formBlog.append("category", blog.category)
+        const formBlog = new FormData();
+        formBlog.append("title", blog.title)
+        formBlog.append("title_text", blog.title_text)
+        formBlog.append("subtitle", blog.subtitle)
+        formBlog.append("subtitle_text", blog.subtitle_text)
+        formBlog.append("subtitle_text2", blog.subtitle_text2)
+        formBlog.append("subtitle_list1", blog.subtitle_list1)
+        formBlog.append("subtitle_list2", blog.subtitle_list2)
+        formBlog.append("subtitle_list3", blog.subtitle_list3)
+        formBlog.append("subtitle_list4", blog.subtitle_list4)
+        const date = new Date()
+        formBlog.append("date", `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
+        formBlog.append("category", blog.category)
 
-        // axios.put("http://127.0.0.1:8000/api/blog/create", formBlog)
-        // .then(response=>{
-        //     if (response.data.status == "success") {
-        //         setStatus(parseInt(response.data.data.id))
-        //     }
-        // })
-        
+        axios.put("http://127.0.0.1:8000/api/blog/create", formBlog)
+        .then(response=>{
+            if (response.data.status == "success") {
+                setStatus(parseInt(response.data.data.id))
+            }
+        })
     }
 
     useEffect(()=>{
@@ -90,6 +89,16 @@ export default function BlogCreate() {
                 formImage.append("blog", status)
                 axios.put(`http://127.0.0.1:8000/api/blogimage/create`, formImage)
                 .then( response => {
+                    console.log(response);
+                })
+            }
+            for (const i in selectedTags) {
+                // console.log(selectedTags[i]);
+                const formTag = new FormData()
+                formTag.append("id", selectedTags[i])
+                formTag.append("blog", status)
+                axios.put(`http://127.0.0.1:8000/api/blog/tags/create`, formTag)
+                .then(response=>{
                     console.log(response);
                 })
             }

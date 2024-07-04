@@ -394,10 +394,6 @@ def create_blog(request):
     
     if request.method == "PUT":
         data = request.data
-        # tagsArray = data["tags"].split(",")
-        # tags = data["tags"].split(",")
-        # for id in (tagsArray):
-        #     tags.append(Tags.objects.get(id=id))
         blog = {
             "title" : data["title"],
             "title_text" : data["title_text"],
@@ -428,16 +424,11 @@ def create_blogImg(request):
         return JsonResponse({"status": "error", "message": blogImg.errors})
 
 
-    # blogImg1 = BlogImgSerializers(data={"image":data["image1"], "blog": id})
-    # if blogImg1.is_valid():
-    #         blogImg1.save()
-    #         blogImg2 = BlogImgSerializers(data={"image":data["image2"], "blog": id})
-    #         if blogImg2.is_valid():
-    #             blogImg2.save()
-    # blogImg3 = BlogImgSerializers(data={"image":data["image3"], "blog": id})
+@api_view(["PUT"])
+def create_blog_tags(request):
+    datas = request.data
+    blog = Blog.objects.get(id=datas["blog"])
+    blog_tag = Tags.objects.get(id=datas["id"])
+    blog.tags.add(blog_tag)
 
-
-
-
-
-    return JsonResponse({"status":"success", "data": blog})
+    return JsonResponse({"status": "success", "data":datas})

@@ -47,10 +47,13 @@ urlpatterns = [
     path("api/popularpost/get", get_popular_post),
     path("api/blog/create", create_blog),
     path("api/blogimage/create", create_blogImg),
+    path("api/blog/tags/create", create_blog_tags),
 
     #comments
     path("api/comments/create", create_comment),
     path("api/reply/create", create_reply),
+
+
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
