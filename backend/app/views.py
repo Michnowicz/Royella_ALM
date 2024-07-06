@@ -433,3 +433,22 @@ def create_blog_tags(request):
     blog.tags.add(blog_tag)
 
     return JsonResponse({"status": "success", "data":datas})
+
+
+@api_view(["GET","PUT"])
+def modify_blog(request, id):
+    if request.method == 'GET':
+        blog = BlogSerializers(Blog.objects.get(id=id)).data
+        blog["images"] =  BlogImgSerializers(BlogImg.objects.filter(blog=id), many=True).data
+        categories = CategoriesSerializers(Categories.objects.all(), many=True).data
+        tags = TagsSerializers(Tags.objects.all(), many=True).data
+        return JsonResponse({"blog":blog , "categories": categories, "tags": tags})
+    
+    if request.method == "PUT":
+        blog = Blog.objects.get(id=id)
+        serializer = BlogSerializers(blog, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse({"status": "success", "message": "blog modified", "data":serializer.data})
+        else:
+            return JsonResponse({"status": "error", "message":serializer.errors})

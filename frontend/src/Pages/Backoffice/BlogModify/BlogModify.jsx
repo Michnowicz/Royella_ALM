@@ -1,8 +1,10 @@
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { Link,NavLink } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+import { HiMiniMagnifyingGlass } from "react-icons/hi2";
+import "./BlogModify.css"
 
 export default function BlogModify({}) {
     const [blogs, setBlogs] = useState(null)
@@ -20,20 +22,28 @@ export default function BlogModify({}) {
     return(
         <div className="BlogModify">
             <div className="dark:bg-lightBlack py-20 2xl:py-[120px]">
-            <div className="Container grid grid-cols-6 md:grid-cols-7 lg:grid-cols-6 gap-5 ">
-            <div className="col-span-6 md:col-span-4">
-                <div className="grid items-center gap-5 2xl:gap-y-[30px] grid-cols-1 lg:grid-cols-2">
+            <div className="Container grid grid-cols-6 gap-5 mt-20">
+            <div className="col-span-6 ">
+                <div className="grid items-center gap-5 2xl:gap-y-[30px] grid-cols-1 lg:grid-cols-3">
                 {/* Blog */}
                 {
                     blogs != null ?
                     blogs.map((b,i)=>(
                     <div
                         className="overflow-hidden 3xl:w-[410px] group"
-                        data-aos="fade-up"
-                        data-aos-duration="1000"
                         key={i}
                     >
-                        <div className="relative w-full h-full">
+                        <div className="w-full h-full relative">
+                        <div className="absolute w-full p-5 flex justify-between squares">
+                            <div className="square bg-blue-700">
+                                <NavLink to={`/backoffice/blog/modify/${b.id}`} className="py-2 block">
+                                    <HiMiniMagnifyingGlass className="text-3xl text-white"/>
+                                </NavLink>
+                            </div>
+                            <div className="square bg-rose-700">
+                                <RiDeleteBin6Line className="text-3xl text-white cursor-pointer"/>
+                            </div>
+                        </div>
                         <img
                             src={"http://127.0.0.1:8000"+b.images[0].image}
                             // src="/images/home-1/blog-1.jpg "
@@ -57,7 +67,7 @@ export default function BlogModify({}) {
                             </p>
                             </div>
                             <Link
-                            to={`/blog_details/${b.id}`}
+                            to=""
                             state={{
                                 title: b.title,
                             }}
@@ -69,7 +79,7 @@ export default function BlogModify({}) {
                         </div>
                         <div className="border-t-[1px] border-[#ddd] dark:border-gray py-2 sm:py-3 md:py-4 xl:py-5">
                             <Link
-                            to={`/blog_details/${b.id}`}
+                            to=""
                             className="px-[30px] flex items-center justify-between "
                             >
                             <div className="">
