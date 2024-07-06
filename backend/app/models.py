@@ -154,7 +154,6 @@ class Blog(models.Model):
     subtitle_list2 = models.CharField(max_length=125)
     subtitle_list3 = models.CharField(max_length=125)
     subtitle_list4 = models.CharField(max_length=125)
-    # image = models.ForeignKey(BlogImg, on_delete=models.SET_NULL, null=True)
     date = models.DateField()
     tags = models.ManyToManyField(Tags)
     category = models.ForeignKey(Categories, on_delete=models.SET_NULL, null=True)

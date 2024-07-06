@@ -32,6 +32,7 @@ import Manager from "../Pages/Backoffice/Manager/Manager.jsx"
 import Dashboard from "../Pages/Backoffice/Dashboard/Dashboard.jsx";
 import Facilities from "../Pages/Backoffice/Facilities/Facilities.jsx";
 import BlogCreate from "../Pages/Backoffice/BlogCreate/BlogCreate.jsx";
+import BlogModify from "../Pages/Backoffice/BlogModify/BlogModify.jsx";
 
 // Starting React Router.
 const router = createBrowserRouter([
@@ -132,6 +133,10 @@ const router = createBrowserRouter([
       {
         path: "/backoffice/blog/create",
         element: <BlogCreate/>,
+      },
+      {
+        path: "/backoffice/blog/modify",
+        element: <BlogModify/>,
       },
     ],
   },

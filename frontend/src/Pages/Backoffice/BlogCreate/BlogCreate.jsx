@@ -32,6 +32,8 @@ export default function BlogCreate() {
         if (name.includes('image')) {
             setImages({ ...images, [name]: files[0] })
             setPreview({ ...preview, [name]: URL.createObjectURL(files[0]) })
+        } else if (name === "category") {
+            setBlog({ ...blog, [name]: parseInt(value) });
         } else {
             setBlog({ ...blog, [name]: value });
         }

@@ -405,14 +405,15 @@ def create_blog(request):
             "subtitle_list3" : data["subtitle_list3"],
             "subtitle_list4" : data["subtitle_list4"],
             "date" : data["date"],
+            "category" : data["category"],
         }
 
-        serializer = BlogSerializers(data=blog)
+        serializer = BlogCreateSerializers(data=blog)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse({"status":"success", "data": serializer.data})
         else:
-            return JsonResponse({"status": "error", "message": serializer.errors, "data": tags})
+            return JsonResponse({"status": "error", "message": serializer.errors})
 
 @api_view(["PUT"])
 def create_blogImg(request):

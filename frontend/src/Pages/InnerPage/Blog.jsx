@@ -166,7 +166,6 @@ export default function Blog () {
                         alt=""
                       />
                     </div>
-                    
                     <div className="font-Garamond border border-[#ddd] dark:border-gray border-t-0">
                       <div className="py-6 px-[30px] ">
                         <div className="flex items-center space-x-6 ">
@@ -174,7 +173,11 @@ export default function Blog () {
                             {months[parseInt(b.date.slice(5,7))-1]} {b.date.slice(8,10)}, {b.date.slice(0,4)}
                           </p>
                           <p className="text-sm 2xl:text-base leading-[26px] text-gray dark:text-lightGray font-normal uppercase mr-7 ml-3 relative before:absolute before:w-[7px] before:h-[7px] before:left-[-13px] before:bg-[#d1d1d1] dark:before:bg-khaki before:top-[9px]">
-                            {b.category.name}
+                            { b.category != null ?
+                            b.category.name
+                            :
+                            ""
+                            }
                           </p>
                         </div>
                         <Link
