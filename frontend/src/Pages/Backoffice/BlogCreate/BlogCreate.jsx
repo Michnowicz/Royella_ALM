@@ -95,7 +95,6 @@ export default function BlogCreate() {
                 })
             }
             for (const i in selectedTags) {
-                // console.log(selectedTags[i]);
                 const formTag = new FormData()
                 formTag.append("id", selectedTags[i])
                 formTag.append("blog", status)

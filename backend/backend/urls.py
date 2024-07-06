@@ -49,6 +49,7 @@ urlpatterns = [
     path("api/blogimage/create", create_blogImg),
     path("api/blog/tags/create", create_blog_tags),
     path("api/blog/modify/<int:id>", modify_blog),
+    path("api/blogimage/modify/<int:id>", modify_blog_img),
 
     #comments
     path("api/comments/create", create_comment),

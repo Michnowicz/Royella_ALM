@@ -13,15 +13,15 @@ export default function BlogModifyDetail() {
     const [tags, setTags] = useState(null)
 
     const [images, setImages] = useState({image1: "", image2: "", image3: ""})
+    const [imagesID, setImagesID] = useState({image1: "", image2: "", image3: ""})
     const [preview, setPreview] = useState({image1: "", image2: "", image3: ""})
-    const [status, setStatus] = useState(0)
+    const [status, setStatus] = useState(null)
 
     useEffect(()=>{
         fetchData()
     },[])
     const fetchData = async () => {
         const response = await axios.get(`http://127.0.0.1:8000/api/blog/modify/${id}`)
-        // console.log(response.data);
         setCategories(response.data.categories)
         setTags(response.data.tags)
         setBlog(response.data.blog)
@@ -44,7 +44,7 @@ export default function BlogModifyDetail() {
             });
             setSelectedTags(selected)
         }
-    },[blog])
+    },[tags])
 
     const submitForm = (e) => {
         e.preventDefault()
@@ -64,16 +64,35 @@ export default function BlogModifyDetail() {
         .then(response=>{
             console.log(response.data.message);
             if (response.data.status == "success") {
+                // console.log(response.data)
                 setStatus(parseInt(response.data.data.id))
             }
         })
 
     }
+    useEffect(()=>{
+        if (status != 0 && status != null) {
+            for (const i in images) {
+                if (images[i] != "") {
+                    console.log(i);
+                    const formImage = new FormData();
+                    formImage.append("image", images[i])
+                    formImage.append("blog", status)
+                    axios.put(`http://127.0.0.1:8000/api/blogimage/modify/${imagesID[i]}`, formImage)
+                    .then( response => {
+                        console.log(response.data.message);
+                    })
+                }
+            }
+        }
+        setStatus(null)
+    },[status])
 
     const handleInput = (e) => {
-        const {name, value, files} = e.target
+        const {name, value, files, id} = e.target
         if (name.includes('image')) {
-            setImages({ ...images, [name]: files[0] })
+            setImages({ ...images, [name]: files[0]})
+            setImagesID({ ...imagesID, [name]: parseInt(e.target.id)})
             setPreview({ ...preview, [name]: URL.createObjectURL(files[0]) })
         } else if (name === "category") {
             setBlog({ ...blog, [name]: {"id": parseInt(value), "name":blog.category.name} });
@@ -83,11 +102,11 @@ export default function BlogModifyDetail() {
     }
 
     useEffect(()=>{
-        console.log(blog);
-    },[blog])
+        console.log(imagesID);
+    },[imagesID])
     useEffect(()=>{
-        console.log(selectedTags);
-    },[selectedTags])
+        console.log(images);
+    },[images])
 
     const handleTags = (e) => {
         const allTags = document.querySelectorAll(".tags")
@@ -129,6 +148,7 @@ export default function BlogModifyDetail() {
                                 className="w-full h-12 md:h-13 lg:h-[59px] px-4 border border-gray dark:border-lightGray text-gray dark:text-lightGray outline-none  bg-transparent focus:ring-0 placeholder:text-gray focus:border-gray dark:focus:border-lightGray focus:outline-none"
                                 name="image1"
                                 onChange={handleInput}
+                                id={blog.images[0].id}
                             />
 
                             <div className="pt-5 lg:pt-[35px]  pr-3">
@@ -254,6 +274,7 @@ export default function BlogModifyDetail() {
                                             className="w-full h-12 md:h-13 lg:h-[59px] px-4 border border-gray dark:border-lightGray text-gray dark:text-lightGray outline-none  bg-transparent focus:ring-0 placeholder:text-gray focus:border-gray dark:focus:border-lightGray focus:outline-none"
                                             name="image2"
                                             onChange={handleInput}
+                                            id={blog.images[1].id}
                                         />
                                     </div>
                                     <div>
@@ -267,6 +288,7 @@ export default function BlogModifyDetail() {
                                             className="w-full h-12 md:h-13 lg:h-[59px] px-4 border border-gray dark:border-lightGray text-gray dark:text-lightGray outline-none  bg-transparent focus:ring-0 placeholder:text-gray focus:border-gray dark:focus:border-lightGray focus:outline-none"
                                             name="image3"
                                             onChange={handleInput}
+                                            id={blog.images[2].id}
                                         />
                                     </div>
                                 </div>

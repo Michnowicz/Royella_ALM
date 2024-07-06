@@ -452,3 +452,13 @@ def modify_blog(request, id):
             return JsonResponse({"status": "success", "message": "blog modified", "data":serializer.data})
         else:
             return JsonResponse({"status": "error", "message":serializer.errors})
+        
+@api_view(["PUT"])
+def modify_blog_img(request, id):
+    blogImg = BlogImg.objects.get(id=id)
+    serializer = ManagerImgSerializers(blogImg, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return JsonResponse({"status": "success", "message": "image modified"})
+    else:
+        return JsonResponse({"status": "error", "message":serializer.errors})
