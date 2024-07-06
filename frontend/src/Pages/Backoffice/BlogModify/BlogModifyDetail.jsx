@@ -16,6 +16,7 @@ export default function BlogModifyDetail() {
     const [imagesID, setImagesID] = useState({image1: "", image2: "", image3: ""})
     const [preview, setPreview] = useState({image1: "", image2: "", image3: ""})
     const [status, setStatus] = useState(null)
+    const [status2, setStatus2] = useState(null)
 
     useEffect(()=>{
         fetchData()
@@ -84,9 +85,19 @@ export default function BlogModifyDetail() {
                     })
                 }
             }
+            for (const i in selectedTags) {
+                const formTag = new FormData()
+                formTag.append("id", selectedTags[i])
+                formTag.append("blog", status)
+                axios.put(`http://127.0.0.1:8000/api/blog/tags/create`, formTag)
+                .then(response=>{
+                    console.log(response);
+                })
+            }
         }
         setStatus(null)
     },[status])
+
 
     const handleInput = (e) => {
         const {name, value, files, id} = e.target
@@ -102,11 +113,11 @@ export default function BlogModifyDetail() {
     }
 
     useEffect(()=>{
-        console.log(imagesID);
-    },[imagesID])
+        console.log(selectedTags);
+    },[selectedTags])
     useEffect(()=>{
-        console.log(images);
-    },[images])
+        console.log(blog);
+    },[blog])
 
     const handleTags = (e) => {
         const allTags = document.querySelectorAll(".tags")

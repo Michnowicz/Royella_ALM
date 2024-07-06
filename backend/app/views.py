@@ -462,3 +462,15 @@ def modify_blog_img(request, id):
         return JsonResponse({"status": "success", "message": "image modified"})
     else:
         return JsonResponse({"status": "error", "message":serializer.errors})
+    
+@api_view(["PUT"])
+def modify_blog_tags(request, id):
+    datas = request.data
+    blog = Blog.objects.get(id=datas["blog"])
+    blog_tag = Tags.objects.get(id=datas["tag"])
+    try:
+        blog.tags.add(blog_tag)
+        return JsonResponse({"status": "success"})
+    except:
+        return JsonResponse({"status": "error"})
+
