@@ -16,6 +16,7 @@ export default function BlogModifyDetail() {
     const [imagesID, setImagesID] = useState({image1: "", image2: "", image3: ""})
     const [preview, setPreview] = useState({image1: "", image2: "", image3: ""})
     const [status, setStatus] = useState(null)
+    const [status2, setStatus2] = useState(null)
 
     useEffect(()=>{
         fetchData()
@@ -84,6 +85,22 @@ export default function BlogModifyDetail() {
                     })
                 }
             }
+            
+            blog.tags.forEach(tag => {
+                console.log(tag.id);
+                axios.delete(`http://127.0.0.1:8000/api/blogtags/delete/${id}`, { data: { tag: tag.id }})
+                .then(response=>{
+                    if (response.data.status === "success") {
+                        setStatus2("success")
+                    }
+                })
+            });
+            
+        }
+        
+    },[status])
+    useEffect(()=>{
+        if (status2 === "success") {
             for (const i in selectedTags) {
                 const formTag = new FormData()
                 formTag.append("id", selectedTags[i])
@@ -93,9 +110,10 @@ export default function BlogModifyDetail() {
                     console.log(response);
                 })
             }
+            setStatus2(null)
+            setStatus(null)
         }
-        setStatus(null)
-    },[status])
+    },[status2])
 
 
     const handleInput = (e) => {
