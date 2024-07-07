@@ -19,6 +19,32 @@ export default function BlogModify({}) {
     setBlogs(response.data.blogs)
     }
 
+    useEffect(()=>{
+        if (blogs != null) {
+            console.log(blogs);
+        }
+    },[blogs])
+
+    const deleteBlogTags = (id) => {
+        const blog = blogs.filter(b=>b.id === id)
+        blog[0].tags.forEach(tag => {
+            axios.delete(`http://127.0.0.1:8000/api/blogtags/delete/${id}`, { data: { tag: tag.id }})
+            .then(response=>{
+                console.log(response.data.status);
+            })
+        });
+        deleteBlog(id)
+    }
+    const deleteBlog = (id) => {
+        axios.delete(`http://127.0.0.1:8000/api/blog/delete/${id}`)
+        .then(response=>{
+            console.log(response.data.status);
+            if (response.data.status === "success") {
+                fetchBlog()
+            }
+        })
+    }
+
     return(
         <div className="BlogModify">
             <div className="dark:bg-lightBlack py-20 2xl:py-[120px]">
@@ -40,7 +66,7 @@ export default function BlogModify({}) {
                                     <HiMiniMagnifyingGlass className="text-3xl text-white"/>
                                 </NavLink>
                             </div>
-                            <div className="square bg-rose-700">
+                            <div className="square bg-rose-700" onClick={()=>{deleteBlogTags(b.id)}}>
                                 <RiDeleteBin6Line className="text-3xl text-white cursor-pointer"/>
                             </div>
                         </div>

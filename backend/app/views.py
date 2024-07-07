@@ -474,3 +474,22 @@ def modify_blog_tags(request, id):
     except:
         return JsonResponse({"status": "error"})
 
+@api_view(["DELETE"])
+def delete_blog_tags(request, id):
+    tag = request.data
+    blog = Blog.objects.get(id=id)
+    blog_tag = Tags.objects.get(id=tag["tag"])
+    try:
+        blog.tags.remove(blog_tag)
+        return Response({"status": "success", "message": "banner created successfully"})
+    except:
+        return JsonResponse({"status": "error"})
+    
+@api_view(["DELETE"])
+def delete_blog(request,id):
+    try:
+        blog = Blog.objects.get(id=id)
+        blog.delete()
+        return Response({"status": "success", "message": "banner created successfully"})
+    except:
+        return JsonResponse({"status": "error"})

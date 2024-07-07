@@ -16,7 +16,6 @@ export default function BlogModifyDetail() {
     const [imagesID, setImagesID] = useState({image1: "", image2: "", image3: ""})
     const [preview, setPreview] = useState({image1: "", image2: "", image3: ""})
     const [status, setStatus] = useState(null)
-    const [status2, setStatus2] = useState(null)
 
     useEffect(()=>{
         fetchData()
@@ -137,6 +136,7 @@ export default function BlogModifyDetail() {
         setSelectedTags(selected)
     }
 
+    
 
     return(
         <div className="BlogModifyDetail">
